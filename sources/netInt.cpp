@@ -7,7 +7,7 @@ netInt::netInt()
     sock = 0;
     for(int i = 0; i < BUFFER_LENGTH; i++)
     {
-        rBuffer[i] = '';
+        rBuffer[i] = 0;
     }
     connectedToNetwork = false;
     for(int i = 0; i < 4; i++)
@@ -22,7 +22,7 @@ netInt::netInt(uint8_t ipAddr[4])
     sock = 0;
     for(int i = 0; i < BUFFER_LENGTH; i++)
     {
-        rBuffer[i] = '';
+        rBuffer[i] = 0;
     }
     connectedToNetwork = false;
     for(int i = 0; i < 4; i++)
