@@ -5,15 +5,25 @@ using namespace std;
 netInt::netInt()
 {
     sock = 0;
-    rBuffer[1024] = { 0 };
+    for(int i = 0; i < BUFFER_LENGTH; i++)
+    {
+        rBuffer[i] = '';
+    }
     connectedToNetwork = false;
-    netAddr = {0,0,0,0}
+    for(int i = 0; i < 4; i++)
+    {
+        netAddr[i] = 0;
+    }
+    
 }
 
 netInt::netInt(uint8_t ipAddr[4])
 {
     sock = 0;
-    rBuffer = { 0 };
+    for(int i = 0; i < BUFFER_LENGTH; i++)
+    {
+        rBuffer[i] = '';
+    }
     connectedToNetwork = false;
     for(int i = 0; i < 4; i++)
     {

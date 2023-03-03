@@ -9,6 +9,7 @@
 
 #define TESTING
 #define PORT 8080
+#define BUFFER_LENGTH 1024
 
 using namespace std;
 
@@ -19,7 +20,7 @@ private:
     int sock;
     int client_fd;
     struct sockaddr_in serv_addr;
-    char rBuffer[1024];
+    char rBuffer[BUFFER_LENGTH];
     bool connectedToNetwork;
     uint8_t netAddr[4];
     
