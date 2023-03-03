@@ -27,7 +27,7 @@ netInt::netInt(uint8_t ipAddr[4])
     connectedToNetwork = false;
     for(int i = 0; i < 4; i++)
     {
-        netAddr[i] = ipAddr[i]
+        netAddr[i] = ipAddr[i];
     }
 }
 

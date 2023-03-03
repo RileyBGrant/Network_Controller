@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <iostream>
+#include <cstdlib>
 
 #define TESTING
 #define PORT 8080
