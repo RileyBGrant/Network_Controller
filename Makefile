@@ -1,4 +1,4 @@
-CPP = g++.exe 
+CPP = g++ 
 dir_path := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 SRCS_path := $(dir_path)/sources
 OBJ_path := $(dir_path)/obj
