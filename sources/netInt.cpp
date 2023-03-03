@@ -52,16 +52,13 @@ int netInt::connectToHost()
         serv_addr.sin_family = AF_INET;
         serv_addr.sin_port = htons(PORT);
 
-        string addrStr = "";
-        char *temp;
+        char *addrStr = "";
         for(int i = 0; i < 3; i++)
         {
-            temp = itoa(netAddr[i]);
-            addrStr += string(temp);
+            addrStr += itoa(netAddr[i]);
             addrStr += "."
         }
-        temp = itoa(netAddr[3]);
-        addrStr += string(temp);
+        addrStr += itoa(netAddr[i]);
         
 
         if (inet_pton(AF_INET, addrStr, &serv_addr.sin_addr) <= 0) 
