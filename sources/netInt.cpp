@@ -5,7 +5,7 @@ using namespace std;
 netInt::netInt()
 {
     sock = 0;
-    rBuffer = { 0 };
+    rBuffer[1024] = { 0 };
     connectedToNetwork = false;
     netAddr = {0,0,0,0}
 }
