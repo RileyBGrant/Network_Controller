@@ -60,7 +60,7 @@ int netInt::connectToHost()
             addrStr += to_string(netAddr[i]);
             addrStr += ".";
         };
-        addrStr += to_string(netAddr[i]);
+        addrStr += to_string(netAddr[4]);
 
         if (inet_pton(AF_INET, addrStr.c_str(), &serv_addr.sin_addr) <= 0) 
         {
