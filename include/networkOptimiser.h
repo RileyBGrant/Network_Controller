@@ -30,7 +30,7 @@ public:
     netInt(uint8_t ipAddr[4]);
     ~netInt();
     int connectToHost();
-    int sendtoHost();
+    int sendtoHost(void *data, int dataLen);
     int readFromHost();
     int disconnectFromHost();
 };

@@ -1,4 +1,5 @@
 #include "networkOptimiser.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -52,16 +53,18 @@ int netInt::connectToHost()
         serv_addr.sin_family = AF_INET;
         serv_addr.sin_port = htons(PORT);
 
-        char *addrStr = "";
+        string addrStr = "";
+        char *temp;
         for(int i = 0; i < 3; i++)
         {
-            addrStr += itoa(netAddr[i]);
+            temp = itoa(netAddr[i])
+            addrStr += temp;
             addrStr += "."
         }
-        addrStr += itoa(netAddr[i]);
-        
+        temp = itoa(netAddr[4]);
+        addrStr += temp;
 
-        if (inet_pton(AF_INET, addrStr, &serv_addr.sin_addr) <= 0) 
+        if (inet_pton(AF_INET, addrStr.c_str, &serv_addr.sin_addr) <= 0) 
         {
             #ifdef TESTING
                 cout << "Invalid address/ Address not supported" << endl;
@@ -89,7 +92,7 @@ int netInt::connectToHost()
     }
 
     #ifdef TESTING
-        cout << "Already connected to a network" << ECANCELED
+        cout << "Already connected to a network" << endl;
     #endif
 
     return 1;
