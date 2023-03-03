@@ -57,9 +57,10 @@ int netInt::connectToHost()
         char *temp;
         for(int i = 0; i < 3; i++)
         {
-            temp = itoa(netAddr[i])
-            addrStr += temp;
-            addrStr += "."
+            //snprintf(temp)
+            //temp = itoa(netAddr[i]);
+            addrStr += to_string(netAddr[i]);
+            addrStr += ".";
         }
         temp = itoa(netAddr[4]);
         addrStr += temp;
