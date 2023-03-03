@@ -57,15 +57,12 @@ int netInt::connectToHost()
         char *temp;
         for(int i = 0; i < 3; i++)
         {
-            //snprintf(temp)
-            //temp = itoa(netAddr[i]);
             addrStr += to_string(netAddr[i]);
             addrStr += ".";
-        }
-        temp = itoa(netAddr[4]);
-        addrStr += temp;
+        };
+        addrStr += to_string(netAddr[i]);
 
-        if (inet_pton(AF_INET, addrStr.c_str, &serv_addr.sin_addr) <= 0) 
+        if (inet_pton(AF_INET, addrStr.c_str(), &serv_addr.sin_addr) <= 0) 
         {
             #ifdef TESTING
                 cout << "Invalid address/ Address not supported" << endl;
