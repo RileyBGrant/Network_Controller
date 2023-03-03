@@ -33,7 +33,7 @@ exe::
 #	 Building testcase
 	$(V) $(CPP) $(CFLAGS) \
 		-c $(SRCPP) \
-		$(APPINCLUDE) $(OBJS) -lws2_32 -o app.exe
+		$(APPINCLUDE) $(OBJS) -o app.exe
 
 	
 
