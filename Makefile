@@ -9,7 +9,7 @@ CFLAGS+=-I${fileDirname}
 #LIBS= $(dir_path)/libs
 
 APPINCLUDE:=-I$(dir_path) \
-			-I$(dir_path)/Include
+			-I$(dir_path)/include
 
 SRCPP+=$(wildcard *.cpp)
 
