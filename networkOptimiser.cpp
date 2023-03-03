@@ -1,4 +1,4 @@
-#include "networkOpitmiser.h"
+#include "networkOptimiser.h"
 
 using namespace std;
 
