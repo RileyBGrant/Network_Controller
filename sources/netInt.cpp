@@ -67,7 +67,7 @@ int netInt::connectToHost()
         addrStr += to_string(netAddr[4]);
 
         #ifdef TESTING
-            cout << "Stored address is " << netAddr[0] << "." << netAddr[1] << "." << netAddr[2] << "." << netAddr[3] << endl;
+            cout << "Stored address is " << to_string(netAddr[0]) << "." << to_string(netAddr[1]) << "." << to_string(netAddr[2]) << "." << to_string(netAddr[3]) << endl;
             cout << "Network IP address is " << addrStr << endl;
         #endif
 
