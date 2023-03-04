@@ -153,7 +153,7 @@ int netInt::readFromHost()
         {
             cout << "." << to_string((uint8_t)rBuffer[i]);
         }
-        cout << ", variable " << rBuffer[9] << " set to state " << rBuffer[11]
+        cout << ", variable " << rBuffer[9] << " set to state " << rBuffer[11] << endl;
          
         return 0;
     }
