@@ -9,9 +9,9 @@ int main()
 
     interface.connectToHost();
 
-    while()
+    while(true)
     {
-        interface.readFromHost()
+        interface.readFromHost();
     }
 
     return 0;
