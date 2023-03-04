@@ -132,6 +132,11 @@ int netInt::readFromHost()
         int valread;
         valread = read(sock, rBuffer, 1024);
 
+        if(valread == 0)
+        {
+            return 1;
+        }
+
         #ifdef TESTING
             cout << "Message recieved with " << valread << " bytes" << endl;
         #endif
