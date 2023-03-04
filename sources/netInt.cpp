@@ -39,6 +39,10 @@ netInt::~netInt()
 
 int netInt::connectToHost()
 {
+    #ifdef TESTING
+        cout << "Connecting to the network" << endl;
+    #endif
+    
     if(connectedToNetwork == false)
     {
         if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) 
