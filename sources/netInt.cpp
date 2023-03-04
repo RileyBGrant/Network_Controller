@@ -149,7 +149,7 @@ int netInt::readFromHost()
         cout << endl;
 
         cout << "Message length is " << (int)rBuffer[0] << " from device " << to_string((uint8_t)rBuffer[2]);
-        for(int i = 3; i < 8)
+        for(int i = 3; i < 8; i++)
         {
             cout << "." << to_string((uint8_t)rBuffer[i]);
         }
