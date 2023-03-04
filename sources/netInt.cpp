@@ -66,6 +66,10 @@ int netInt::connectToHost()
         };
         addrStr += to_string(netAddr[4]);
 
+        #ifdef TESTING
+            cout << "Network IP address is " << addrStr << endl;
+        #endif
+
         if (inet_pton(AF_INET, addrStr.c_str(), &serv_addr.sin_addr) <= 0) 
         {
             #ifdef TESTING
