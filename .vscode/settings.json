@@ -3,6 +3,8 @@
         "fstream": "cpp",
         "iostream": "cpp",
         "string": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "istream": "cpp",
+        "*.tcc": "cpp"
     }
 }

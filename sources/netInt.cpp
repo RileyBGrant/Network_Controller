@@ -136,6 +136,12 @@ int netInt::readFromHost()
             cout << "Message recieved with " << valread << " bytes" << endl;
         #endif
 
+        for(int i = 0; i < valread; i++)
+        {
+            cout << rBuffer[i];
+        }
+        cout << endl;
+
         return 0;
     }
     
