@@ -27,7 +27,7 @@ all: run
 
 # Run all executables for the matrix multiplication program
 run: headers exe 
-	./app
+	./app.exe
 
 exe::
 #	 Building testcase
