@@ -157,7 +157,7 @@ int netInt::readFromHost()
                     cout << "." << stoi(to_string((uint8_t)rBuffer[i + j]));
                 }
                 cout << dec << ", variable " << rBuffer[i + 7] << " set to state " << rBuffer[i + 9];
-                cout " at " << stoi(to_string((uint8_t)rBuffer[i + 12])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 11])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 10])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 13])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 14])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 15])) endl;
+                cout " at " << stoi(to_string((uint8_t)rBuffer[i + 12])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 11])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 10])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 13])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 14])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 15])) << endl;
             #endif
 
 
