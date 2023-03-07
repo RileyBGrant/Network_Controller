@@ -35,4 +35,10 @@ public:
     int disconnectFromHost();
 };
 
+struct activityRecord
+{
+    uint8_t macAddr[6];
+    uint8_t variable;
+    uint8_t state;
+};
 

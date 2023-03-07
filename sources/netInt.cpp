@@ -139,22 +139,33 @@ int netInt::readFromHost()
 
         #ifdef TESTING
             cout << "Message recieved with " << valread << " bytes" << endl;
+
+            for(int i = 0; i < valread; i++)
+            {
+                cout << rBuffer[i];
+            }
+
+            cout << endl;
         #endif
 
-        for(int i = 0; i < valread; i++)
+        for(int i = 0; i < valread; i += 16)
         {
-            cout << rBuffer[i];
-        }
+            #ifdef TESTING
+                cout << "Message is from device " << hex << stoi(to_string((uint8_t)rBuffer[i]));
+                for(int j = 1; j < 6; j++)
+                {
+                    cout << "." << stoi(to_string((uint8_t)rBuffer[i + j]));
+                }
+                cout << dec << ", variable " << rBuffer[i + 7] << " set to state " << rBuffer[i + 9];
+                cout " at " << rBuffer[i + 10] << "/" << rBuffer[i + 11] << "/" << rBuffer[i + 12] << " " << rBuffer[i + 13] << ":" << rBuffer[i + 14] << ":" << rBuffer[i + 15] endl;
+            #endif
 
-        cout << endl;
 
-        cout << "Message is from device " << hex << stoi(to_string((uint8_t)rBuffer[0]));
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << stoi(to_string((uint8_t)rBuffer[i]));
         }
-        cout << dec << ", variable " << rBuffer[7] << " set to state " << rBuffer[9] << endl;
-         
+        
+
+
+
         return 0;
     }
     
