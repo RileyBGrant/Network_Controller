@@ -148,6 +148,9 @@ int netInt::readFromHost()
             cout << endl;
         #endif
 
+        bool devFound = false;
+        uint8_t macAddr[6];
+
         for(int i = 0; i < valread; )
         {
             #ifdef TESTING
@@ -158,10 +161,57 @@ int netInt::readFromHost()
                 }
                 cout << dec << ", variable " << rBuffer[i + 7] << " set to state " << rBuffer[i + 9];
                 cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 13])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 12])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 11])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 14])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 15])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 16])) << endl;
-                i += 17;
             #endif
 
+            
+            for(int j = 0; j < 6; j++)
+            {
+                macAddr[j] = stoi(to_string((uint8_t)rBuffer[i + j]));
+            }
 
+            node_t *listIterator = devices.getHead();
+            devRecord *dev;
+            devFound = false;
+
+            activityRecord *newEntry = new activityRecord;
+            newEntry->variable = rBuffer[i + 7];
+            newEntry->state = rBuffer[i + 9];
+            newEntry->timestamp->tm_year = stoi(to_string((uint8_t)rBuffer[i + 11]));
+            newEntry->timestamp->tm_mon = stoi(to_string((uint8_t)rBuffer[i + 12]));
+            newEntry->timestamp->tm_mday = stoi(to_string((uint8_t)rBuffer[i + 13]));
+            newEntry->timestamp->tm_hour = stoi(to_string((uint8_t)rBuffer[i + 14]));
+            newEntry->timestamp->tm_min = stoi(to_string((uint8_t)rBuffer[i + 15]));
+            newEntry->timestamp->tm_sec = stoi(to_string((uint8_t)rBuffer[i + 16]));
+            time_t tempTime = mktime(&newEntry->timestamp);
+            newEntry->timestamp = *gmtime(&tempTime);
+
+            while (listIterator)
+            {
+                dev = (devRecord *)listIterator->data;
+                if(packMAC(dev->macAddr) == packMAC(macAddr))
+                {
+                    devFound = true;
+                    dev->activity.append(newEntry);
+                    listIterator = NULL;
+                }
+                else
+                {
+                    listIterator = devices.getNext(listIterator);
+                }
+            }
+            if(devFound = false)
+            {
+                devRecord *newDev = new devRecord;
+                for(int j = 0; j < 6; j++)
+                {
+                    newDev->macAddr[j] = macAddr[j];
+                }
+                devices.append(newDev);
+
+                newDev->activity.append(newEntry);
+            }
+
+            i += 17;
         }
         
 
@@ -197,3 +247,34 @@ int netInt::disconnectFromHost()
 
     return 1;
 }
+
+#ifdef TESTING
+    int netInt::printRecords()
+    {
+        node_t *listIteratorD = devices.getHead();
+        node_t *listIteratorA;
+        devRecord *dev;
+        activityRecord *record;
+        while(listIteratorD)
+        {
+            dev = (devRecord *)listIteratorD->data;
+            cout << "Record for device " << hex << dev->macAddr[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << dev->macAddr[i];
+            }
+            cout << dec << ":" << endl;
+            
+            listIteratorA = dev->activity.getHead();
+            while(listIteratorA)
+            {
+                record = (activityRecord *)listIteratorA->data;
+                cout << "Variable " << record->variable << " set to state " << record->state;
+
+                listIteratorA = dev->activity.getNext(listIteratorA);
+            }
+
+            listIteratorD = devices.getNext(listIteratorD);
+        }
+    }
+#endif

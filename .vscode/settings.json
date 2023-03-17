@@ -6,6 +6,9 @@
         "string_view": "cpp",
         "istream": "cpp",
         "*.tcc": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp",
+        "array": "cpp"
     }
 }

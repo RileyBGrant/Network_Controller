@@ -12,6 +12,7 @@ int main()
     while(true)
     {
         interface.readFromHost();
+        interface.printRecords();
     }
 
     return 0;
