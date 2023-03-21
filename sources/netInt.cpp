@@ -252,6 +252,7 @@ int netInt::disconnectFromHost()
 #ifdef TESTING
     int netInt::printRecords()
     {
+        cout << "Printing Records" << endl;
         node_t *listIteratorD = devices.getHead();
         node_t *listIteratorA;
         devRecord *dev;
