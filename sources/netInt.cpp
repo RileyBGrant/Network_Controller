@@ -198,7 +198,7 @@ int netInt::readFromHost()
                     dev->activity.append(newEntry);
 
                     #ifdef TESTING
-                        cout << "Device activity record length: " << dev->activity.getLen();
+                        cout << "Device activity record length: " << dev->activity.getLen() << endl;
                     #endif
                     listIterator = NULL;
                 }
@@ -220,13 +220,13 @@ int netInt::readFromHost()
                 newDev->devType = rBuffer[i + 9];
                 devices.append(newDev);
                 #ifdef TESTING
-                    cout << "Devices recorded: " << devices.getLen();
+                    cout << "Devices recorded: " << devices.getLen() << endl;
                 #endif
 
                 newDev->activity.append(newEntry);
 
                 #ifdef TESTING
-                    cout << "Device activity record length: " << newDev->activity.getLen();
+                    cout << "Device activity record length: " << newDev->activity.getLen() << endl;
                 #endif
             }
 
@@ -288,7 +288,7 @@ int netInt::disconnectFromHost()
             while(listIteratorA)
             {
                 record = (activityRecord *)listIteratorA->data;
-                cout << "Variable " << record->variable << " set to state " << record->state;
+                cout << "Variable " << record->variable << " set to state " << record->state << endl;
 
                 listIteratorA = dev->activity.getNext(listIteratorA);
             }
