@@ -166,18 +166,18 @@ int netInt::readFromHost()
             
             for(int j = 0; j < 6; j++)
             {
-                macAddr[j] = stoi(to_string((uint8_t)rBuffer[i + j]));
+                macAddr[j] = (uint8_t)rBuffer[i + j];
             }
             
             activityRecord *newEntry = new activityRecord;
             newEntry->variable = rBuffer[i + 9];
             newEntry->state = rBuffer[i + 11];
-            newEntry->timestamp.tm_year = stoul(to_string((uint8_t)rBuffer[i + 13]));
-            newEntry->timestamp.tm_mon = stoul(to_string((uint8_t)rBuffer[i + 14]));
-            newEntry->timestamp.tm_mday = stoul(to_string((uint8_t)rBuffer[i + 15]));
-            newEntry->timestamp.tm_hour = stoul(to_string((uint8_t)rBuffer[i + 16])) + 1;
-            newEntry->timestamp.tm_min = stoul(to_string((uint8_t)rBuffer[i + 17]));
-            newEntry->timestamp.tm_sec = stoul(to_string((uint8_t)rBuffer[i + 18]));
+            newEntry->timestamp.tm_year = (uint8_t)rBuffer[i + 13];
+            newEntry->timestamp.tm_mon = (uint8_t)rBuffer[i + 14];
+            newEntry->timestamp.tm_mday = (uint8_t)rBuffer[i + 15];
+            newEntry->timestamp.tm_hour = (uint8_t)rBuffer[i + 16] + 1;
+            newEntry->timestamp.tm_min = (uint8_t)rBuffer[i + 17];
+            newEntry->timestamp.tm_sec = (uint8_t)rBuffer[i + 18];
             time_t tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
 
@@ -277,10 +277,10 @@ int netInt::disconnectFromHost()
         while(listIteratorD)
         {
             dev = (devRecord *)listIteratorD->data;
-            cout << "Record for device " << hex << dev->macAddr[0];
+            cout << "Record for device " << hex << stoi(to_string(dev->macAddr[0]));
             for(int i = 1; i < 6; i++)
             {
-                cout << "." << dev->macAddr[i];
+                cout << "." << stoi(to_string(dev->macAddr[i]));
             }
             cout << dec << ":" << endl;
             
