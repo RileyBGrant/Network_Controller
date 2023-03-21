@@ -207,7 +207,7 @@ int netInt::readFromHost()
                     listIterator = devices.getNext(listIterator);
                 }
             }
-            if(devFound = false)
+            if(devFound == false)
             {
                 #ifdef TESTING
                     cout << "Device record not found, creating new record" << endl;
