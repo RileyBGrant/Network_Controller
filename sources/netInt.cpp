@@ -179,10 +179,10 @@ int netInt::readFromHost()
             newEntry->timestamp.tm_year = stoul(to_string((uint8_t)rBuffer[i + 13]));
             newEntry->timestamp.tm_mon = stoul(to_string((uint8_t)rBuffer[i + 14]));
             newEntry->timestamp.tm_mday = stoul(to_string((uint8_t)rBuffer[i + 15]));
-            newEntry->timestamp.tm_hour = stoul(to_string((uint8_t)rBuffer[i + 16]));
+            newEntry->timestamp.tm_hour = stoul(to_string((uint8_t)rBuffer[i + 16])) + 1;
             newEntry->timestamp.tm_min = stoul(to_string((uint8_t)rBuffer[i + 17]));
             newEntry->timestamp.tm_sec = stoul(to_string((uint8_t)rBuffer[i + 18]));
-            cout << "time: " << asctime(&newEntry->timestamp);
+            //cout << "time: " << asctime(&newEntry->timestamp);
             time_t tempTime = 0;
             tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
