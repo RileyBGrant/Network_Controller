@@ -182,7 +182,9 @@ int netInt::readFromHost()
             newEntry->timestamp.tm_hour = stoul(to_string((uint8_t)rBuffer[i + 16]));
             newEntry->timestamp.tm_min = stoul(to_string((uint8_t)rBuffer[i + 17]));
             newEntry->timestamp.tm_sec = stoul(to_string((uint8_t)rBuffer[i + 18]));
-            time_t tempTime = mktime(&newEntry->timestamp);
+            cout << "time: " << asctime(&newEntry->timestamp);
+            time_t tempTime = 0;
+            tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
             cout << "time: " << asctime(&newEntry->timestamp);
 
