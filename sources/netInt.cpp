@@ -176,12 +176,12 @@ int netInt::readFromHost()
             activityRecord *newEntry = new activityRecord;
             newEntry->variable = rBuffer[i + 9];
             newEntry->state = rBuffer[i + 11];
-            newEntry->timestamp.tm_year = stouI(to_string((uint8_t)rBuffer[i + 13]));
-            newEntry->timestamp.tm_mon = stouI(to_string((uint8_t)rBuffer[i + 14]));
-            newEntry->timestamp.tm_mday = stouI(to_string((uint8_t)rBuffer[i + 15]));
-            newEntry->timestamp.tm_hour = stouI(to_string((uint8_t)rBuffer[i + 16]));
-            newEntry->timestamp.tm_min = stouI(to_string((uint8_t)rBuffer[i + 17]));
-            newEntry->timestamp.tm_sec = stouI(to_string((uint8_t)rBuffer[i + 18]));
+            newEntry->timestamp.tm_year = stoul(to_string((uint8_t)rBuffer[i + 13]));
+            newEntry->timestamp.tm_mon = stoul(to_string((uint8_t)rBuffer[i + 14]));
+            newEntry->timestamp.tm_mday = stoul(to_string((uint8_t)rBuffer[i + 15]));
+            newEntry->timestamp.tm_hour = stoul(to_string((uint8_t)rBuffer[i + 16]));
+            newEntry->timestamp.tm_min = stoul(to_string((uint8_t)rBuffer[i + 17]));
+            newEntry->timestamp.tm_sec = stoul(to_string((uint8_t)rBuffer[i + 18]));
             time_t tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
             cout << "time: " << asctime(&newEntry->timestamp);
