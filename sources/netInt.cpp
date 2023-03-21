@@ -213,11 +213,10 @@ int netInt::readFromHost()
             }
 
             i += 19; //Individual message size
+            #ifdef TESTING
+                printRecords();
+            #endif
         }
-        #ifdef TESTING
-            printRecords();
-        #endif
-
         return 0;
     }
     
