@@ -212,7 +212,7 @@ int netInt::readFromHost()
                 newDev->activity.append(newEntry);
             }
 
-            i += 17;
+            i += 19; //Individual message size
         }
         
 
