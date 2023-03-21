@@ -159,8 +159,8 @@ int netInt::readFromHost()
                 {
                     cout << "." << stoi(to_string((uint8_t)rBuffer[i + j]));
                 }
-                cout << dec << ", variable " << rBuffer[i + 7] << " set to state " << rBuffer[i + 9];
-                cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 13])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 12])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 11])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 14])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 15])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 16])) << endl;
+                cout << dec << " devType " <<  rBuffer[i + 9] << ", variable " << rBuffer[i + 9] << " set to state " << rBuffer[i + 11];
+                cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
             #endif
 
             
@@ -175,7 +175,7 @@ int netInt::readFromHost()
 
             activityRecord *newEntry = new activityRecord;
             newEntry->variable = rBuffer[i + 9];
-            newEntry->state = rBuffer[i + 7];
+            newEntry->state = rBuffer[i + 11];
             newEntry->timestamp.tm_year = stoi(to_string((uint8_t)rBuffer[i + 13]));
             newEntry->timestamp.tm_mon = stoi(to_string((uint8_t)rBuffer[i + 14]));
             newEntry->timestamp.tm_mday = stoi(to_string((uint8_t)rBuffer[i + 15]));
@@ -184,6 +184,7 @@ int netInt::readFromHost()
             newEntry->timestamp.tm_sec = stoi(to_string((uint8_t)rBuffer[i + 18]));
             time_t tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
+            cout << "time: " << asctime(&newEntry->timestamp);
 
             while (listIterator)
             {
