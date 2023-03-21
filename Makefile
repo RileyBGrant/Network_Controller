@@ -40,6 +40,7 @@ exe::
 headers::
 	$(CPP) -c $(SRCS_path)/netData.cpp $(APPINCLUDE) -o $(OBJ_path)/netData.o
 	$(CPP) -c $(SRCS_path)/netInt.cpp $(APPINCLUDE) -o $(OBJ_path)/netInt.o
+	$(CPP) -c $(SRCS_path)/LList.cpp $(APPINCLUDE) -o $(OBJ_path)/LList.o
 
 #	$(CPP) -o simNet $(OBJ_path)/LList.o
 
