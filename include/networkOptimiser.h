@@ -43,6 +43,7 @@ public:
 struct devRecord
 {
     uint8_t macAddr[6];
+    uint8_t devType;
     linkedList_t activity;
 };
 

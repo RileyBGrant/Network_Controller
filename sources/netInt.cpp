@@ -174,14 +174,14 @@ int netInt::readFromHost()
             devFound = false;
 
             activityRecord *newEntry = new activityRecord;
-            newEntry->variable = rBuffer[i + 7];
-            newEntry->state = rBuffer[i + 9];
-            newEntry->timestamp->tm_year = stoi(to_string((uint8_t)rBuffer[i + 11]));
-            newEntry->timestamp->tm_mon = stoi(to_string((uint8_t)rBuffer[i + 12]));
-            newEntry->timestamp->tm_mday = stoi(to_string((uint8_t)rBuffer[i + 13]));
-            newEntry->timestamp->tm_hour = stoi(to_string((uint8_t)rBuffer[i + 14]));
-            newEntry->timestamp->tm_min = stoi(to_string((uint8_t)rBuffer[i + 15]));
-            newEntry->timestamp->tm_sec = stoi(to_string((uint8_t)rBuffer[i + 16]));
+            newEntry->variable = rBuffer[i + 9];
+            newEntry->state = rBuffer[i + 7];
+            newEntry->timestamp->tm_year = stoi(to_string((uint8_t)rBuffer[i + 13]));
+            newEntry->timestamp->tm_mon = stoi(to_string((uint8_t)rBuffer[i + 14]));
+            newEntry->timestamp->tm_mday = stoi(to_string((uint8_t)rBuffer[i + 15]));
+            newEntry->timestamp->tm_hour = stoi(to_string((uint8_t)rBuffer[i + 16]));
+            newEntry->timestamp->tm_min = stoi(to_string((uint8_t)rBuffer[i + 17]));
+            newEntry->timestamp->tm_sec = stoi(to_string((uint8_t)rBuffer[i + 18]));
             time_t tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
 
@@ -206,6 +206,7 @@ int netInt::readFromHost()
                 {
                     newDev->macAddr[j] = macAddr[j];
                 }
+                newDev->devType = rBuffer[i + 9];
                 devices.append(newDev);
 
                 newDev->activity.append(newEntry);
