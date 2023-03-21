@@ -168,11 +168,7 @@ int netInt::readFromHost()
             {
                 macAddr[j] = stoi(to_string((uint8_t)rBuffer[i + j]));
             }
-
-            node_t *listIterator = devices.getHead();
-            devRecord *dev;
-            devFound = false;
-
+            
             activityRecord *newEntry = new activityRecord;
             newEntry->variable = rBuffer[i + 9];
             newEntry->state = rBuffer[i + 11];
@@ -182,11 +178,12 @@ int netInt::readFromHost()
             newEntry->timestamp.tm_hour = stoul(to_string((uint8_t)rBuffer[i + 16])) + 1;
             newEntry->timestamp.tm_min = stoul(to_string((uint8_t)rBuffer[i + 17]));
             newEntry->timestamp.tm_sec = stoul(to_string((uint8_t)rBuffer[i + 18]));
-            //cout << "time: " << asctime(&newEntry->timestamp);
-            time_t tempTime = 0;
-            tempTime = mktime(&newEntry->timestamp);
+            time_t tempTime = mktime(&newEntry->timestamp);
             newEntry->timestamp = *gmtime(&tempTime);
-            cout << "time: " << asctime(&newEntry->timestamp);
+
+            node_t *listIterator = devices.getHead();
+            devRecord *dev;
+            devFound = false;
 
             while (listIterator)
             {
@@ -194,7 +191,15 @@ int netInt::readFromHost()
                 if(packMAC(dev->macAddr) == packMAC(macAddr))
                 {
                     devFound = true;
+                    #ifdef TESTING
+                        cout << "Device record found" << endl;
+                    #endif
+
                     dev->activity.append(newEntry);
+
+                    #ifdef TESTING
+                        cout << "Device activity record length: " << dev->activity.getLen();
+                    #endif
                     listIterator = NULL;
                 }
                 else
@@ -204,6 +209,9 @@ int netInt::readFromHost()
             }
             if(devFound = false)
             {
+                #ifdef TESTING
+                    cout << "Device record not found, creating new record" << endl;
+                #endif
                 devRecord *newDev = new devRecord;
                 for(int j = 0; j < 6; j++)
                 {
@@ -211,8 +219,15 @@ int netInt::readFromHost()
                 }
                 newDev->devType = rBuffer[i + 9];
                 devices.append(newDev);
+                #ifdef TESTING
+                    cout << "Devices recorded: " << devices.getLen();
+                #endif
 
                 newDev->activity.append(newEntry);
+
+                #ifdef TESTING
+                    cout << "Device activity record length: " << newDev->activity.getLen();
+                #endif
             }
 
             i += 19; //Individual message size
