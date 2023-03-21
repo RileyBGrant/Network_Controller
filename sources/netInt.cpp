@@ -288,7 +288,7 @@ int netInt::disconnectFromHost()
             while(listIteratorA)
             {
                 record = (activityRecord *)listIteratorA->data;
-                cout << "Variable " << record->variable << " set to state " << record->state << endl;
+                cout << "Variable " << record->variable << " set to state " << record->state << " at " << asctime(&record->timestamp);
 
                 listIteratorA = dev->activity.getNext(listIteratorA);
             }
