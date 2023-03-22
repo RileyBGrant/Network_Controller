@@ -188,7 +188,7 @@ int netInt::readFromHost()
             while (listIterator)
             {
                 dev = (devRecord *)listIterator->data;
-                if(packMAC(dev->macAddr) == packMAC(macAddr))
+                if(dev->macAddr == packMAC(macAddr))
                 {
                     devFound = true;
                     #ifdef TESTING
@@ -213,10 +213,9 @@ int netInt::readFromHost()
                     cout << "Device record not found, creating new record" << endl;
                 #endif
                 devRecord *newDev = new devRecord;
-                for(int j = 0; j < 6; j++)
-                {
-                    newDev->macAddr[j] = macAddr[j];
-                }
+                
+                newDev->macAddr = packMAC(macAddr);
+
                 newDev->devType = rBuffer[i + 9];
                 devices.append(newDev);
                 #ifdef TESTING

@@ -25,7 +25,7 @@ private:
     char rBuffer[BUFFER_LENGTH];
     bool connectedToNetwork;
     uint8_t netAddr[4];
-    linkedList_t devices;
+    linkedList_t devices; //list of devRecords
     
 public:
     netInt();
@@ -35,6 +35,7 @@ public:
     int sendtoHost(void *data, int dataLen);
     int readFromHost();
     int disconnectFromHost();
+
     #ifdef TESTING
         int printRecords();
     #endif
@@ -42,9 +43,9 @@ public:
 
 struct devRecord
 {
-    uint8_t macAddr[6];
+    uint64_t macAddr;
     uint8_t devType;
-    linkedList_t activity;
+    linkedList_t activity; //list of activity record types
 };
 
 struct activityRecord
@@ -54,3 +55,33 @@ struct activityRecord
     time_t timestamp;
 };
 
+class lightOptimiser
+{
+    linkedList_t lightDevs;
+    linkedList_t lightGroups;
+
+};
+
+//class for network optimiser
+class netOpt
+{
+private:
+    linkedList_t *devices;
+    lightOptimiser lightOpt;
+
+public:
+    int sortDevs;
+};
+
+
+struct devGroup
+{
+    unint8_t devtype;
+    linkedList_t mems; //List of groupMember structs
+};
+
+struct groupMember
+{
+    devRecord dev;
+    uint8_t memberProb; //membership probability
+}
