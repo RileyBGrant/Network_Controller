@@ -14,13 +14,18 @@ int netOpt::sortDevs()
     #endif
     node_t *listIterator = devices->getHead();
     devRecord *dev;
+    int type;
     while(listIterator)
     {
         dev = (devRecord*)listIterator->data;
 
-        cout << "DevType: " << (int)dev->devType << endl;
+        type = dev->devType;
 
-        switch((int)dev->devType)
+        #ifdef TESTING
+            cout << "DevType: " << type << endl;
+        #endif
+
+        switch(type)
         {
         case 0:
             lightOpt.addDevice(dev);
