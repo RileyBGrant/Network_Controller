@@ -20,11 +20,15 @@ int netOpt::sortDevs()
 
         cout << "DevType: " << dev->devType << endl;
 
-        switch(dev->devType)
+        switch((int)dev->devType)
         {
-        case (uint8_t)0:
+        case 0:
             lightOpt.addDevice(dev);
             break;
+        default:
+            #ifdef TESTING
+                cout << "DevType not found" << endl;
+            #endif
         }
 
         listIterator = devices->getNext(listIterator);
