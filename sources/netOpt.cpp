@@ -18,6 +18,8 @@ int netOpt::sortDevs()
     {
         dev = (devRecord*)listIterator->data;
 
+        cout << "DevType: " << dev->devType << endl;
+
         switch(dev->devType)
         {
         case (uint8_t)0:
@@ -27,4 +29,5 @@ int netOpt::sortDevs()
 
         listIterator = devices->getNext(listIterator);
     }
+    return 0;
 }
