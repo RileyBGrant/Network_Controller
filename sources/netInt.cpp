@@ -179,7 +179,7 @@ int netInt::readFromHost()
             tempTime.tm_hour = (uint8_t)rBuffer[i + 16] + 1;
             tempTime.tm_min = (uint8_t)rBuffer[i + 17];
             tempTime.tm_sec = (uint8_t)rBuffer[i + 18];
-            newEntry->timestamp = mktime(&newEntry->timestamp);
+            newEntry->timestamp = mktime(&tempTime);
 
             node_t *listIterator = devices.getHead();
             devRecord *dev;
@@ -288,7 +288,8 @@ int netInt::disconnectFromHost()
             while(listIteratorA)
             {
                 record = (activityRecord *)listIteratorA->data;
-                cout << "Variable " << record->variable << " set to state " << record->state << " at " << asctime(&record->timestamp);
+                tm tempTime = *gmtime(&record->timestamp);
+                cout << "Variable " << record->variable << " set to state " << record->state << " at " << asctime(&tempTime);
 
                 listIteratorA = dev->activity.getNext(listIteratorA);
             }
