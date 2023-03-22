@@ -76,7 +76,7 @@ public:
 
 struct devGroup
 {
-    unint8_t devtype;
+    uint8_t devtype;
     linkedList_t mems; //List of groupMember structs
 };
 
@@ -84,4 +84,4 @@ struct groupMember
 {
     devRecord dev;
     uint8_t memberProb; //membership probability
-}
+};

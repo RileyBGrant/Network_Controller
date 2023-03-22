@@ -273,13 +273,15 @@ int netInt::disconnectFromHost()
         node_t *listIteratorA;
         devRecord *dev;
         activityRecord *record;
+        uint8_t mac[6];
         while(listIteratorD)
         {
             dev = (devRecord *)listIteratorD->data;
-            cout << "Record for device " << hex << stoi(to_string(dev->macAddr[0]));
+            unpackMAC(dev->macAddr, mac);
+            cout << "Record for device " << hex << stoi(to_string(mac));
             for(int i = 1; i < 6; i++)
             {
-                cout << "." << stoi(to_string(dev->macAddr[i]));
+                cout << "." << stoi(to_string(mac[i]));
             }
             cout << dec << ":" << endl;
             
