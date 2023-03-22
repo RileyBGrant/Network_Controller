@@ -278,7 +278,7 @@ int netInt::disconnectFromHost()
         {
             dev = (devRecord *)listIteratorD->data;
             unpackMAC(dev->macAddr, mac);
-            cout << "Record for device " << hex << stoi(to_string(mac));
+            cout << "Record for device " << hex << stoi(to_string(mac[0]));
             for(int i = 1; i < 6; i++)
             {
                 cout << "." << stoi(to_string(mac[i]));
