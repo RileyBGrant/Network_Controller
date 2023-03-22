@@ -172,14 +172,14 @@ int netInt::readFromHost()
             activityRecord *newEntry = new activityRecord;
             newEntry->variable = rBuffer[i + 9];
             newEntry->state = rBuffer[i + 11];
-            newEntry->timestamp.tm_year = (uint8_t)rBuffer[i + 13];
-            newEntry->timestamp.tm_mon = (uint8_t)rBuffer[i + 14];
-            newEntry->timestamp.tm_mday = (uint8_t)rBuffer[i + 15];
-            newEntry->timestamp.tm_hour = (uint8_t)rBuffer[i + 16] + 1;
-            newEntry->timestamp.tm_min = (uint8_t)rBuffer[i + 17];
-            newEntry->timestamp.tm_sec = (uint8_t)rBuffer[i + 18];
-            time_t tempTime = mktime(&newEntry->timestamp);
-            newEntry->timestamp = *gmtime(&tempTime);
+            tm tempTime;
+            tempTime.tm_year = (uint8_t)rBuffer[i + 13];
+            tempTime.tm_mon = (uint8_t)rBuffer[i + 14];
+            tempTime.tm_mday = (uint8_t)rBuffer[i + 15];
+            tempTime.tm_hour = (uint8_t)rBuffer[i + 16] + 1;
+            tempTime.tm_min = (uint8_t)rBuffer[i + 17];
+            tempTime.tm_sec = (uint8_t)rBuffer[i + 18];
+            newEntry->timestamp = mktime(&newEntry->timestamp);
 
             node_t *listIterator = devices.getHead();
             devRecord *dev;

@@ -51,6 +51,6 @@ struct activityRecord
 { 
     uint8_t variable;
     uint8_t state;
-    tm timestamp;
+    time_t timestamp;
 };
 
