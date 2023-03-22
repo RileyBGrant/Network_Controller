@@ -37,6 +37,11 @@ netInt::~netInt()
     disconnectFromHost();
 }
 
+linkedList_t *netInt::getDevices()
+{
+    return &devices;
+}
+
 int netInt::connectToHost()
 {
     #ifdef TESTING

@@ -6,15 +6,17 @@ int main()
 {
     uint8_t intAddr[4] = {192,168,0,75};
     netInt interface(intAddr);
-    //netOpt Optimiser(interface);
+    netOpt optimiser(&interface);
 
     interface.connectToHost();
 
-    while(true)
+    //while(true)
+    for(int i = 0; i < 1000000; i++)
     {
         interface.readFromHost();
-        //interface.printRecords();
     }
+    
+    optimiser.sortDevs();
 
     return 0;
 }

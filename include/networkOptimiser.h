@@ -31,6 +31,7 @@ public:
     netInt();
     netInt(uint8_t ipAddr[4]);
     ~netInt();
+    linkedList_t *getDevices();
     int connectToHost();
     int sendtoHost(void *data, int dataLen);
     int readFromHost();
@@ -57,9 +58,16 @@ struct activityRecord
 
 class lightOptimiser
 {
+private:
     linkedList_t lightDevs;
     linkedList_t lightGroups;
 
+public:
+    int addDevice(devRecord *newDev);
+    
+    #ifdef TESTING
+        int printDevs();
+    #endif
 };
 
 //class for network optimiser
@@ -70,9 +78,9 @@ private:
     lightOptimiser lightOpt;
 
 public:
-    int sortDevs;
+    netOpt(netInt *interface);
+    int sortDevs();
 };
-
 
 struct devGroup
 {
