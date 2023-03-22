@@ -23,7 +23,6 @@ int netOpt::sortDevs()
         case 0:
             lightOpt.addDevice(dev);
             break;
-        
         }
 
         listIterator = devices->getNext(listIterator);

@@ -4,11 +4,14 @@ using namespace std;
 
 int lightOptimiser::addDevice(devRecord *newDev)
 {
+    #ifdef TESTING
+        cout << "Light optimiser: Adding new device" << endl;
+    #endif
     node_t *listIterator = lightDevs.getHead();
     devRecord *dev;
     while(listIterator)
     {
-        if(dev->macAddr = newDev->macAddr)
+        if(dev->macAddr == newDev->macAddr)
         {
             #ifdef TESTING
                 cout << "Light optimiser: Device already added" << endl;
