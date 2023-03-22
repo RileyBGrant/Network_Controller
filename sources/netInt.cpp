@@ -175,8 +175,8 @@ int netInt::readFromHost()
             }
             
             activityRecord *newEntry = new activityRecord;
-            newEntry->variable = rBuffer[i + 9];
-            newEntry->state = rBuffer[i + 11];
+            newEntry->variable = stoi(to_string(rBuffer[i + 9]));
+            newEntry->state = stoi(to_string(rBuffer[i + 11]));
             tm tempTime;
             tempTime.tm_year = (uint8_t)rBuffer[i + 13];
             tempTime.tm_mon = (uint8_t)rBuffer[i + 14];
@@ -221,7 +221,7 @@ int netInt::readFromHost()
                 
                 newDev->macAddr = packMAC(macAddr);
 
-                newDev->devType = rBuffer[i + 9];
+                newDev->devType = stoi(to_string(rBuffer[i + 9]));
                 devices.append(newDev);
                 #ifdef TESTING
                     cout << "Devices recorded: " << devices.getLen() << endl;
@@ -288,14 +288,14 @@ int netInt::disconnectFromHost()
             {
                 cout << "." << stoi(to_string(mac[i]));
             }
-            cout << dec << ":" << endl;
+            cout << dec << " of type " << (int)dev->devType << ":" << endl;
             
             listIteratorA = dev->activity.getHead();
             while(listIteratorA)
             {
                 record = (activityRecord *)listIteratorA->data;
                 tm tempTime = *gmtime(&record->timestamp);
-                cout << "Variable " << record->variable << " set to state " << record->state << " at " << asctime(&tempTime);
+                cout << "Variable " << (int)record->variable << " set to state " << (int)record->state << " at " << asctime(&tempTime);
 
                 listIteratorA = dev->activity.getNext(listIteratorA);
             }
