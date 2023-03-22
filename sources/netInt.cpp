@@ -175,8 +175,8 @@ int netInt::readFromHost()
             }
             
             activityRecord *newEntry = new activityRecord;
-            newEntry->variable = stoi(to_string(rBuffer[i + 9]));
-            newEntry->state = stoi(to_string(rBuffer[i + 11]));
+            newEntry->variable = rBuffer[i + 9] - '0';
+            newEntry->state = rBuffer[i + 11] - '0';
             tm tempTime;
             tempTime.tm_year = (uint8_t)rBuffer[i + 13];
             tempTime.tm_mon = (uint8_t)rBuffer[i + 14];
@@ -221,7 +221,7 @@ int netInt::readFromHost()
                 
                 newDev->macAddr = packMAC(macAddr);
 
-                newDev->devType = stoi(to_string(rBuffer[i + 9]));
+                newDev->devType = rBuffer[i + 9]  - '0';
                 devices.append(newDev);
                 #ifdef TESTING
                     cout << "Devices recorded: " << devices.getLen() << endl;
