@@ -18,7 +18,7 @@ int netOpt::sortDevs()
     {
         dev = (devRecord*)listIterator->data;
 
-        cout << "DevType: " << dev->devType << endl;
+        cout << "DevType: " << (int)dev->devType << endl;
 
         switch((int)dev->devType)
         {

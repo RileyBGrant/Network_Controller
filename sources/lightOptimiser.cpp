@@ -26,6 +26,8 @@ int lightOptimiser::addDevice(devRecord *newDev)
     #endif
     lightDevs.append(newDev);
     printDevs();
+
+    return 0;
 }
 
 #ifdef TESTING
