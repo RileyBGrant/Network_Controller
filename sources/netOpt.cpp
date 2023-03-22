@@ -20,7 +20,7 @@ int netOpt::sortDevs()
 
         switch(dev->devType)
         {
-        case 0:
+        case (uint8_t)0:
             lightOpt.addDevice(dev);
             break;
         }
