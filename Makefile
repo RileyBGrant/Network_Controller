@@ -41,6 +41,8 @@ headers::
 	$(CPP) -c $(SRCS_path)/netData.cpp $(APPINCLUDE) -o $(OBJ_path)/netData.o
 	$(CPP) -c $(SRCS_path)/netInt.cpp $(APPINCLUDE) -o $(OBJ_path)/netInt.o
 	$(CPP) -c $(SRCS_path)/LList.cpp $(APPINCLUDE) -o $(OBJ_path)/LList.o
+	$(CPP) -c $(SRCS_path)/netOpt.cpp $(APPINCLUDE) -o $(OBJ_path)/netOpt.o
+	$(CPP) -c $(SRCS_path)/lightOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/lightOptimiser.o
 
 #	$(CPP) -o simNet $(OBJ_path)/LList.o
 
