@@ -233,6 +233,11 @@ int lightOptimiser::groupLights()
                         listIteratorA1 = NULL;
                         listIteratorA2 = NULL;
                     }
+                    else
+                    {
+                        listIteratorA1 = masterDev->activity.getNext(listIteratorA1);
+                        listIteratorA2 = dev->activity.getNext(listIteratorA2);
+                    }
                 }
 
                 if(devMatch == true)
