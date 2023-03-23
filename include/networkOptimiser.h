@@ -83,6 +83,7 @@ private:
 public:
     netOpt(netInt *interface);
     int sortDevs();
+    int optimise();
 };
 
 struct devGroup

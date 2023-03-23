@@ -40,6 +40,17 @@ int netOpt::sortDevs()
     }
 
     lightOpt.printDevs();
-    
+
+    return 0;
+}
+
+int netOpt::optimise()
+{
+    #ifdef TESTING
+        cout << "Optimising Devices" << endl;
+    #endif
+
+    lightOpt.groupLights();
+
     return 0;
 }

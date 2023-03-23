@@ -17,6 +17,7 @@ int main()
     }
     
     optimiser.sortDevs();
+    optimiser.optimise();
 
     return 0;
 }
