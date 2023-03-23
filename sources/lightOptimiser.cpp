@@ -155,10 +155,18 @@ int lightOptimiser::groupLights()
     {
         masterDev = (devRecord *)listIteratorD1->data;
 
+        #ifdef TESTING
+            int counter = 0;
+        #endif
+
         //Check if device can be added to an existing group
         listIteratorG1 = lightGroups.getHead();
         while(listIteratorG1 != NULL && masterDev->groups.getLen() < 1)
         {
+            #ifdef TESTING
+                cout << "Light optimiser: Checking for match with group " << counter << endl;
+                counter++;
+            #endif
             group = (devGroup *)listIteratorG1->data;
             listIteratorD2 = group->mems.getHead();
             dev = (devRecord *)listIteratorG1->data;
@@ -191,6 +199,28 @@ int lightOptimiser::groupLights()
 
                     if(devMatch == false)
                     {
+                        #ifdef TESTING
+                            cout << "Records do not match" << endl;
+                            uint8_t mac[6];
+                            unpackMAC(masterDev->macAddr, mac);
+                            cout << "Record for device " << hex << stoi(to_string(mac[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(mac[i]));
+                            }
+                            cout << dec << " of type " << (int)masterDev->devType << ": ";
+                            tm tempTime = *gmtime(&activity1->timestamp);
+                            cout << "Variable " << (int)activity1->variable << " set to state " << (int)activity1->state << " at " << asctime(&tempTime);
+                            unpackMAC(dev->macAddr, mac);
+                            cout << "Record for device " << hex << stoi(to_string(mac[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(mac[i]));
+                            }
+                            cout << dec << " of type " << (int)dev->devType << ": ";
+                            tempTime = *gmtime(&activity2->timestamp);
+                            cout << "Variable " << (int)activity2->variable << " set to state " << (int)activity2->state << " at " << asctime(&tempTime);
+                        #endif
                         listIteratorA1 = NULL;
                         listIteratorA2 = NULL;
                     }
@@ -209,6 +239,9 @@ int lightOptimiser::groupLights()
         //create new group
         if(masterDev->groups.getLen() < 1)
         {
+            #ifdef TESTING
+                cout << "Light optimiser: No matching group found, creating new group" << endl;
+            #endif
             devGroup *newGroup = new devGroup;
             newGroup->mems.append(masterDev);
             newGroup->devtype = masterDev->devType;
@@ -262,7 +295,7 @@ int lightOptimiser::groupLights()
         {
             group = (devGroup *)listIteratorG->data;
 
-            cout << "Group " << i << ":" << endl;
+            cout << "Group " << i << " with " << group->mems.getLen() << " members:" << endl;
             i++;
             listIteratorM = group->mems.getHead();
 
