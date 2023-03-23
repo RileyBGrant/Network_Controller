@@ -171,8 +171,17 @@ int lightOptimiser::groupLights()
             listIteratorD2 = group->mems.getHead();
             dev = (devRecord *)listIteratorG1->data;
 
+            #ifdef TESTING
+                cout << "Light optimiser: Master Dev record length is  " << masterDev->activity.getLen() << endl;
+                cout << "Light optimiser: Group Dev record length is  " << dev->activity.getLen() << endl;
+            #endif
+
             if(dev->activity.getLen() == masterDev->activity.getLen())
             {
+                #ifdef TESTING
+                    cout << "Light optimiser: length match " << endl;
+                #endif
+                
                 listIteratorA1 = masterDev->activity.getHead();
                 listIteratorA2 = dev->activity.getHead();
                 devMatch = true;
