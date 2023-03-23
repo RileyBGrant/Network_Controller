@@ -38,5 +38,8 @@ int netOpt::sortDevs()
 
         listIterator = devices->getNext(listIterator);
     }
+
+    lightOpt.printDevs();
+    
     return 0;
 }

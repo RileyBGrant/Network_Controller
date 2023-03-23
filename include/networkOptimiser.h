@@ -47,6 +47,7 @@ struct devRecord
     uint64_t macAddr;
     uint8_t devType;
     linkedList_t activity; //list of activity record types
+    linkedList_t groups;
 };
 
 struct activityRecord
@@ -64,7 +65,8 @@ private:
 
 public:
     int addDevice(devRecord *newDev);
-    
+    int groupLights();
+
     #ifdef TESTING
         int printDevs();
     #endif
@@ -88,8 +90,8 @@ struct devGroup
     linkedList_t mems; //List of groupMember structs
 };
 
-struct groupMember
+/*struct groupMember
 {
-    devRecord dev;
+    devRecord *dev;
     uint8_t memberProb; //membership probability
-};
+};*/
