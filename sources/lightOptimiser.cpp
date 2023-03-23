@@ -195,6 +195,7 @@ int lightOptimiser::groupLights()
                         listIteratorA2 = NULL;
                     }
                 }
+
                 if(devMatch == true)
                 {
                     group->mems.append(masterDev);
@@ -205,6 +206,7 @@ int lightOptimiser::groupLights()
             listIteratorG1 = lightGroups.getNext(listIteratorG1);
         }
 
+        //create new group
         if(masterDev->groups.getLen() < 1)
         {
             devGroup *newGroup = new devGroup;
@@ -215,6 +217,10 @@ int lightOptimiser::groupLights()
 
         listIteratorD1 = lightDevs.getNext(listIteratorD1);
     }
+
+    #ifdef TESTING
+        printGroups();
+    #endif
 
     return 0;
 }
@@ -238,6 +244,44 @@ int lightOptimiser::groupLights()
             cout << dec << endl;
 
             listIteratorD = lightDevs.getNext(listIteratorD);
+        }
+        return 0;
+    }
+
+    int lightOptimiser::printGroups()
+    {
+        cout << "Light Optimiser: Light groups" << endl;
+        node_t *listIteratorG = lightGroups.getHead();
+        devGroup *group;
+        node_t *listIteratorM;
+        devRecord *dev;
+        int i = 0;
+        uint8_t mac[6];
+
+        while(listIteratorG)
+        {
+            group = (devGroup *)listIteratorG->data;
+
+            cout << "Group " << i << ":" << endl;
+            i++;
+            listIteratorM = group->mems.getHead();
+
+            while(listIteratorM)
+            {
+                dev = (devRecord *)listIteratorM->data;
+
+                unpackMAC(dev->macAddr, mac);
+                cout << hex << stoi(to_string(mac[0]));
+                for(int i = 1; i < 6; i++)
+                {
+                    cout << "." << stoi(to_string(mac[i]));
+                }
+                cout << dec << endl;
+
+                listIteratorM = group->mems.getNext(listIteratorM);
+            }
+
+            listIteratorG = lightGroups.getNext(listIteratorG);
         }
         return 0;
     }

@@ -69,6 +69,7 @@ public:
 
     #ifdef TESTING
         int printDevs();
+        int printGroups();
     #endif
 };
 
