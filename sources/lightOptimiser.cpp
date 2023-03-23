@@ -169,7 +169,7 @@ int lightOptimiser::groupLights()
             #endif
             group = (devGroup *)listIteratorG1->data;
             listIteratorD2 = group->mems.getHead();
-            dev = (devRecord *)listIteratorG1->data;
+            dev = (devRecord *)listIteratorD2->data;
 
             #ifdef TESTING
                 cout << "Light optimiser: Master Dev record length is  " << masterDev->activity.getLen() << endl;
