@@ -10,10 +10,12 @@ int main()
 
     interface.connectToHost();
 
-    //while(true)
-    for(int i = 0; i < 1000000; i++)
+    int r = 0;
+
+    while(r < 2);
+    //for(int i = 0; i < 1000000; i++)
     {
-        interface.readFromHost();
+        r = interface.readFromHost();
     }
     
     optimiser.sortDevs();

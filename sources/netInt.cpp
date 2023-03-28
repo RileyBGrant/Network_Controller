@@ -158,6 +158,18 @@ int netInt::readFromHost()
 
         for(int i = 0; i < valread; )
         {
+            if(rBuffer[i] == (char)255 && rBuffer[i + 1] == (char)255 && rBuffer[i + 2] == (char)255 && rBuffer[i + 3] == (char)255 && rBuffer[i + 4] == (char)255 && rBuffer[i + 5] == (char)255)
+            {
+                if(rBuffer[i + 7] == 255 && rBuffer[i + 9] == 255 && rBuffer[i + 11] == 170)
+                {
+                    #ifdef TESTING
+                        cout << "Server closed" << endl;
+                    #endif
+
+                    return 2;
+                }
+            }
+
             #ifdef TESTING
                 cout << "Message is from device " << hex << stoi(to_string((uint8_t)rBuffer[i]));
                 for(int j = 1; j < 6; j++)
@@ -167,7 +179,6 @@ int netInt::readFromHost()
                 cout << dec << " devType " <<  rBuffer[i + 9] << ", variable " << rBuffer[i + 9] << " set to state " << rBuffer[i + 11];
                 cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
             #endif
-
             
             for(int j = 0; j < 6; j++)
             {
