@@ -48,6 +48,7 @@ struct devRecord
     uint8_t devType;
     linkedList_t activity; //list of activity record types
     linkedList_t groups;
+    linkedList_t rooms;
 };
 
 struct activityRecord
@@ -64,6 +65,7 @@ private:
     linkedList_t lightGroups;
 
 public:
+    linkedList_t *getGroups();
     int addDevice(devRecord *newDev);
     int groupLights();
 
@@ -79,11 +81,15 @@ class netOpt
 private:
     linkedList_t *devices;
     lightOptimiser lightOpt;
+    linkedList_t groups;
+    linkedList_t rooms;
 
 public:
     netOpt(netInt *interface);
     int sortDevs();
     int optimise();
+    int groupRooms();
+    int8_t light2Light(roomMember *m1, roomMember *m2);
 };
 
 struct devGroup
@@ -92,8 +98,14 @@ struct devGroup
     linkedList_t mems; //List of groupMember structs
 };
 
-/*struct groupMember
+struct devRoom
 {
-    devRecord *dev;
+    linkedList groups;
+    linkedList mems;
+};
+
+struct roomMember
+{
+    void *member;
     uint8_t memberProb; //membership probability
-};*/
+};

@@ -2,6 +2,11 @@
 
 using namespace std;
 
+linkedList_t *lightOptimiser::getGroups()
+{
+    return &lightGroups;
+}
+
 int lightOptimiser::addDevice(devRecord *newDev)
 {
     #ifdef TESTING
