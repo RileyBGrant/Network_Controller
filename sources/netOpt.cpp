@@ -89,7 +89,7 @@ int netOpt::groupRooms()
         counterM1 = 0;
 
         #ifdef TESTING
-            cout << "Checking room " << counterR1 << end;
+            cout << "Checking room " << counterR1 << endl;
             counterR1 ++;
         #endif
 
@@ -280,7 +280,7 @@ int netOpt::groupRooms()
                     #ifdef TESTING
                         cout << "No compatible rooms, creating new room" << endl;
                     #endif
-                    
+
                     r1 = new devRoom;
                     m1->memberProb = 255;
                     r1->groups.append(m1);
