@@ -370,6 +370,15 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
             {
                 probChange--;
             } 
+            
+            if(a1->timestamp < a2->timestamp)
+            {
+                listIteratorA1 = g1->mems.getNext(listIteratorA1);
+            }
+            else if(a1->timestamp > a2->timestamp)
+            {
+                listIteratorA2 = g2->mems.getNext(listIteratorA2);
+            }
         }
         else
         {
@@ -377,22 +386,10 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
             {
                 probChange++;
             } 
-        }
 
-        if(a1->timestamp < a2->timestamp)
-        {
-            listIteratorA1 = g1->mems.getNext(listIteratorA1);
-        }
-        else if(a1->timestamp > a2->timestamp)
-        {
-            listIteratorA2 = g2->mems.getNext(listIteratorA2);
-        }
-        else
-        {
             listIteratorA1 = g1->mems.getNext(listIteratorA1);
             listIteratorA2 = g2->mems.getNext(listIteratorA2);
         }
-        
     }
 
     #ifdef TESTING
