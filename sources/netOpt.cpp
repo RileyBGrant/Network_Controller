@@ -220,10 +220,11 @@ int netOpt::groupRooms()
                 {
                     cout << "." << stoi(to_string(mac[i]));
                 }
-                cout << dec << "assigned to " << d1->rooms.getLen() << " rooms" << endl;
+                cout << dec << " assigned to " << d1->rooms.getLen() << " rooms" << endl;
+                cout << "First room pointer is " << rooms.getHead() << endl;
             #endif
 
-            if(((devRecord *)g1->mems.getHead())->rooms.getHead() == NULL)
+            if(((devRecord *)g1->mems.getHead())->rooms.getLen() == 0)
             {
                 #ifdef TESTING
                     cout << "Goup has no room assigned" << endl;
