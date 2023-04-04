@@ -212,6 +212,7 @@ int netOpt::groupRooms()
 
             #ifdef TESTING
                 uint8_t mac[6];
+                d1 = ((devRecord *)((node_t *)g1->mems.getHead())->data);
                 cout << "Lead device member is ";
                 unpackMAC(d1->macAddr, mac);
                 cout << hex << stoi(to_string(mac[0]));
