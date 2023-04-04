@@ -209,10 +209,10 @@ int netOpt::groupRooms()
         while(listIteratorG1)
         {
             g1 = (devGroup *)listIteratorG1->data;
-
+            d1 = ((devRecord *)((node_t *)g1->mems.getHead())->data);
             #ifdef TESTING
                 uint8_t mac[6];
-                d1 = ((devRecord *)((node_t *)g1->mems.getHead())->data);
+                
                 cout << "Lead device member is ";
                 unpackMAC(d1->macAddr, mac);
                 cout << hex << stoi(to_string(mac[0]));
@@ -224,7 +224,7 @@ int netOpt::groupRooms()
                 cout << "First room pointer is " << rooms.getHead() << endl;
             #endif
 
-            if(((devRecord *)g1->mems.getHead())->rooms.getLen() == 0)
+            if(d1->rooms.getLen() == 0)
             {
                 #ifdef TESTING
                     cout << "Goup has no room assigned" << endl;
