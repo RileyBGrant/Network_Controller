@@ -210,6 +210,18 @@ int netOpt::groupRooms()
         {
             g1 = (devGroup *)listIteratorG1->data;
 
+            #ifdef TESTING
+                uint8_t mac[6];
+                cout << "Lead device member is ";
+                unpackMAC(d1->macAddr, mac);
+                cout << hex << stoi(to_string(mac[0]));
+                for(int i = 1; i < 6; i++)
+                {
+                    cout << "." << stoi(to_string(mac[i]));
+                }
+                cout << dec << endl;
+            #endif
+
             if(((devRecord *)g1->mems.getHead())->rooms.getHead() == NULL)
             {
                 #ifdef TESTING
@@ -382,7 +394,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     }
 
     #ifdef TESTING
-        cout << "Test complete, probability change of " << probChange << endl;
+        cout << "Test complete, probability change of " << (int)probChange << endl;
     #endif
 
     return probChange;
