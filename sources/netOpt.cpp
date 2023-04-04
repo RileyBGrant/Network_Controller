@@ -56,6 +56,7 @@ int netOpt::optimise()
     lightOpt.groupLights();
 
     groupRooms();
+    printRooms();
 
     return 0;
 }
@@ -171,7 +172,7 @@ int netOpt::groupRooms()
 
                 delete(m1);
                 listIteratorM1 = r1->groups.getNext(listIteratorM1);
-                r1->mems.remove(counterM1);
+                r1->groups.remove(counterM1);
             }
             else
             {
@@ -264,8 +265,19 @@ int netOpt::groupRooms()
                     m1->memberProb = 255;
                     r1->groups.append(m1);
                     rooms.append(r1);
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+                    
+                    while(listIteratorD1)
+                    {
+                        d1 = (devRecord *)listIteratorD1->data;
+                        
+                        d1->rooms.append(r1);
+
+                        listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                    }
                 }
             }
+
             listIteratorG1 = l1->getNext(listIteratorG1);
         }     
         
@@ -341,3 +353,79 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
 
     return probChange;
 }
+
+#ifdef TESTING
+    int netOpt::printRooms()
+    {
+        cout << "Printing rooms" << endl;
+
+        node_t *listIteratorR1 = rooms.getHead();
+        devRoom *r1;
+        int counterR1 = 0;
+        node_t *listIteratorM1;
+        roomMember *m1;
+        int counterM1;
+        node_t *listIteratorD1;
+        devRecord *d1;
+        uint8_t mac[6];
+
+        while(listIteratorR1)
+        {
+            r1 = (devRoom *)listIteratorR1->data;
+
+            cout << "Room " << counterR1 << ":" << endl;
+            counterR1++;
+            listIteratorM1 = r1->groups.getHead();
+            counterM1 = 0;
+            cout << r1->groups.getLen() << " groups" << endl;
+
+            while(listIteratorM1)
+            {
+                m1 = (roomMember *)listIteratorM1->data;
+
+                cout << "Group " << counterM1 << " with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << m1->memberProb  << ":" << endl;
+                counterM1++;
+                listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+
+                while(listIteratorD1)
+                {
+                    d1 = (devRecord *)listIteratorD1->data;
+
+                    unpackMAC(d1->macAddr, mac);
+                    cout << hex << stoi(to_string(mac[0]));
+                    for(int i = 1; i < 6; i++)
+                    {
+                        cout << "." << stoi(to_string(mac[i]));
+                    }
+                    cout << dec << endl;
+
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                }
+
+                listIteratorM1 = r1->groups.getNext(listIteratorM1);
+            }
+
+            listIteratorM1 = r1->mems.getHead();
+            cout << r1->mems.getLen() << " solo members" << endl;
+
+            while(listIteratorM1)
+            {
+                m1 = (roomMember *)listIteratorM1->data;
+                d1 = (devRecord *)m1->member;
+
+                unpackMAC(d1->macAddr, mac);
+                cout << hex << stoi(to_string(mac[0]));
+                for(int i = 1; i < 6; i++)
+                {
+                    cout << "." << stoi(to_string(mac[i]));
+                }
+                cout << dec << " with membership probability " << m1->memberProb << endl;
+
+                listIteratorM1 = r1->mems.getNext(listIteratorM1);
+            }
+
+            listIteratorR1 = rooms.getNext(listIteratorR1);
+        }
+        
+    }
+#endif

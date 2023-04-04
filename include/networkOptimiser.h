@@ -90,6 +90,10 @@ public:
     int optimise();
     int groupRooms();
     int8_t light2Light(roomMember *m1, roomMember *m2);
+
+    #ifdef TESTING
+        int printRooms();
+    #endif
 };
 
 struct devGroup
