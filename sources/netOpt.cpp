@@ -75,18 +75,23 @@ int netOpt::groupRooms()
     roomMember *m2;
     node_t *listIteratorD1;
     devRecord *d1;
-    int16_t probChange = 0;
-    //devGroup *g1;
-    //devGroup *g2;
-    
-
+    int16_t probChange = 0;  
 
     //check exisiting rooms
+    #ifdef TESTING
+        cout << rooms.getLen() << " exisiting rooms" << endl;
+        int counterR1 = 0;
+    #endif
     while (listIteratorR1)
     {
         r1 = (devRoom *) listIteratorR1->data;
         listIteratorM1 = r1->groups.getHead();
         counterM1 = 0;
+
+        #ifdef TESTING
+            cout << "Checking room " << counterR1 << end;
+            counterR1 ++;
+        #endif
 
         while(listIteratorM1)
         {
@@ -192,6 +197,10 @@ int netOpt::groupRooms()
     int compatability = 0;
     bool roomFound;
 
+    #ifdef TESTING
+        cout << "Rooming unsorted groups" << endl;
+    #endif
+
     while(listIteratorL1)
     {
         l1 = (linkedList_t *)listIteratorL1->data;
@@ -203,6 +212,9 @@ int netOpt::groupRooms()
 
             if(((devRecord *)g1->mems.getHead())->rooms.getHead() == NULL)
             {
+                #ifdef TESTING
+                    cout << "Goup has no room assigned" << endl;
+                #endif
                 m1 = new roomMember;
                 m1->member = g1;
                 roomFound = false;
@@ -237,6 +249,10 @@ int netOpt::groupRooms()
 
                     if(compatability > 0)
                     {
+                        #ifdef TESTING
+                            cout << "group compatible with a room" << endl;
+                        #endif
+                        
                         if(compatability + 128 < 0)
                         {
                             m1->memberProb = 0;
@@ -261,6 +277,10 @@ int netOpt::groupRooms()
 
                 if(roomFound == false)
                 {
+                    #ifdef TESTING
+                        cout << "No compatible rooms, creating new room" << endl;
+                    #endif
+                    
                     r1 = new devRoom;
                     m1->memberProb = 255;
                     r1->groups.append(m1);
@@ -277,6 +297,12 @@ int netOpt::groupRooms()
                     }
                 }
             }
+            #ifdef TESTING
+                else
+                {
+                    cout << "Group already part of a room" << endl;
+                }
+            #endif
 
             listIteratorG1 = l1->getNext(listIteratorG1);
         }     
@@ -289,6 +315,10 @@ int netOpt::groupRooms()
 
 int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
 {
+    #ifdef TESTING
+        cout << "Light to light compatability test start" << endl;
+    #endif
+    
     devGroup *g1 = (devGroup *)m1->member;
     devGroup *g2 = (devGroup *)m2->member;
     node_t *listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
@@ -350,6 +380,10 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
         }
         
     }
+
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
+    #endif
 
     return probChange;
 }
