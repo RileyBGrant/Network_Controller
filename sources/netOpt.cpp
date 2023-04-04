@@ -220,7 +220,7 @@ int netOpt::groupRooms()
                 {
                     cout << "." << stoi(to_string(mac[i]));
                 }
-                cout << dec << endl;
+                cout << dec << "assigned to " << d1->rooms.getLen() << " rooms" << endl;
             #endif
 
             if(((devRecord *)g1->mems.getHead())->rooms.getHead() == NULL)
