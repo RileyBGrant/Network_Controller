@@ -75,6 +75,12 @@ public:
     #endif
 };
 
+struct roomMember
+{
+    void *member;
+    uint8_t memberProb; //membership probability
+};
+
 //class for network optimiser
 class netOpt
 {
@@ -108,8 +114,3 @@ struct devRoom
     linkedList mems;
 };
 
-struct roomMember
-{
-    void *member;
-    uint8_t memberProb; //membership probability
-};
