@@ -357,7 +357,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
 #ifdef TESTING
     int netOpt::printRooms()
     {
-        cout << "Printing rooms" << endl;
+        cout << "Printing " << rooms.getLen() << " rooms" << endl;
 
         node_t *listIteratorR1 = rooms.getHead();
         devRoom *r1;
@@ -383,7 +383,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
             {
                 m1 = (roomMember *)listIteratorM1->data;
 
-                cout << "Group " << counterM1 << " with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << m1->memberProb  << ":" << endl;
+                cout << "Group " << counterM1 << " with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << (int)m1->memberProb  << ":" << endl;
                 counterM1++;
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
@@ -419,7 +419,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
                 {
                     cout << "." << stoi(to_string(mac[i]));
                 }
-                cout << dec << " with membership probability " << m1->memberProb << endl;
+                cout << dec << " with membership probability " << (int)m1->memberProb << endl;
 
                 listIteratorM1 = r1->mems.getNext(listIteratorM1);
             }
@@ -427,5 +427,6 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
             listIteratorR1 = rooms.getNext(listIteratorR1);
         }
         
+        return 0;
     }
 #endif
