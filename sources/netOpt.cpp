@@ -340,7 +340,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     activityRecord *a1;
     activityRecord *a2;
     bool devMatch = true;
-    int8_t probChange = 0;
+    int probChange = 0;
     int timeDiff = 0;
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
@@ -369,7 +369,11 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
             if(probChange > -128)
             {
                 probChange--;
-            } 
+            }
+            else
+            {
+                probChange = -128;
+            }
 
             if(a1->timestamp < a2->timestamp)
             {
@@ -387,9 +391,13 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
         }
         else
         {
-            if(probChange < 127)
+            if(probChange < 123)
             {
-                probChange++;
+                probChange = probChange + 5;
+            }
+            else
+            {
+                probChange = 127;
             } 
 
             listIteratorA1 = g1->mems.getNext(listIteratorA1);
