@@ -345,6 +345,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
     {
+        bool devMatch = true;
         a1 = (activityRecord *)listIteratorA1->data;
         a2 = (activityRecord *)listIteratorA2->data;
 
