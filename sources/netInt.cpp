@@ -316,23 +316,26 @@ int netInt::requestStim(time_t stimTime)
     #endif
     
     string message = "";
-    char_time byteTime;
-    byteTime.t = stimTime;
 
     for(int i = 0; i < 6; i++) //MAC
     {
         message += (char)hubAddr[i];
     }
     cout << "Stim message: " << message << endl;
+
     message += ","; 
     message += (char)1; //varID
     message += ",";
     cout << "Stim message: " << message << endl;
+
+    char_time byteTime;
+    byteTime.t = stimTime;
     for(int i = 0; i < sizeof(time_t); i++)
     {
         message += byteTime.c[i]; //value
     }
     cout << "Stim message: " << message << endl;
+
     for(int i = 0; 7 - sizeof(time_t); i++)
     {
         message += (char)0; //padding
