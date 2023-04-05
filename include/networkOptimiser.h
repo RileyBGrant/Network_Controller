@@ -17,6 +17,15 @@
 
 using namespace std;
 
+struct devRecord
+{
+    uint64_t macAddr;
+    uint8_t devType;
+    linkedList_t activity; //list of activity record types
+    linkedList_t groups;
+    linkedList_t rooms;
+};
+
 //Class for the network interface
 class netInt
 {
@@ -51,14 +60,7 @@ public:
     #endif
 };
 
-struct devRecord
-{
-    uint64_t macAddr;
-    uint8_t devType;
-    linkedList_t activity; //list of activity record types
-    linkedList_t groups;
-    linkedList_t rooms;
-};
+
 
 struct activityRecord
 { 
@@ -91,6 +93,13 @@ struct roomMember
     uint8_t memberProb; //membership probability
 };
 
+struct devRoom
+{
+    linkedList groups;
+    linkedList mems;
+    uint8_t activeProb;
+};
+
 //class for network optimiser
 class netOpt
 {
@@ -120,9 +129,4 @@ struct devGroup
     linkedList_t mems; //List of groupMember structs
 };
 
-struct devRoom
-{
-    linkedList groups;
-    linkedList mems;
-    uint8_t activeProb;
-};
+
