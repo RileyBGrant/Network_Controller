@@ -181,74 +181,77 @@ int lightOptimiser::groupLights()
                 cout << "Light optimiser: Group Dev record length is  " << dev->activity.getLen() << endl;
             #endif
 
-            if(dev->activity.getLen() == masterDev->activity.getLen())
+            if(dev != masterDev)
             {
-                #ifdef TESTING
-                    cout << "Light optimiser: length match " << endl;
-                #endif
-                
-                listIteratorA1 = masterDev->activity.getHead();
-                listIteratorA2 = dev->activity.getHead();
-                devMatch = true;
-
-                while(listIteratorA1 != NULL && listIteratorA2 != NULL)
+                if(dev->activity.getLen() == masterDev->activity.getLen())
                 {
-                    activity1 = (activityRecord *)listIteratorA1->data;
-                    activity2 = (activityRecord *)listIteratorA2->data;
+                    #ifdef TESTING
+                        cout << "Light optimiser: length match " << endl;
+                    #endif
+                    
+                    listIteratorA1 = masterDev->activity.getHead();
+                    listIteratorA2 = dev->activity.getHead();
+                    devMatch = true;
 
-                    if(activity1->timestamp != activity2->timestamp)
+                    while(listIteratorA1 != NULL && listIteratorA2 != NULL)
                     {
-                        devMatch = false;
+                        activity1 = (activityRecord *)listIteratorA1->data;
+                        activity2 = (activityRecord *)listIteratorA2->data;
+
+                        if(activity1->timestamp != activity2->timestamp)
+                        {
+                            devMatch = false;
+                        }
+
+                        if(activity1->state != activity2->state)
+                        {
+                            devMatch = false;
+                        }
+
+                        if(activity1->variable != activity2->variable)
+                        {
+                            devMatch = false;
+                        }
+
+                        if(devMatch == false)
+                        {
+                            #ifdef TESTING
+                                cout << "Records do not match" << endl;
+                                uint8_t mac[6];
+                                unpackMAC(masterDev->macAddr, mac);
+                                cout << "Record for device " << hex << stoi(to_string(mac[0]));
+                                for(int i = 1; i < 6; i++)
+                                {
+                                    cout << "." << stoi(to_string(mac[i]));
+                                }
+                                cout << dec << " of type " << (int)masterDev->devType << ": ";
+                                tm tempTime = *gmtime(&activity1->timestamp);
+                                cout << "Variable " << (int)activity1->variable << " set to state " << (int)activity1->state << " at " << asctime(&tempTime);
+                                unpackMAC(dev->macAddr, mac);
+                                cout << "Record for device " << hex << stoi(to_string(mac[0]));
+                                for(int i = 1; i < 6; i++)
+                                {
+                                    cout << "." << stoi(to_string(mac[i]));
+                                }
+                                cout << dec << " of type " << (int)dev->devType << ": ";
+                                tempTime = *gmtime(&activity2->timestamp);
+                                cout << "Variable " << (int)activity2->variable << " set to state " << (int)activity2->state << " at " << asctime(&tempTime);
+                            #endif
+                            listIteratorA1 = NULL;
+                            listIteratorA2 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorA1 = masterDev->activity.getNext(listIteratorA1);
+                            listIteratorA2 = dev->activity.getNext(listIteratorA2);
+                        }
                     }
 
-                    if(activity1->state != activity2->state)
+                    if(devMatch == true)
                     {
-                        devMatch = false;
+                        group->mems.append(masterDev);
+                        masterDev->groups.append(group);
                     }
-
-                    if(activity1->variable != activity2->variable)
-                    {
-                        devMatch = false;
-                    }
-
-                    if(devMatch == false)
-                    {
-                        #ifdef TESTING
-                            cout << "Records do not match" << endl;
-                            uint8_t mac[6];
-                            unpackMAC(masterDev->macAddr, mac);
-                            cout << "Record for device " << hex << stoi(to_string(mac[0]));
-                            for(int i = 1; i < 6; i++)
-                            {
-                                cout << "." << stoi(to_string(mac[i]));
-                            }
-                            cout << dec << " of type " << (int)masterDev->devType << ": ";
-                            tm tempTime = *gmtime(&activity1->timestamp);
-                            cout << "Variable " << (int)activity1->variable << " set to state " << (int)activity1->state << " at " << asctime(&tempTime);
-                            unpackMAC(dev->macAddr, mac);
-                            cout << "Record for device " << hex << stoi(to_string(mac[0]));
-                            for(int i = 1; i < 6; i++)
-                            {
-                                cout << "." << stoi(to_string(mac[i]));
-                            }
-                            cout << dec << " of type " << (int)dev->devType << ": ";
-                            tempTime = *gmtime(&activity2->timestamp);
-                            cout << "Variable " << (int)activity2->variable << " set to state " << (int)activity2->state << " at " << asctime(&tempTime);
-                        #endif
-                        listIteratorA1 = NULL;
-                        listIteratorA2 = NULL;
-                    }
-                    else
-                    {
-                        listIteratorA1 = masterDev->activity.getNext(listIteratorA1);
-                        listIteratorA2 = dev->activity.getNext(listIteratorA2);
-                    }
-                }
-
-                if(devMatch == true)
-                {
-                    group->mems.append(masterDev);
-                    masterDev->groups.append(group);
                 }
             }
 
