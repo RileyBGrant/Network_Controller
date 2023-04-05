@@ -189,7 +189,7 @@ int netInt::readFromHost()
 
             for(int i = 0; i < valread; i++)
             {
-                cout << rBuffer[i];
+                cout << (int)rBuffer[i] << " ";
             }
 
             cout << endl;
@@ -209,7 +209,7 @@ int netInt::readFromHost()
                     cout << "Value: " << (int)rBuffer[i + 11] << endl;
                 #endif
                 
-                if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == (uint8_t)0 && rBuffer[i + 11] == (uint8_t)1)
+                if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == (uint8_t)0 && rBuffer[i + 11] == (uint8_t)170)
                 {
                     #ifdef TESTING
                         cout << "Server closed" << endl;
