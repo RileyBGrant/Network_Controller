@@ -200,9 +200,9 @@ int netInt::readFromHost()
 
         for(int i = 0; i < valread; )
         {
-            if(rBuffer[i] == (char)hubAddr[0] && rBuffer[i + 1] == (char)hubAddr[1] && rBuffer[i + 2] == (char)hubAddr[2] && rBuffer[i + 3] == (char)hubAddr[3] && rBuffer[i + 4] == (char)hubAddr[4] && rBuffer[i + 5] == (char)hubAddr[5])
+            if(rBuffer[i] == (uint8_t)hubAddr[0] && rBuffer[i + 1] == (uint8_t)hubAddr[1] && rBuffer[i + 2] == (uint8_t)hubAddr[2] && rBuffer[i + 3] == (uint8_t)hubAddr[3] && rBuffer[i + 4] == (uint8_t)hubAddr[4] && rBuffer[i + 5] == (uint8_t)hubAddr[5])
             {
-                if(rBuffer[i + 7] == 255 && rBuffer[i + 9] == 0 && rBuffer[i + 11] == 170)
+                if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == (uint8_t)0 && rBuffer[i + 11] == (uint8_t)170)
                 {
                     #ifdef TESTING
                         cout << "Server closed" << endl;
@@ -210,6 +210,7 @@ int netInt::readFromHost()
 
                     return 2;
                 }
+                return 2;
             }
 
             #ifdef TESTING
@@ -225,6 +226,7 @@ int netInt::readFromHost()
                 {
                     cout << "." << stoi(to_string((uint8_t)hubAddr[i + j]));
                 }
+                cout << dec << endl;
             #endif
             
             for(int j = 0; j < 6; j++)
