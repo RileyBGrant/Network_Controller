@@ -256,6 +256,11 @@ int netInt::readFromHost()
                 printRecords();
             #endif
         }
+
+        uint8_t returnMessage = 0;
+
+        sendtoHost(&returnMessage, 1);
+
         return 0;
     }
     
