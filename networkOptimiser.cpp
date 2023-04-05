@@ -17,14 +17,14 @@ int main()
     //for(int i = 0; i < 1000000; i++)
     {
         r = interface.readFromHost();
-        if(lastOpt - interface.getLastTimestamp() > 604800)
+        if( interface.getLastTimestamp() - lastOpt > 86400)
         {
             optimiser.sortDevs();
             optimiser.optimise();
         }
     }
 
-    cout << interface.getLastTimestamp();
+    cout << interface.getLastTimestamp() << endl;
     optimiser.printRooms();    
 
     return 0;
