@@ -1,4 +1,8 @@
 #include "networkOptimiser.h"
+#ifndef MAIN_HEADER_MISSING
+    #include "../include/networkOptimiser.h"
+#endif
+
 #include <cstdlib>
 
 using namespace std;
@@ -8,6 +12,8 @@ netOpt::netOpt(netInt *interface)
     devices = interface->getDevices();
 
     groups.append(lightOpt.getGroups());
+
+    activeRoom = NULL;
 }
 
 int netOpt::sortDevs()
@@ -421,6 +427,155 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     #endif
 
     return probChange;
+}
+
+int netOpt::activeRoomUpdate(devRecord *lastDevUpdated) //returns time for next device stim, -1 if no preference
+{
+    //check if device is assigned to a room;
+    if(lastDevUpdated->rooms.getLen() > 0)
+    {
+        node_t *listIteratorR1;
+        devRoom *r1;
+        devRoom *r2;
+        node_t *listIteratorG1 = lastDevUpdated->groups.getHead();
+        devGroup *g1;
+        node_t *listIteratorD1;
+        devRecord *d1;
+        bool groupChanged = true;
+        uint8_t highestProb = 0;
+        
+
+        //Check if device is part of a group
+        if(lastDevUpdated->groups.getLen() > 0)
+        {
+            uint8_t v1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->variable;
+            uint8_t v2;
+            uint8_t s1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->state;
+            uint8_t s2;
+
+            while(listIteratorG1)
+            {
+                g1 = (devGroup *)listIteratorG1->data;
+                listIteratorD1 = g1->mems.getHead();
+
+                while(listIteratorD1)
+                {
+                    d1 = (devRecord *)listIteratorD1->data;
+                    v2 = ((activityRecord *)d1->activity.getTail()->data)->variable;
+                    s2 = ((activityRecord *)d1->activity.getTail()->data)->state;
+
+                    if(d1 != lastDevUpdated && (v1 != v2 || s1 != s2))
+                    {
+                        groupChanged = false;
+                        listIteratorD1 = NULL;
+                    }
+                    else
+                    {
+                        listIteratorD1 = g1->mems.getNext(listIteratorD1);
+                    }
+                }
+                
+                listIteratorG1 = lastDevUpdated->groups.getNext(listIteratorG1);
+            }
+        }
+
+        if(groupChanged == true)
+        {
+            node_t *listIteratorR2;
+            bool devInRoom = false;
+
+            listIteratorR1 = rooms.getHead();
+
+            while(listIteratorR1)
+            {
+                r1 = (devRoom *)listIteratorR1->data;
+                listIteratorR2 = lastDevUpdated->rooms.getHead();
+
+                while(listIteratorR2)
+                {
+                    r2 = (devRoom *)listIteratorR2->data;
+
+                    if(r1 == r2)
+                    {
+                        devInRoom = true;
+                        listIteratorR2 = NULL;
+                    }
+                    else
+                    {
+                        listIteratorR2 = lastDevUpdated->rooms.getNext(listIteratorR2);
+                    }
+                }
+
+                if(devInRoom == true)
+                {
+                    switch(lastDevUpdated->devType)
+                    {
+                    case 0:
+                        if(r1->activeProb < 254)
+                        {
+                            r1->activeProb += 2;
+                        }
+                        else
+                        {
+                            r1->activeProb = 255;
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    switch(lastDevUpdated->devType)
+                    {
+                    case 0:
+                        if(r1->activeProb > 0)
+                        {
+                            r1->activeProb--;
+
+                        }
+                        else
+                        {
+                            r1->activeProb = 0;
+                        }
+                        break;
+                    }
+                    
+                }
+
+                listIteratorR1 = rooms.getNext(listIteratorR1);
+            }
+        }
+
+        listIteratorR1 = rooms.getHead();
+        highestProb = 0;
+        r2 = activeRoom;
+
+        while(listIteratorR1)
+        {
+            r1 = (devRoom *)listIteratorR1->data;
+
+            if(r1->activeProb > highestProb)
+            {
+                highestProb = r1->activeProb;
+                r2 = r1;
+            }
+
+            listIteratorR1 = rooms.getNext(listIteratorR1);
+        }
+
+        if(r2 != activeRoom)
+        {
+            #ifdef TESTING
+            time_t tempTime1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp + 900;
+            tm tempTime2 = *gmtime(&tempTime1);
+                cout << "Active room changed, requesting next stim at " << asctime(&tempTime2);
+            #endif
+            activeRoom = r2;
+            return 900 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp;
+        }
+        
+    }
+
+    return -1;
 }
 
 #ifdef TESTING

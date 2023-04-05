@@ -1,4 +1,7 @@
 #include "networkOptimiser.h"
+#ifndef MAIN_HEADER_MISSING
+    #include "include/networkOptimiser.h"
+#endif
 
 using namespace std;
 
@@ -11,12 +14,25 @@ int main()
 
     interface.connectToHost();
 
-    int r = 0;
+    int iR = 0; //interface return value
+    int oR = 0; //optimiser return value
 
-    while(r < 2)
+    while(iR < 2)
     //for(int i = 0; i < 1000000; i++)
     {
-        r = interface.readFromHost();
+        iR = interface.readFromHost();
+        oR = optimiser.activeRoomUpdate(interface.getLastDevUpdated());
+        if(oR >= 0)
+        {
+            interface.requestStim(oR);
+        }
+        else
+
+        {
+            uint8_t returnMessage[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+            interface.sendtoHost(&returnMessage, 16);
+        }
+
         if(interface.getLastTimestamp() - lastOpt > 86400)
         {
             lastOpt = interface.getLastTimestamp();

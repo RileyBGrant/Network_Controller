@@ -10,8 +10,10 @@
 #include <ctime>
 
 #define TESTING
+#define MAIN_HEADER_MISSING
 #define PORT 8080
 #define BUFFER_LENGTH 1024
+#define REPLY_LENGTH 16
 
 using namespace std;
 
@@ -24,20 +26,25 @@ private:
     struct sockaddr_in serv_addr;
     char rBuffer[BUFFER_LENGTH];
     bool connectedToNetwork;
-    time_t lastTimestamp = 0;
+    time_t lastTimestamp;
+    devRecord *lastDevUpdated;
     uint8_t netAddr[4];
     linkedList_t devices; //list of devRecords
+    uint8_t hubAddr[6];
     
 public:
     netInt();
     netInt(uint8_t ipAddr[4]);
     ~netInt();
     time_t getLastTimestamp();
+    devRecord * getLastDevUpdated();
     linkedList_t *getDevices();
     int connectToHost();
     int sendtoHost(void *data, int dataLen);
     int readFromHost();
     int disconnectFromHost();
+    int requestStim(time_t stimtime);
+    int endBurst();
 
     #ifdef TESTING
         int printRecords();
@@ -70,6 +77,7 @@ public:
     linkedList_t *getGroups();
     int addDevice(devRecord *newDev);
     int groupLights();
+    int inactivity(string *message);
 
     #ifdef TESTING
         int printDevs();
@@ -91,6 +99,7 @@ private:
     lightOptimiser lightOpt;
     linkedList_t groups;
     linkedList_t rooms;
+    devRoom *activeRoom;
 
 public:
     netOpt(netInt *interface);
@@ -98,6 +107,7 @@ public:
     int optimise();
     int groupRooms();
     int8_t light2Light(roomMember *m1, roomMember *m2);
+    int activeRoomUpdate(devRecord *lastDevUpdated);
 
     #ifdef TESTING
         int printRooms();
@@ -114,5 +124,5 @@ struct devRoom
 {
     linkedList groups;
     linkedList mems;
+    uint8_t activeProb;
 };
-

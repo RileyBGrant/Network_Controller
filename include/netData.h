@@ -75,3 +75,9 @@ void unpackIP(uint32_t ipAddr, uint8_t unpackedIP[4]);
 
 uint64_t packMAC(uint8_t macAddr[6]);
 void unpackMAC(uint64_t macAddr, uint8_t unpackedIP[6]);
+
+union char_time
+{
+    time_t t;
+    unsigned char c[sizeof(time_t)];
+};

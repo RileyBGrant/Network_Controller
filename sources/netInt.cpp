@@ -1,4 +1,7 @@
 #include "networkOptimiser.h"
+#ifndef MAIN_HEADER_MISSING
+    #include "../include/networkOptimiser.h"
+#endif
 #include <cstdlib>
 
 using namespace std;
@@ -6,6 +9,16 @@ using namespace std;
 netInt::netInt()
 {
     sock = 0;
+    lastTimestamp = 0;
+    lastDevUpdated = NULL;
+
+    hubAddr[0] = 100;
+    hubAddr[1] = 100;
+    hubAddr[2] = 100;
+    hubAddr[3] = 100;
+    hubAddr[4] = 100;
+    hubAddr[5] = 17;
+
     for(int i = 0; i < BUFFER_LENGTH; i++)
     {
         rBuffer[i] = 0;
@@ -21,6 +34,8 @@ netInt::netInt()
 netInt::netInt(uint8_t ipAddr[4])
 {
     sock = 0;
+    lastTimestamp = 0;
+    lastDevUpdated = NULL;
     for(int i = 0; i < BUFFER_LENGTH; i++)
     {
         rBuffer[i] = 0;
@@ -40,6 +55,11 @@ netInt::~netInt()
 time_t netInt::getLastTimestamp()
 {
     return lastTimestamp;
+}
+
+devRecord * netInt::getLastDevUpdated()
+{
+    return lastDevUpdated;
 }
 
 linkedList_t *netInt::getDevices()
@@ -163,9 +183,9 @@ int netInt::readFromHost()
 
         for(int i = 0; i < valread; )
         {
-            if(rBuffer[i] == (char)255 && rBuffer[i + 1] == (char)255 && rBuffer[i + 2] == (char)255 && rBuffer[i + 3] == (char)255 && rBuffer[i + 4] == (char)255 && rBuffer[i + 5] == (char)255)
+            if(rBuffer[i] == hubAddr[0] && rBuffer[i + 1] == hubAddr[1] && rBuffer[i + 2] == hubAddr[2] && rBuffer[i + 3] == hubAddr[3] && rBuffer[i + 4] == hubAddr[4] && rBuffer[i + 5] == hubAddr[5])
             {
-                if(rBuffer[i + 7] == 255 && rBuffer[i + 9] == 255 && rBuffer[i + 11] == 170)
+                if(rBuffer[i + 7] == 255 && rBuffer[i + 9] == 0 && rBuffer[i + 11] == 170)
                 {
                     #ifdef TESTING
                         cout << "Server closed" << endl;
@@ -213,6 +233,7 @@ int netInt::readFromHost()
                 if(dev->macAddr == packMAC(macAddr))
                 {
                     devFound = true;
+                    lastDevUpdated = dev;
                     #ifdef TESTING
                         cout << "Device record found" << endl;
                     #endif
@@ -245,6 +266,7 @@ int netInt::readFromHost()
                 #endif
 
                 newDev->activity.append(newEntry);
+                lastDevUpdated = newDev;
 
                 #ifdef TESTING
                     cout << "Device activity record length: " << newDev->activity.getLen() << endl;
@@ -256,11 +278,6 @@ int netInt::readFromHost()
                 printRecords();
             #endif
         }
-
-        uint8_t returnMessage = 0;
-
-        sendtoHost(&returnMessage, 1);
-
         return 0;
     }
     
@@ -290,6 +307,34 @@ int netInt::disconnectFromHost()
     #endif
 
     return 1;
+}
+
+int netInt::requestStim(time_t stimTime)
+{
+    string message = "";
+    char_time byteTime;
+    byteTime.t = stimTime;
+
+    for(int i = 0; i < 6; i++) //MAC
+    {
+        message += (char)hubAddr[i];
+    }
+    message += ","; 
+    message += (char)1; //varID
+    message += ",";
+    for(int i = 0; i < sizeof(time_t); i++)
+    {
+        message += byteTime.c[i]; //value
+    }
+
+    for(int i = 0; 7 - sizeof(time_t); i++)
+    {
+        message += (char)0; //padding
+    }
+
+    sendtoHost((void *)&message, REPLY_LENGTH);
+
+    return 0;
 }
 
 #ifdef TESTING
