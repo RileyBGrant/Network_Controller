@@ -36,6 +36,14 @@ netInt::netInt(uint8_t ipAddr[4])
     sock = 0;
     lastTimestamp = 0;
     lastDevUpdated = NULL;
+
+    hubAddr[0] = 100;
+    hubAddr[1] = 100;
+    hubAddr[2] = 100;
+    hubAddr[3] = 100;
+    hubAddr[4] = 100;
+    hubAddr[5] = 17;
+
     for(int i = 0; i < BUFFER_LENGTH; i++)
     {
         rBuffer[i] = 0;
@@ -139,6 +147,14 @@ int netInt::sendtoHost(void *data, int dataLen)
 {
     if(connectedToNetwork == true)
     {
+        #ifdef TESTING
+            cout << "Message to send if: ";
+            for(int i = 0; i < dataLen; i++)
+            {
+                cout << ((char *)data)[i];
+            }
+        #endif
+        
         send(sock, data, dataLen, 0);
 
         #ifdef TESTING
