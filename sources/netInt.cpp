@@ -202,6 +202,13 @@ int netInt::readFromHost()
         {
             if(rBuffer[i] == (uint8_t)hubAddr[0] && rBuffer[i + 1] == (uint8_t)hubAddr[1] && rBuffer[i + 2] == (uint8_t)hubAddr[2] && rBuffer[i + 3] == (uint8_t)hubAddr[3] && rBuffer[i + 4] == (uint8_t)hubAddr[4] && rBuffer[i + 5] == (uint8_t)hubAddr[5])
             {
+                #ifdef TESTING
+                    cout << "Command message" << endl;
+                    cout << "DevType: " << (int)rBuffer[i + 7] << endl;
+                    cout << "Variable: " << (int)rBuffer[i + 9] << endl;
+                    cout << "Value: " << (int)rBuffer[i + 11] << endl;
+                #endif
+                
                 if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == (uint8_t)0 && rBuffer[i + 11] == (uint8_t)170)
                 {
                     #ifdef TESTING
@@ -210,7 +217,7 @@ int netInt::readFromHost()
 
                     return 2;
                 }
-                return 2;
+                //return 2;
             }
 
             #ifdef TESTING
