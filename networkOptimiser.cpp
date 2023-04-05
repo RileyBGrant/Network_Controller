@@ -24,6 +24,7 @@ int main()
         }
     }
 
+    cout << interface.getLastTimestamp();
     optimiser.printRooms();    
 
     return 0;
