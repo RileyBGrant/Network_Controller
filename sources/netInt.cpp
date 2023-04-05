@@ -311,6 +311,10 @@ int netInt::disconnectFromHost()
 
 int netInt::requestStim(time_t stimTime)
 {
+    #ifdef TESTIN
+        cout << "Creating stim message" << endl;
+    #endif
+    
     string message = "";
     char_time byteTime;
     byteTime.t = stimTime;
@@ -331,6 +335,10 @@ int netInt::requestStim(time_t stimTime)
     {
         message += (char)0; //padding
     }
+
+    #ifdef TESTING
+        cout << "Stime message: " << message << endl;
+    #endif
 
     sendtoHost((void *)&message, REPLY_LENGTH);
 
