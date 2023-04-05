@@ -24,10 +24,10 @@ int main()
         oR = optimiser.activeRoomUpdate(interface.getLastDevUpdated());
         if(oR >= 0)
         {
-            interface.requestStim(oR);
+            cout << "Stim request of time " << (time_t)oR << endl;
+            interface.requestStim((time_t)oR);
         }
         else
-
         {
             uint8_t returnMessage[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
             interface.sendtoHost(&returnMessage, 16);
