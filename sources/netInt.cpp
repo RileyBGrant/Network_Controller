@@ -221,12 +221,12 @@ int netInt::readFromHost()
                 }
                 cout << dec << " devType " <<  rBuffer[i + 9] << ", variable " << rBuffer[i + 9] << " set to state " << rBuffer[i + 11];
                 cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
-                cout << "hub address " << hex << stoi(to_string((uint8_t)hubAddr[i]));
+                /*cout << "hub address " << hex << stoi(to_string((uint8_t)hubAddr[i]));
                 for(int j = 1; j < 6; j++)
                 {
                     cout << "." << stoi(to_string((uint8_t)hubAddr[i + j]));
                 }
-                cout << dec << endl;
+                cout << dec << endl;*/
             #endif
             
             for(int j = 0; j < 6; j++)
