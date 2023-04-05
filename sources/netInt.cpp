@@ -200,7 +200,7 @@ int netInt::readFromHost()
 
         for(int i = 0; i < valread; )
         {
-            if(rBuffer[i] == hubAddr[0] && rBuffer[i + 1] == hubAddr[1] && rBuffer[i + 2] == hubAddr[2] && rBuffer[i + 3] == hubAddr[3] && rBuffer[i + 4] == hubAddr[4] && rBuffer[i + 5] == hubAddr[5])
+            if(rBuffer[i] == (char)hubAddr[0] && rBuffer[i + 1] == (char)hubAddr[1] && rBuffer[i + 2] == (char)hubAddr[2] && rBuffer[i + 3] == (char)hubAddr[3] && rBuffer[i + 4] == (char)hubAddr[4] && rBuffer[i + 5] == (char)hubAddr[5])
             {
                 if(rBuffer[i + 7] == 255 && rBuffer[i + 9] == 0 && rBuffer[i + 11] == 170)
                 {
