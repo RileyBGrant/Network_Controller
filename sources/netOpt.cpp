@@ -442,7 +442,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
             {
                 m1 = (roomMember *)listIteratorM1->data;
 
-                cout << "Group " << counterM1 << "(" << m1->member << ") with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << (int)m1->memberProb  << ":" << endl;
+                cout << "Group " << counterM1 << "(" << m1 << ", " << m1->member << ") with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << (int)m1->memberProb  << ":" << endl;
                 counterM1++;
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
