@@ -282,6 +282,16 @@ int netOpt::groupRooms()
                         r1->groups.append(m1);
                         roomFound = true;
                         listIteratorR1 = NULL;
+                        listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+                    
+                        while(listIteratorD1)
+                        {
+                            d1 = (devRecord *)listIteratorD1->data;
+                            
+                            d1->rooms.append(r1);
+
+                            listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                        }
                     }
                     else
                     {
