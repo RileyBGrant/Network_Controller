@@ -17,8 +17,9 @@ int main()
     //for(int i = 0; i < 1000000; i++)
     {
         r = interface.readFromHost();
-        if( interface.getLastTimestamp() - lastOpt > 86400)
+        if(interface.getLastTimestamp() - lastOpt > 86400)
         {
+            lastOpt = interface.getLastTimestamp();
             optimiser.sortDevs();
             optimiser.optimise();
         }
