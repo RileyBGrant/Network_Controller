@@ -267,7 +267,9 @@ int lightOptimiser::groupLights()
             devGroup *newGroup = new devGroup;
             newGroup->mems.append(masterDev);
             newGroup->devtype = masterDev->devType;
+            
             lightGroups.append(newGroup);
+            masterDev->groups.append(newGroup);
         }
 
         listIteratorD1 = lightDevs.getNext(listIteratorD1);
