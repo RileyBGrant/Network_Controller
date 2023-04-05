@@ -456,7 +456,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
                     {
                         cout << "." << stoi(to_string(mac[i]));
                     }
-                    cout << dec << endl;
+                    cout << dec << " (" << d1 << ")" << endl;
 
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
                 }
