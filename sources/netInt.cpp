@@ -311,7 +311,7 @@ int netInt::disconnectFromHost()
 
 int netInt::requestStim(time_t stimTime)
 {
-    #ifdef TESTIN
+    #ifdef TESTING
         cout << "Creating stim message" << endl;
     #endif
     
