@@ -24,6 +24,7 @@ private:
     struct sockaddr_in serv_addr;
     char rBuffer[BUFFER_LENGTH];
     bool connectedToNetwork;
+    time_t lastTimestamp = 0;
     uint8_t netAddr[4];
     linkedList_t devices; //list of devRecords
     
@@ -31,6 +32,7 @@ public:
     netInt();
     netInt(uint8_t ipAddr[4]);
     ~netInt();
+    time_t getLastTimestamp();
     linkedList_t *getDevices();
     int connectToHost();
     int sendtoHost(void *data, int dataLen);

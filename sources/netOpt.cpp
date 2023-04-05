@@ -407,7 +407,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     }
 
     #ifdef TESTING
-        cout << "Test complete, probability change of " << (int)probChange << endl;
+        cout << "Test complete, probability change of " << probChange << endl;
     #endif
 
     return probChange;

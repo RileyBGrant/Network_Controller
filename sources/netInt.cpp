@@ -37,6 +37,11 @@ netInt::~netInt()
     disconnectFromHost();
 }
 
+time_t netInt::getLastTimestamp()
+{
+    return lastTimestamp;
+}
+
 linkedList_t *netInt::getDevices()
 {
     return &devices;
@@ -196,6 +201,7 @@ int netInt::readFromHost()
             tempTime.tm_min = (uint8_t)rBuffer[i + 17];
             tempTime.tm_sec = (uint8_t)rBuffer[i + 18];
             newEntry->timestamp = mktime(&tempTime);
+            lastTimestamp = newEntry->timestamp;
 
             node_t *listIterator = devices.getHead();
             devRecord *dev;
