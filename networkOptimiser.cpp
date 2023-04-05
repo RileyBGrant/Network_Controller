@@ -23,8 +23,8 @@ int main()
             optimiser.optimise();
         }
     }
-    
-    
+
+    optimiser.printRooms();    
 
     return 0;
 }
