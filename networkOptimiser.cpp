@@ -26,6 +26,8 @@ int main()
     }
 
     //cout << interface.getLastTimestamp() << endl;
+    optimiser.sortDevs();
+    optimiser.optimise();
     optimiser.printRooms();    
 
     return 0;
