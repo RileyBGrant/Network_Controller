@@ -336,7 +336,7 @@ int netInt::requestStim(time_t stimTime)
     }
     cout << "Stim message: " << message << endl;
 
-    for(int i = 0; 7 - sizeof(time_t); i++)
+    for(int i = 0; i < 7 - sizeof(time_t); i++)
     {
         message += (char)0; //padding
     }
