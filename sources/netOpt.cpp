@@ -345,7 +345,7 @@ int netOpt::groupRooms()
 
 int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
 {
-    #ifdef TESTING
+    #ifdef TESTIN
         cout << "Light to light compatability test start" << endl;
     #endif
     
@@ -422,7 +422,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
         }
     }
 
-    #ifdef TESTING
+    #ifdef TESTIN
         cout << "Test complete, probability change of " << probChange << endl;
     #endif
 
