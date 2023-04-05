@@ -1,4 +1,7 @@
 #include "networkOptimiser.h"
+#ifndef MAIN_HEADER_MISSING
+    #include "../include/networkOptimiser.h"
+#endif
 
 using namespace std;
 
@@ -16,6 +19,7 @@ int lightOptimiser::addDevice(devRecord *newDev)
     devRecord *dev;
     while(listIterator)
     {
+        dev = (devRecord *)listIterator->data;
         if(dev->macAddr == newDev->macAddr)
         {
             #ifdef TESTING
@@ -267,7 +271,7 @@ int lightOptimiser::groupLights()
             devGroup *newGroup = new devGroup;
             newGroup->mems.append(masterDev);
             newGroup->devtype = masterDev->devType;
-            
+
             lightGroups.append(newGroup);
             masterDev->groups.append(newGroup);
         }
