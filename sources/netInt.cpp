@@ -189,7 +189,7 @@ int netInt::readFromHost()
 
             for(int i = 0; i < valread; i++)
             {
-                cout << (int)rBuffer[i] << " ";
+                cout << stoi(to_string(rBuffer[i])) << " ";
             }
 
             cout << endl;
