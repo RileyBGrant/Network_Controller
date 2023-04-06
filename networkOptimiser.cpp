@@ -17,20 +17,15 @@ int main()
     int iR = 0; //interface return value
     int oR = 0; //optimiser return value
 
-    while(iR < 2)
+    while(iR < SIM_FINISHED)
     //for(int i = 0; i < 1000000; i++)
     {
         iR = interface.readFromHost();
-        oR = optimiser.activeRoomUpdate(interface.getLastDevUpdated());
-        if(oR >= 0)
+        optimiser.activeRoomUpdate();
+
+        if(iR == 2)
         {
-            cout << "Stim request of time " << (time_t)oR << endl;
-            interface.requestStim((time_t)oR);
-        }
-        else
-        {
-            uint8_t returnMessage[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
-            interface.sendtoHost(&returnMessage, 16);
+            optimiser.sendDevStims();
         }
 
         if(interface.getLastTimestamp() - lastOpt > 86400)

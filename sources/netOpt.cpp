@@ -7,9 +7,10 @@
 
 using namespace std;
 
-netOpt::netOpt(netInt *interface)
+netOpt::netOpt(netInt *netInterface)
 {
-    devices = interface->getDevices();
+    interface = netInterface;    
+    devices = netInterface->getDevices();
 
     groups.append(lightOpt.getGroups());
 
@@ -429,8 +430,9 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     return probChange;
 }
 
-int netOpt::activeRoomUpdate(devRecord *lastDevUpdated) //returns time for next device stim, -1 if no preference
+int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no preference
 {
+    devRecord *lastDevUpdated = interface->getLastDevUpdated();
     //check if device is assigned to a room;
     if(lastDevUpdated->rooms.getLen() > 0)
     {
@@ -570,12 +572,25 @@ int netOpt::activeRoomUpdate(devRecord *lastDevUpdated) //returns time for next 
                 cout << "Active room changed, requesting next stim at " << asctime(&tempTime2);
             #endif
             activeRoom = r2;
-            return 900 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp;
+            interface->requestStim((time_t)(900 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp));
+            return 0;
         }
-        
     }
 
-    return -1;
+    uint8_t returnMessage[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+    interface->sendtoHost(&returnMessage, 16);
+
+    return 0;
+}
+
+int netOpt::sendDevStims()
+{
+    time_t t1 = interface->getLastTimestamp();
+    node_t *listIteratorD1;
+    
+    
+
+    return 0;
 }
 
 #ifdef TESTING

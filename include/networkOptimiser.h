@@ -14,6 +14,7 @@
 #define PORT 8080
 #define BUFFER_LENGTH 1024
 #define REPLY_LENGTH 16
+#define SIM_FINISHED 255
 
 using namespace std;
 
@@ -104,6 +105,7 @@ struct devRoom
 class netOpt
 {
 private:
+    netInt *interface;
     linkedList_t *devices;
     lightOptimiser lightOpt;
     linkedList_t groups;
@@ -111,12 +113,13 @@ private:
     devRoom *activeRoom;
 
 public:
-    netOpt(netInt *interface);
+    netOpt(netInt *netInterface);
     int sortDevs();
     int optimise();
     int groupRooms();
     int8_t light2Light(roomMember *m1, roomMember *m2);
-    int activeRoomUpdate(devRecord *lastDevUpdated);
+    int activeRoomUpdate();
+    int sendDevStims();
 
     #ifdef TESTING
         int printRooms();

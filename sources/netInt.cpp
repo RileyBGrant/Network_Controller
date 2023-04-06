@@ -215,15 +215,24 @@ int netInt::readFromHost()
                         cout << "Server closed" << endl;
                     #endif
 
-                    return 2;
+                    return SIM_FINISHED;
                 }
-                if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == '1' && rBuffer[i + 11] == '1')
+                else if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == '1' && rBuffer[i + 11] == '1')
                 {
                     #ifdef TESTING
-                        cout << "Stim requests from hub" << endl;
+                        cout << "Stim request from hub" << endl;
                     #endif
 
-                    return 0;
+                    tm tempTime;
+                    tempTime.tm_year = (uint8_t)rBuffer[i + 13];
+                    tempTime.tm_mon = (uint8_t)rBuffer[i + 14];
+                    tempTime.tm_mday = (uint8_t)rBuffer[i + 15];
+                    tempTime.tm_hour = (uint8_t)rBuffer[i + 16] + 1;
+                    tempTime.tm_min = (uint8_t)rBuffer[i + 17];
+                    tempTime.tm_sec = (uint8_t)rBuffer[i + 18];
+                    lastTimestamp = mktime(&tempTime);
+
+                    return 2;
                 }
             }
 
@@ -359,12 +368,10 @@ int netInt::requestStim(time_t stimTime)
     {
         message += (char)hubAddr[i];
     }
-    cout << "Stim message: " << message << endl;
 
     message += ","; 
     message += (char)1; //varID
     message += ",";
-    cout << "Stim message: " << message << endl;
 
     char_time byteTime;
     byteTime.t = stimTime;
@@ -372,13 +379,43 @@ int netInt::requestStim(time_t stimTime)
     {
         message += byteTime.c[i]; //value
     }
-    cout << "Stim message: " << message << endl;
 
     for(int i = 0; i < 7 - sizeof(time_t); i++)
     {
         message += (char)0; //padding
     }
-    cout << "Stim message: " << message << " with length " << message.length() << endl;
+
+    #ifdef TESTING
+        cout << "Stim message: " << message << endl;
+    #endif
+
+    sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+
+    return 0;
+}
+
+int netInt::endBurst()
+{
+    #ifdef TESTING
+        cout << "Creating stim message" << endl;
+    #endif
+    
+    string message = "";
+
+    for(int i = 0; i < 6; i++) //MAC
+    {
+        message += (char)hubAddr[i];
+    }
+
+    message += ","; 
+    message += (char)0; //varID
+    message += ",";
+    message += '1'; //signal
+
+    for(int i = 0; i < 6; i++)
+    {
+        message += (char)0; //padding
+    }
 
     #ifdef TESTING
         cout << "Stim message: " << message << endl;
