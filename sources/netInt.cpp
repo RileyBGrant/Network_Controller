@@ -189,7 +189,7 @@ int netInt::readFromHost()
 
             for(int i = 0; i < valread; i++)
             {
-                cout << (int)rBuffer[i] << " ";
+                cout << rBuffer[i] << " ";
             }
 
             cout << endl;
@@ -217,7 +217,14 @@ int netInt::readFromHost()
 
                     return 2;
                 }
-                //return 2;
+                if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == '1' && rBuffer[i + 11] == '1')
+                {
+                    #ifdef TESTING
+                        cout << "Stim requests from hub" << endl;
+                    #endif
+
+                    return 0;
+                }
             }
 
             #ifdef TESTING
