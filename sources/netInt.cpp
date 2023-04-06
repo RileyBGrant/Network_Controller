@@ -390,6 +390,7 @@ int netInt::requestStim(time_t stimTime)
     #endif
 
     sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+    endBurst();
 
     return 0;
 }

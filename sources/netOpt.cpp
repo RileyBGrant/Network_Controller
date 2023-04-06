@@ -579,6 +579,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
 
     uint8_t returnMessage[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
     interface->sendtoHost(&returnMessage, 16);
+    interface->endBurst();
 
     return 0;
 }
@@ -588,7 +589,7 @@ int netOpt::sendDevStims()
     time_t t1 = interface->getLastTimestamp();
     node_t *listIteratorD1;
     
-    
+
 
     return 0;
 }
