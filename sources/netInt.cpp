@@ -257,10 +257,12 @@ int netInt::readFromHost()
                 ofstream ofile;
 
                 ostringstream ss;
+                ss << hex;
                 for(int i = 0; i < 6; i++)
                 {
                     ss << stoi(to_string((uint8_t)rBuffer[i]));
                 }
+                ss << dec;
                 
                 string csv = ss.str();
 
