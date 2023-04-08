@@ -268,7 +268,7 @@ int netInt::readFromHost()
 
                 if(!ofile.is_open())
                 {
-                    ofile.open("logs/CSVs/" + csv + ".csv", ios::out);
+                    ofile.open("logs/CSVs/" + csv + ".csv", ios::app);
                     //cout << csv << " opened" << endl;
 
                     ofile << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << "," << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "," << stoi(to_string((uint8_t)rBuffer[i + 15])) << "," << stoi(to_string((uint8_t)rBuffer[i + 16])) << "," << stoi(to_string((uint8_t)rBuffer[i + 17])) << "," << stoi(to_string((uint8_t)rBuffer[i + 18])) << "," << rBuffer[i + 11] << endl;
@@ -343,6 +343,30 @@ int netInt::readFromHost()
                 #ifdef TESTING
                     cout << "Device activity record length: " << newDev->activity.getLen() << endl;
                 #endif
+
+                #ifdef LOG
+                ofstream ofile;
+
+                ostringstream ss;
+                ss << hex;
+                for(int i = 0; i < 6; i++)
+                {
+                    ss << stoi(to_string((uint8_t)rBuffer[i]));
+                }
+                ss << dec;
+                
+                string csv = ss.str();
+
+                if(!ofile.is_open())
+                {
+                    ofile.open("logs/CSVs/" + csv + ".csv", ios::out);
+                    //cout << csv << " opened" << endl;
+
+                    ofile << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << "," << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "," << stoi(to_string((uint8_t)rBuffer[i + 15])) << "," << stoi(to_string((uint8_t)rBuffer[i + 16])) << "," << stoi(to_string((uint8_t)rBuffer[i + 17])) << "," << stoi(to_string((uint8_t)rBuffer[i + 18])) << "," << rBuffer[i + 11] << endl;
+                    //cout << t->tm_year + 1900 << "," << t->tm_mon + 1 << "," << t->tm_mday << "," << t->tm_hour << "," << t->tm_min << "," << t->tm_sec << "," << temp << endl;
+                    ofile.close();
+                }
+            #endif
             }
 
             i += 19; //Individual message size

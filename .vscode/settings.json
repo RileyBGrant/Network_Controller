@@ -10,7 +10,8 @@
     "xstring": "cpp",
     "xutility": "cpp",
     "array": "cpp",
-    "system_error": "cpp"
+    "system_error": "cpp",
+    "iosfwd": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
