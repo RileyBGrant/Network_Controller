@@ -398,7 +398,7 @@ int netInt::requestStim(time_t stimTime)
 int netInt::endBurst()
 {
     #ifdef TESTING
-        cout << "Creating stim message" << endl;
+        cout << "Creating EoB message" << endl;
     #endif
     
     string message = "";
@@ -419,7 +419,7 @@ int netInt::endBurst()
     }
 
     #ifdef TESTING
-        cout << "Stim message: " << message << endl;
+        cout << "EoB message: " << message << endl;
     #endif
 
     sendtoHost((void *)message.c_str(), REPLY_LENGTH);
