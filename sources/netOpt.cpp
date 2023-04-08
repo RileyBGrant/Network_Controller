@@ -668,6 +668,7 @@ int netOpt::sendDevStims()
 
                         interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
                         interface->readFromHost();
+                        interface->endBurst();
                     }
                 }
                 break;
