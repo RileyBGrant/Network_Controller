@@ -203,7 +203,8 @@ int netInt::readFromHost()
             if(rBuffer[i] == (uint8_t)hubAddr[0] && rBuffer[i + 1] == (uint8_t)hubAddr[1] && rBuffer[i + 2] == (uint8_t)hubAddr[2] && rBuffer[i + 3] == (uint8_t)hubAddr[3] && rBuffer[i + 4] == (uint8_t)hubAddr[4] && rBuffer[i + 5] == (uint8_t)hubAddr[5])
             {
                 #ifdef TESTING
-                    cout << "Command message" << endl;
+                    cout << "Command message";
+                    cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
                     cout << "DevType: " << (int)rBuffer[i + 7] << endl;
                     cout << "Variable: " << (int)rBuffer[i + 9] << endl;
                     cout << "Value: " << (int)rBuffer[i + 11] << endl;
