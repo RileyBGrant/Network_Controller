@@ -579,7 +579,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
 
     uint8_t returnMessage[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
     interface->sendtoHost(&returnMessage, 16);
-    interface->endBurst();
+    //interface->endBurst();
 
     return 0;
 }
@@ -606,7 +606,7 @@ int netOpt::sendDevStims()
             switch ((int)d1->devType)
             {
             case 0: //light
-            
+
                 a1 = (activityRecord *)d1->activity.getTail()->data;
                 if(a1->variable == 0 && a1->state == 1)
                 {

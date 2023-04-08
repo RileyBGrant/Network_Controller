@@ -28,6 +28,8 @@ int main()
             optimiser.sendDevStims();
         }
 
+        interface.endBurst();
+
         if(interface.getLastTimestamp() - lastOpt > 86400)
         {
             lastOpt = interface.getLastTimestamp();
