@@ -6,10 +6,13 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstdlib>
 #include <ctime>
 
 #define TESTING
+#define LOG
 #define MAIN_HEADER_MISSING
 #define PORT 8080
 #define BUFFER_LENGTH 1024
