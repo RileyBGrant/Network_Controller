@@ -587,9 +587,94 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
 int netOpt::sendDevStims()
 {
     time_t t1 = interface->getLastTimestamp();
-    node_t *listIteratorD1;
-    
+    time_t t2;
+    node_t *listIteratorD1 = devices->getHead();
+    devRecord *d1;
+    activityRecord *a1;
+    node_t *listIteratorR1;
+    devRoom * r1;
+    bool inActiveRoom = false;
+    uint8_t macAddr[6];
+    //activityRecord *a1;
 
+    while(listIteratorD1)
+    {
+        d1 = (devRecord *)listIteratorD1->data;
+        
+        if(d1->rooms.getLen() > 0)
+        {
+            switch ((int)d1->devType)
+            {
+            case 0: //light
+            
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state == 1)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+                        
+                        string message = "";
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                    }
+                }
+                break;
+            }
+        }
+
+        listIteratorD1 = devices->getNext(listIteratorD1);
+    }
 
     return 0;
 }
