@@ -101,7 +101,7 @@ struct devRoom
 {
     linkedList groups;
     linkedList mems;
-    unsigned float activeProb;
+    float activeProb;
 };
 
 //class for network optimiser
@@ -126,6 +126,7 @@ public:
 
     #ifdef TESTING
         int printRooms();
+        int printActivity();
     #endif
 };
 

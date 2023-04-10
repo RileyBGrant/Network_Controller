@@ -528,7 +528,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                             listIteratorG1 = r1->groups.getNext(listIteratorG1);
                         }
                         
-                        if(r1->activeProb < 100)
+                        if(r1->activeProb <= 100 - (1 / numLights))
                         {
                             r1->activeProb += 1 / numLights;
                         }
@@ -544,7 +544,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                     switch(lastDevUpdated->devType)
                     {
                     case 0:
-                        if(r1->activeProb > 0)
+                        if(r1->activeProb >= 1)
                         {
                             r1->activeProb -= 1;
 
@@ -560,6 +560,8 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
 
                 listIteratorR1 = rooms.getNext(listIteratorR1);
             }
+
+            printActivity();
         }
 
         listIteratorR1 = rooms.getHead();
@@ -769,6 +771,43 @@ int netOpt::sendDevStims()
             listIteratorR1 = rooms.getNext(listIteratorR1);
         }
         
+        return 0;
+    }
+
+    int netOpt::printActivity()
+    {
+        node_t *listIteratorR1 = rooms.getHead();
+        devRoom *r1;
+        devRecord *d1;
+        int counterR1 = 0;
+        uint8_t mac[6];
+
+        while(listIteratorR1)
+        {
+            r1 = (devRoom *)listIteratorR1->data;
+
+            cout << "Room " << counterR1 << " ";
+            if(r1->groups.getLen() > 0)
+            {
+                d1 = (devRecord *)((devGroup *)((roomMember *)r1->groups.getHead()->data)->member)->mems.getHead()->data;
+            }
+            else
+            {
+                d1 = (devRecord *)((devGroup *)((roomMember *)r1->mems.getHead()->data)->member)->mems.getHead()->data;
+            }
+            unpackMAC(d1->macAddr, mac);
+            cout << "with lead device " << hex << mac[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << mac[i];
+            }
+            
+            cout << dec << ", has activety probability " << r1->activeProb << endl;
+
+            listIteratorR1 = rooms.getNext(listIteratorR1);
+            counterR1++;
+        }
+
         return 0;
     }
 #endif
