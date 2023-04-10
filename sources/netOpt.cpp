@@ -540,17 +540,19 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                             cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
                         #endif
 
-                        if(r1->activeProb <= 100 - (1 / numLights))
+                        if(r1->activeProb <= 100.0 - (1.0 / numLights))
                         {
-                            r1->activeProb += 1 / numLights;
+                            r1->activeProb += (1.0 / numLights);
                         }
                         else
                         {
                             r1->activeProb = 100;
                         }
+
                         #ifdef TESTING
                             cout << ", new room probability is " << r1->activeProb << endl;
                         #endif
+
                         break;
                     }
                 }
