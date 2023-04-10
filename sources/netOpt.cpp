@@ -536,7 +536,9 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                             listIteratorG1 = r1->groups.getNext(listIteratorG1);
                         }
 
-                        cout << "numLights: " << numLights << endl;
+                        #ifdef TESTING
+                            cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
+                        #endif
 
                         if(r1->activeProb <= 100 - (1 / numLights))
                         {
@@ -546,6 +548,9 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                         {
                             r1->activeProb = 100;
                         }
+                        #ifdef TESTING
+                            cout << ", new room probability is " << r1->activeProb << endl;
+                        #endif
                         break;
                     }
                 }
