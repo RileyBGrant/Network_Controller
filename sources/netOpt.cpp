@@ -435,6 +435,10 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
 
 int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no preference
 {
+    #ifdef TESTING
+        cout << "Updating room activity probabilities" << endl;
+    #endif
+    
     devRecord *lastDevUpdated = interface->getLastDevUpdated();
     //check if device is assigned to a room;
     if(lastDevUpdated->rooms.getLen() > 0)
