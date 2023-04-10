@@ -21,11 +21,14 @@ int main()
     //for(int i = 0; i < 1000000; i++)
     {
         iR = interface.readFromHost();
-        optimiser.activeRoomUpdate();
 
         if(iR == 2)
         {
             optimiser.sendDevStims();
+        }
+        else
+        {
+            optimiser.activeRoomUpdate();
         }
 
         interface.endBurst();

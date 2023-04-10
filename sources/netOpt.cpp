@@ -433,7 +433,7 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     return probChange;
 }
 
-int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no preference
+int netOpt::activeRoomUpdate() 
 {
     #ifdef TESTING
         cout << "Updating room activity probabilities" << endl;
@@ -452,14 +452,13 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
         devRecord *d1;
         bool groupChanged = true;
         uint8_t highestProb = 0;
-        
+        uint8_t v1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->variable;
+        uint8_t s1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->state;
 
         //Check if device is part of a group
         if(lastDevUpdated->groups.getLen() > 0)
         {
-            uint8_t v1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->variable;
             uint8_t v2;
-            uint8_t s1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->state;
             uint8_t s2;
 
             while(listIteratorG1)
@@ -521,37 +520,52 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                     switch(lastDevUpdated->devType)
                     {
                     case 0:
-                        int numLights = 0;
-                        listIteratorG1 = r1->groups.getHead();
+                        
+                            int numLights = 0;
+                            listIteratorG1 = r1->groups.getHead();
 
-                        while(listIteratorG1)
-                        {
-                            g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
-
-                            if(g1->devtype == 0)
+                            while(listIteratorG1)
                             {
-                                numLights++;
+                                g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+
+                                if(g1->devtype == 0)
+                                {
+                                    numLights++;
+                                }
+
+                                listIteratorG1 = r1->groups.getNext(listIteratorG1);
                             }
 
-                            listIteratorG1 = r1->groups.getNext(listIteratorG1);
-                        }
-
-                        #ifdef TESTING
-                            cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
-                        #endif
-
-                        if(r1->activeProb <= 100.0 - (1.0 / numLights))
+                            #ifdef TESTING
+                                cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
+                            #endif
+                        if(v1 == 0 && s1 == 1)
                         {
-                            r1->activeProb += (1.0 / numLights);
-                        }
-                        else
-                        {
-                            r1->activeProb = 100;
-                        }
+                            if(r1->activeProb <= 100.0 - (1.0 / numLights))
+                            {
+                                r1->activeProb += 1.0 / numLights;
+                            }
+                            else
+                            {
+                                r1->activeProb = 100.0;
+                            }
 
-                        #ifdef TESTING
-                            cout << ", new room probability is " << r1->activeProb << endl;
-                        #endif
+                            #ifdef TESTING
+                                cout << ", new room probability is " << r1->activeProb << endl;
+                            #endif
+                        }
+                        else if (v1 == 0 && s1 == 0)
+                        {
+                            if(r1->activeProb >= 1.0 / numLights)
+                            {
+                                r1->activeProb -= 1.0 / numLights;
+
+                            }
+                            else
+                            {
+                                r1->activeProb = 0.0;
+                            }
+                        }
 
                         break;
                     }
@@ -561,14 +575,17 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                     switch(lastDevUpdated->devType)
                     {
                     case 0:
-                        if(r1->activeProb >= 1)
+                        if(v1 == 0 && s1 == 1)
                         {
-                            r1->activeProb -= 1;
+                            if(r1->activeProb >= 1.0)
+                            {
+                                r1->activeProb -= 1.0;
 
-                        }
-                        else
-                        {
-                            r1->activeProb = 0;
+                            }
+                            else
+                            {
+                                r1->activeProb = 0.0;
+                            }
                         }
                         break;
                     }

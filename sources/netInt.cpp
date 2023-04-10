@@ -205,9 +205,9 @@ int netInt::readFromHost()
                 #ifdef TESTING
                     cout << "Command message";
                     cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
-                    cout << "DevType: " << (int)rBuffer[i + 7] << endl;
-                    cout << "Variable: " << (int)rBuffer[i + 9] << endl;
-                    cout << "Value: " << (int)rBuffer[i + 11] << endl;
+                    cout << "DevType: " << (int)rBuffer[i + 7]<< endl;
+                    cout << "Variable: " << (int)(rBuffer[i + 9] - '0') << endl;
+                    cout << "Value: " << (int)(rBuffer[i + 11] - '0') << endl;
                 #endif
                 
                 if(rBuffer[i + 7] == (uint8_t)255 && rBuffer[i + 9] == '0' && rBuffer[i + 11] == '1')
