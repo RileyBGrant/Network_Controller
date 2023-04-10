@@ -499,6 +499,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
             {
                 r1 = (devRoom *)listIteratorR1->data;
                 listIteratorR2 = lastDevUpdated->rooms.getHead();
+                devInRoom = false;
 
                 while(listIteratorR2)
                 {
@@ -534,7 +535,9 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
 
                             listIteratorG1 = r1->groups.getNext(listIteratorG1);
                         }
+
                         cout << "numLights: " << numLights << endl;
+
                         if(r1->activeProb <= 100 - (1 / numLights))
                         {
                             r1->activeProb += 1 / numLights;
@@ -805,10 +808,10 @@ int netOpt::sendDevStims()
                 d1 = (devRecord *)((devGroup *)((roomMember *)r1->mems.getHead()->data)->member)->mems.getHead()->data;
             }
             unpackMAC(d1->macAddr, mac);
-            cout << "with lead device " << hex << mac[0];
+            cout << "with lead device " << hex << (int)mac[0];
             for(int i = 1; i < 6; i++)
             {
-                cout << "." << mac[i];
+                cout << "." << (int)mac[i];
             }
             
             cout << dec << ", has activety probability " << r1->activeProb << endl;
