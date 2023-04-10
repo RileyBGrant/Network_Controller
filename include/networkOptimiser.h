@@ -99,8 +99,8 @@ struct roomMember
 
 struct devRoom
 {
-    linkedList groups;
-    linkedList mems;
+    linkedList groups; //roomMember where roomMember->member is devGroup
+    linkedList mems; //roomMember where roomMember->member is devRecord
     float activeProb;
 };
 
@@ -109,10 +109,10 @@ class netOpt
 {
 private:
     netInt *interface;
-    linkedList_t *devices;
+    linkedList_t *devices; //devRecord
     lightOptimiser lightOpt;
-    linkedList_t groups;
-    linkedList_t rooms;
+    linkedList_t groups; //devGroup
+    linkedList_t rooms; //devRoom
     devRoom *activeRoom;
 
 public:
@@ -133,7 +133,7 @@ public:
 struct devGroup
 {
     uint8_t devtype;
-    linkedList_t mems; //List of groupMember structs
+    linkedList_t mems; //List of devRecord
 };
 
 

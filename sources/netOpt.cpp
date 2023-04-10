@@ -525,7 +525,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
 
                         while(listIteratorG1)
                         {
-                            g1 = (devGroup *)listIteratorG1->data;
+                            g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
 
                             if(g1->devtype == 0)
                             {
