@@ -513,13 +513,28 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                     switch(lastDevUpdated->devType)
                     {
                     case 0:
-                        if(r1->activeProb < 254)
+                        int numLights = 0;
+                        listIteratorG1 = r1->groups.getHead();
+
+                        while(listIteratorG1)
                         {
-                            r1->activeProb += 2;
+                            g1 = (devGroup *)listIteratorG1->data;
+
+                            if(g1->devtype == 0)
+                            {
+                                numLights++;
+                            }
+
+                            listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                        }
+                        
+                        if(r1->activeProb < 100)
+                        {
+                            r1->activeProb += 1 / numLights;
                         }
                         else
                         {
-                            r1->activeProb = 255;
+                            r1->activeProb = 100;
                         }
                         break;
                     }
@@ -531,7 +546,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                     case 0:
                         if(r1->activeProb > 0)
                         {
-                            r1->activeProb--;
+                            r1->activeProb -= 1;
 
                         }
                         else
@@ -572,7 +587,7 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                 cout << "Active room changed, requesting next stim at " << asctime(&tempTime2);
             #endif
             activeRoom = r2;
-            interface->requestStim((time_t)(900 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp));
+            interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
             return 0;
         }
     }

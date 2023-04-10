@@ -101,7 +101,7 @@ struct devRoom
 {
     linkedList groups;
     linkedList mems;
-    uint8_t activeProb;
+    unsigned float activeProb;
 };
 
 //class for network optimiser
