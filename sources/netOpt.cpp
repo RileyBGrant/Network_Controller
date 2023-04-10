@@ -63,7 +63,9 @@ int netOpt::optimise()
     lightOpt.groupLights();
 
     groupRooms();
-    printRooms();
+    #ifdef TESTING
+        printRooms();
+    #endif
 
     return 0;
 }
@@ -234,7 +236,7 @@ int netOpt::groupRooms()
             if(d1->rooms.getLen() == 0)
             {
                 #ifdef TESTING
-                    cout << "Goup has no room assigned" << endl;
+                    cout << "Group has no room assigned" << endl;
                 #endif
                 m1 = new roomMember;
                 m1->member = g1;
@@ -314,6 +316,7 @@ int netOpt::groupRooms()
 
                     r1 = new devRoom;
                     m1->memberProb = 255;
+                    r1->activeProb = 0;
                     r1->groups.append(m1);
                     rooms.append(r1);
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
@@ -561,7 +564,9 @@ int netOpt::activeRoomUpdate() //returns time for next device stim, -1 if no pre
                 listIteratorR1 = rooms.getNext(listIteratorR1);
             }
 
-            printActivity();
+            #ifdef TESTING
+                printActivity();
+            #endif
         }
 
         listIteratorR1 = rooms.getHead();
