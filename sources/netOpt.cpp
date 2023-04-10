@@ -814,7 +814,7 @@ int netOpt::sendDevStims()
                 cout << "." << (int)mac[i];
             }
             
-            cout << dec << ", has activety probability " << r1->activeProb << endl;
+            cout << dec << ", has activety probability " << fixed << setprecision(2) << r1->activeProb << endl;
 
             listIteratorR1 = rooms.getNext(listIteratorR1);
             counterR1++;

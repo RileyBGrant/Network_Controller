@@ -10,6 +10,7 @@
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 #define TESTING
 #define LOG
