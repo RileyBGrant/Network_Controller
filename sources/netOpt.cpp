@@ -805,7 +805,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         a3 = (activityRecord *)listIteratorA3->data;
         
         if(a1->variable == 0 && a1->state == 1)
-        {
+        { 
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
                 if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
@@ -840,16 +840,26 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                 }
                 else
                 {
+                    #ifdef TESTING
+                        cout << "a3 invalid" << endl;
+                    #endif
                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
                 }
             }
             else
             {
+                #ifdef TESTING
+                    cout << "a2 invalid" << endl;
+                #endif
                 listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
             }
         }
         else
         {
+            #ifdef TESTING
+                cout << "a1 invalid" << endl;
+            #endif
+            
             listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
             listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
         }
