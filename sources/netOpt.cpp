@@ -874,15 +874,6 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     devGroup *l1 = (devGroup *)light->member;
     devRecord *d1 = (devRecord *)mainDev->member;
 
-    
-
-    node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = d1->activity.getHead();
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-
     #ifdef TESTING
     uint8_t mac[6];
         unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
@@ -908,6 +899,13 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
 
         return -1;
     }
+
+    node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
+    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+    node_t *listIteratorA3 = d1->activity.getHead();
+    activityRecord *a1;
+    activityRecord *a2;
+    activityRecord *a3;
 
     int probChange = 0;
     
@@ -962,7 +960,11 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                         }
 
                         listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                        listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                        if(listIteratorA1 != NULL)
+                        {
+                            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                        }
+                        
                     }
                 }
                 else
@@ -988,7 +990,10 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             #endif
             
             listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+            if(listIteratorA1 != NULL)
+            {
+                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+            }
         }
 
         #ifdef TESTING
@@ -1068,9 +1073,15 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
             }
             
             listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            listIteratorA2 = d1->activity.getNext(listIteratorA1);
+            if(listIteratorA1 != NULL)
+            {
+                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+            }
             listIteratorA3 = d2->activity.getNext(listIteratorA3);
-            listIteratorA4 = d2->activity.getNext(listIteratorA3);
+            if(listIteratorA3 != NULL)
+            {
+               listIteratorA4 = d2->activity.getNext(listIteratorA3); 
+            }
         }
         else
         {
@@ -1096,12 +1107,18 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                                     }
 
                                     listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    if(listIteratorA3 != NULL)
+                                    {
+                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    }
                                 }
                                 else
                                 {
                                     listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    if(listIteratorA1 != NULL)
+                                    {
+                                       listIteratorA2 = d1->activity.getNext(listIteratorA1); 
+                                    }
                                 }
                             }
                             else if(a1->timestamp > a3->timestamp)
@@ -1118,12 +1135,18 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                                     }
 
                                     listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    if(listIteratorA1 != NULL)
+                                    {
+                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    }
                                 }
                                 else
                                 {
                                     listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    if(listIteratorA3 != NULL)
+                                    {
+                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    }
                                 }
                             }
                             else
@@ -1131,19 +1154,31 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                                 if(a2->timestamp > a4->timestamp)
                                 {
                                     listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    if(listIteratorA3 != NULL)
+                                    {
+                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    }
                                 }
                                 else if(a2->timestamp < a4->timestamp)
                                 {
                                     listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    if(listIteratorA1 != NULL)
+                                    {
+                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    }
                                 }
                                 else
                                 {
                                     listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    if(listIteratorA1 != NULL)
+                                    {
+                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    }
                                     listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    if(listIteratorA3 != NULL)
+                                    {
+                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                    }
                                 }
                             }
                         }
@@ -1155,7 +1190,10 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                     else
                     {
                         listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                        if(listIteratorA3 != NULL)
+                        {
+                            listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                        }
                     }
                 }
                 else
@@ -1166,7 +1204,10 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
             else
             {
                 listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                if(listIteratorA1 != NULL)
+                {
+                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                }
             }
         }
     }
