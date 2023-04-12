@@ -908,7 +908,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
     devRecord *d2 = (devRecord *)m2->member;
 
     #ifdef TESTING
-    uint8_t mac[6];
+        uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
         cout << "Compatability test between tv " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
@@ -932,7 +932,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
 
         return -1;
     }
-    
+
     node_t *listIteratorA1 = d1->activity.getHead();
     node_t *listIteratorA2 = d1->activity.getNext(listIteratorA2);
     node_t *listIteratorA3 = d2->activity.getHead();
