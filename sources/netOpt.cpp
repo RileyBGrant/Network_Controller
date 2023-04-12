@@ -261,7 +261,8 @@ int netOpt::groupRooms()
         while(listIteratorM1)
         {
             m1 = (roomMember *)listIteratorM1->data;
-            listIteratorM2 = r1->mems.getHead();
+
+            listIteratorM2 = r1->mems.getNext(listIteratorM2);
 
             while(listIteratorM2)
             {
