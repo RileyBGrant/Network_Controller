@@ -331,7 +331,7 @@ int netInt::readFromHost()
                 
                 newDev->macAddr = packMAC(macAddr);
 
-                newDev->devType = rBuffer[i + 9]  - '0';
+                newDev->devType = rBuffer[i + 7]  - '0';
                 devices.append(newDev);
                 #ifdef TESTING
                     cout << "Devices recorded: " << devices.getLen() << endl;
