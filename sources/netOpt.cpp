@@ -1033,9 +1033,9 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
     }
 
     node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA2);
+    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
     node_t *listIteratorA3 = d2->activity.getHead();
-    node_t *listIteratorA4 =  d2->activity.getNext(listIteratorA4);
+    node_t *listIteratorA4 =  d2->activity.getNext(listIteratorA3);
     activityRecord *a1;
     activityRecord *a2;
     activityRecord *a3;
