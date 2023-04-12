@@ -257,6 +257,7 @@ int netOpt::groupRooms()
         }
 
         listIteratorM1 = r1->mems.getHead();
+        counterM1 = 0;
 
         while(listIteratorM1)
         {
@@ -315,40 +316,13 @@ int netOpt::groupRooms()
 
             if(counterM1 > 0 && m1->memberProb < 100)
             {
-                listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
-
-                while (listIteratorD1)
-                {
-                    d1 = (devRecord *)listIteratorD1->data;
-                    listIteratorR2 = d1->rooms.getHead();
-                    counterR2 = 0;
-
-                    while(listIteratorR2)
-                    {
-                        r2 = (devRoom *)listIteratorR2->data;
-
-                        if(r2 == r1)
-                        {
-                            listIteratorR2 = d1->rooms.getNext(listIteratorR2);
-                            d1->rooms.remove(counterR2);
-                        }
-                        else
-                        {
-                            listIteratorR2 = d1->rooms.getNext(listIteratorR2);
-                            counterR2++;
-                        }
-                    }
-
-                    listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
-                }
-
                 delete(m1);
-                listIteratorM1 = r1->groups.getNext(listIteratorM1);
-                r1->groups.remove(counterM1);
+                listIteratorM1 = r1->mems.getNext(listIteratorM1);
+                r1->mems.remove(counterM1);
             }
             else
             {
-                listIteratorM1 = r1->groups.getNext(listIteratorM1);
+                listIteratorM1 = r1->mems.getNext(listIteratorM1);
                 counterM1++;
             }
         }
