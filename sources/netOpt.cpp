@@ -97,6 +97,7 @@ int netOpt::groupRooms()
     #ifdef TESTING
         cout << rooms.getLen() << " exisiting rooms" << endl;
         int counterR1 = 0;
+        printRooms();
     #endif
     while (listIteratorR1)
     {
