@@ -869,7 +869,9 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         #endif
     }
 
-    
+    #ifdef TESTING
+        cout << "Compatability: " << probChange << endl;
+    #endif
 
     return probChange;
 }
