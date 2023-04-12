@@ -398,7 +398,8 @@ int netOpt::groupRooms()
 
                 cout << "room cleared from all devs" << endl;
 
-                free(m1);
+                delete(m1);
+                cout << "memory freed" << endl;
                 listIteratorM1 = r1->groups.getNext(listIteratorM1);
                 r1->groups.remove(counterM1);
 
