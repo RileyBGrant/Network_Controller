@@ -605,6 +605,7 @@ int netOpt::groupRooms()
                             {
                                 case 1:
                                 {
+                                    cout << "tv2 tv" << endl;
                                     compatability += tv2tv(m1,m2);   
                                     break;
                                 }
