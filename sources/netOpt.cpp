@@ -801,7 +801,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
     {
         #ifdef TESTING
-            cout << listIteratorA1 << listIteratorA2 << listIteratorA3 << endl;
+            cout << listIteratorA1->data << listIteratorA2->data << listIteratorA3->data << endl;
         #endif
 
         a1 = (activityRecord *)listIteratorA1->data;
