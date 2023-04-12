@@ -772,6 +772,16 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
 {
     devGroup *l1 = (devGroup *)light->member;
     devRecord *d1 = (devRecord *)mainDev->member;
+
+    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
+    {
+        #ifdef TESTING
+            cout << "activity records are too short" << endl;
+        #endif
+
+        return -1;
+    }
+
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
     node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
     node_t *listIteratorA3 = d1->activity.getHead();
@@ -800,16 +810,13 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     
     while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
     {
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << listIteratorA1->data << " " << listIteratorA2->data << " " << listIteratorA3->data << endl;
         #endif
         
         a1 = (activityRecord *)listIteratorA1->data;
-        cout << "1 ";
         a2 = (activityRecord *)listIteratorA2->data;
-        cout << "2 " ;
         a3 = (activityRecord *)listIteratorA3->data;
-        cout << "3 " << endl;
 
         #ifdef  TESTING
             tm tempTime;
