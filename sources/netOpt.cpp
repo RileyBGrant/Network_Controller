@@ -361,14 +361,16 @@ int netOpt::groupRooms()
         if(r1->groups.getLen() + r1->mems.getLen() < 2)
         {
             #ifdef TESTING
-                cout << "Room with 1 memebr deletign room" << endl;
+                cout << "Room with 1 member deleting room" << endl;
             #endif
+
             if(r1->groups.getLen() == 1)
             {
                 m1 = ((roomMember *)r1->groups.getHead()->data);
+
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
-                while (listIteratorD1)
+                while(listIteratorD1)
                 {
                     d1 = (devRecord *)listIteratorD1->data;
                     listIteratorR2 = d1->rooms.getHead();
@@ -396,6 +398,10 @@ int netOpt::groupRooms()
                 delete(m1);
                 listIteratorM1 = r1->groups.getNext(listIteratorM1);
                 r1->groups.remove(counterM1);
+
+                #ifdef TESTING
+                    cout << "group removed" << endl;
+                #endif
             }
 
             if(r1->mems.getLen() == 1)
@@ -428,12 +434,19 @@ int netOpt::groupRooms()
                 delete(m1);
                 listIteratorM1 = r1->mems.getNext(listIteratorM1);
                 r1->mems.remove(counterM1);
+
+                #ifdef TESTING
+                    cout << "solo member removed" << endl;
+                #endif
             }
 
             delete(r1);
             listIteratorR1 = rooms.getNext(listIteratorR1);
             rooms.remove(counterR1);
 
+            #ifdef TESTING
+                cout << "room removed" << endl;
+            #endif
         }
         else
         {
