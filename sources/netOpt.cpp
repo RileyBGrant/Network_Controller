@@ -932,7 +932,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             {
                 if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
                 {
-                    if(a2->timestamp >= a3->timestamp)
+                    if(a2->timestamp > a3->timestamp)
                     {
                         if(probChange <= 117)
                         {
