@@ -398,6 +398,8 @@ int netOpt::groupRooms()
 
                 cout << "room cleared from all devs" << endl;
 
+                cout << m1 << endl;
+
                 delete(m1);
                 cout << "memory freed" << endl;
             }
