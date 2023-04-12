@@ -366,13 +366,13 @@ int netOpt::groupRooms()
 
             if(r1->groups.getLen() == 1)
             {
-                cout << "Deleting group" << endl;
                 m1 = ((roomMember *)r1->groups.getHead()->data);
 
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
                 while(listIteratorD1)
                 {
+                    cout << "removing room from device" << endl;
                     d1 = (devRecord *)listIteratorD1->data;
                     listIteratorR2 = d1->rooms.getHead();
                     counterR2 = 0;
@@ -396,12 +396,14 @@ int netOpt::groupRooms()
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
                 }
 
+                cout << "room cleared from all devs" << endl;
+
                 delete(m1);
                 listIteratorM1 = r1->groups.getNext(listIteratorM1);
                 r1->groups.remove(counterM1);
 
                 #ifdef TESTING
-                    cout << "group removed" << endl;
+                    cout << "group removed from room" << endl;
                 #endif
             }
 
