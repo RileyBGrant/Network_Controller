@@ -1047,25 +1047,25 @@ int netOpt::activeRoomUpdate()
                     switch(lastDevUpdated->devType)
                     {
                     case 0:
-                        
-                            int numLights = 0;
-                            listIteratorG1 = r1->groups.getHead();
+                        int numLights = 0;
+                        listIteratorG1 = r1->groups.getHead();
 
-                            while(listIteratorG1)
+                        while(listIteratorG1)
+                        {
+                            g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+
+                            if(g1->devtype == 0)
                             {
-                                g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
-
-                                if(g1->devtype == 0)
-                                {
-                                    numLights++;
-                                }
-
-                                listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                                numLights++;
                             }
 
-                            #ifdef TESTING
-                                cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
-                            #endif
+                            listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                        }
+
+                        #ifdef TESTING
+                            cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
+                        #endif
+
                         if(v1 == 0 && s1 == 1)
                         {
                             if(r1->activeProb <= 100.0 - (1.0 / numLights))
@@ -1270,6 +1270,75 @@ int netOpt::sendDevStims()
                         #endif
                         
                         string message = lightOpt.inactivity(d1);                       
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+
+            case 1: // tv
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && (a1->state == 1 && a1->state == 3 && a1->state == 4))
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
 
                         #ifdef TESTING
                             cout << "Message: " << message << endl;

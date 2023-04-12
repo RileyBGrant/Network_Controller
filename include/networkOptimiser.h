@@ -111,11 +111,11 @@ class netOpt
 private:
     netInt *interface;
     linkedList_t *devices; //devRecord
-    lightOptimiser lightOpt;
     linkedList_t groups; //devGroup
     linkedList_t rooms; //devRoom
     devRoom *activeRoom;
-
+    lightOptimiser lightOpt;
+    
 public:
     netOpt(netInt *netInterface);
     int sortDevs();
@@ -138,5 +138,3 @@ struct devGroup
     uint8_t devtype;
     linkedList_t mems; //List of devRecord
 };
-
-
