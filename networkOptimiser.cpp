@@ -44,7 +44,7 @@ int main()
     //cout << interface.getLastTimestamp() << endl;
     optimiser.sortDevs();
     optimiser.optimise();
-    optimiser.printRooms();    
+    //optimiser.printRooms();    
 
     return 0;
 }

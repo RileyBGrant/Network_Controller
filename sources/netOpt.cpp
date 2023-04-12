@@ -1415,7 +1415,7 @@ int netOpt::sendDevStims()
             counterM1 = 0;
             cout << r1->groups.getLen() << " groups" << endl;
 
-            while(listIteratorM1)
+            while)
             {
                 m1 = (roomMember *)listIteratorM1->data;
 
