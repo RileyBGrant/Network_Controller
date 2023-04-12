@@ -663,18 +663,10 @@ int netOpt::groupRooms()
                 r1 = new devRoom;
                 m1->memberProb = 255;
                 r1->activeProb = 0;
-                r1->groups.append(m1);
+                r1->mems.append(m1);
                 rooms.append(r1);
-                listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
                 
-                while(listIteratorD1)
-                {
-                    d1 = (devRecord *)listIteratorD1->data;
-                    
-                    d1->rooms.append(r1);
-
-                    listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
-                }
+                d1->rooms.append(r1);
             }
         }
         #ifdef TESTING

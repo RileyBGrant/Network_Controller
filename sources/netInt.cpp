@@ -205,7 +205,7 @@ int netInt::readFromHost()
                 #ifdef TESTING
                     cout << "Command message";
                     cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
-                    cout << "DevType: " << rBuffer[i + 7] << endl;
+                    cout << "DevType: " << (rBuffer[i + 7] - '0')<< endl;
                     cout << "Variable: " << (int)(rBuffer[i + 9] - '0') << endl;
                     cout << "Value: " << (int)(rBuffer[i + 11] - '0') << endl;
                 #endif
@@ -243,7 +243,7 @@ int netInt::readFromHost()
                 {
                     cout << "." << stoi(to_string((uint8_t)rBuffer[i + j]));
                 }
-                cout << dec << " devType " <<  rBuffer[i + 9] << ", variable " << rBuffer[i + 9] << " set to state " << rBuffer[i + 11];
+                cout << dec << " devType " <<  (int)(rBuffer[i + 7] - '0') << ", variable " << (int)(rBuffer[i + 9] - '0') << " set to state " << (int)(rBuffer[i + 11] - '0') ;
                 cout << " at " << stoi(to_string((uint8_t)rBuffer[i + 15])) << "/" << stoi(to_string((uint8_t)rBuffer[i + 14])) + 1 << "/" << stoi(to_string((uint8_t)rBuffer[i + 13])) + 1900 << " " << stoi(to_string((uint8_t)rBuffer[i + 16])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 17])) << ":" << stoi(to_string((uint8_t)rBuffer[i + 18])) << endl;
                 /*cout << "hub address " << hex << stoi(to_string((uint8_t)hubAddr[i]));
                 for(int j = 1; j < 6; j++)
