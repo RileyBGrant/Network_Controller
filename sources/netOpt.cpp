@@ -488,7 +488,7 @@ int netOpt::groupRooms()
                     cout << "." << stoi(to_string(mac[i]));
                 }
                 cout << dec << " assigned to " << d1->rooms.getLen() << " rooms" << endl;
-                cout << "First room pointer is " << rooms.getHead() << endl;
+                cout << "First room pointer is " << d1->rooms.getHead() << endl;
             #endif
 
             if(d1->rooms.getLen() == 0)
@@ -648,7 +648,7 @@ int netOpt::groupRooms()
                 cout << "." << stoi(to_string(mac[i]));
             }
             cout << dec << " assigned to " << d1->rooms.getLen() << " rooms" << endl;
-            cout << "First room pointer is " << rooms.getHead() << endl;
+            cout << "First room pointer is " << d1->rooms.getHead() << endl;
         #endif
 
         if(d1->rooms.getLen() == 0)
@@ -697,6 +697,7 @@ int netOpt::groupRooms()
                 while(listIteratorM2)
                 {
                     m2 = (roomMember *)listIteratorM2->data;
+                    
 
                     switch(((devRecord *)m1->member)->devType)
                     {
@@ -738,7 +739,7 @@ int netOpt::groupRooms()
                     r1->mems.append(m1);
                     roomFound = true;
                     ((devRecord *)m1->member)->rooms.append(r1);
-                    
+
                     listIteratorR1 = NULL;
                 }
                 else
@@ -1013,7 +1014,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        unpackMAC(d1->macAddr, mac);
+        unpackMAC(d2->macAddr, mac);
         cout << dec << " and tv " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
@@ -1042,8 +1043,6 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
 
     int probChange = 0;
     int timeDiff = 0;
-
-    
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
     {
@@ -1202,6 +1201,10 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                 }
             }
         }
+
+        #ifdef TESTING
+            cout << "compatability" << probChange << endl;
+        #endif
     }
 
     return probChange;
