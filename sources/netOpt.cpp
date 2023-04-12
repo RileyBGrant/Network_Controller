@@ -271,7 +271,7 @@ int netOpt::groupRooms()
                 {
                     case 1: //tv
                     {
-                        switch (((devGroup *)m2->member)->devtype)
+                        switch (((devRecord *)m2->member)->devType)
                         {
                             case 1: //tv
                             {
@@ -441,7 +441,7 @@ int netOpt::groupRooms()
                         {
                             case 0:
                             {
-                                switch (((devGroup *)m2->member)->devtype)
+                                switch (((devRecord *)m2->member)->devType)
                                 {
                                     case 1:
                                     {
@@ -572,7 +572,7 @@ int netOpt::groupRooms()
                 {
                     m2 = (roomMember *)listIteratorM2->data;
 
-                    switch(((devGroup *)m1->member)->devtype)
+                    switch(((devRecord *)m1->member)->devType)
                     {
                         case 1:
                         {
@@ -597,11 +597,11 @@ int netOpt::groupRooms()
                 {
                     m2 = (roomMember *)listIteratorM2->data;
 
-                    switch(((devGroup *)m1->member)->devtype)
+                    switch(((devRecord *)m1->member)->devType)
                     {
                         case 1:
                         {
-                            switch (((devGroup *)m2->member)->devtype)
+                            switch (((devRecord *)m2->member)->devType)
                             {
                                 case 1:
                                 {
