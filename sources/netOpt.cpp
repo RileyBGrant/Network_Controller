@@ -112,6 +112,7 @@ int netOpt::groupRooms()
         while(listIteratorM1)
         {
             m1 = (roomMember *)listIteratorM1->data;
+            probChange = 0;
             //g1 = (devGroup *) m1->member;
             listIteratorM2 = r1->groups.getNext(listIteratorM1);
 
@@ -128,7 +129,7 @@ int netOpt::groupRooms()
                         {
                             case 0: //light
                             { 
-                                probChange = light2Light(m1,m2);
+                                probChange += light2Light(m1,m2);
                                 break;
                             }
                         }
@@ -179,7 +180,7 @@ int netOpt::groupRooms()
                         {
                             case 1: //tv
                             {
-                                probChange = light2mainDev(m1,m2);                                
+                                probChange += light2mainDev(m1,m2);                                
                                 break;
                             }
                         }
@@ -262,6 +263,7 @@ int netOpt::groupRooms()
         while(listIteratorM1)
         {
             m1 = (roomMember *)listIteratorM1->data;
+            probChange = 0;
 
             listIteratorM2 = r1->mems.getNext(listIteratorM2);
 
@@ -277,7 +279,7 @@ int netOpt::groupRooms()
                         {
                             case 1: //tv
                             {
-                                probChange = tv2tv(m1,m2);
+                                probChange += tv2tv(m1,m2);
                                 break;
                             }  
                         }
