@@ -853,12 +853,13 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
             listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
         }
-        
+
+        #ifdef TESTING
+            cout << "Compatability: " << probChange << endl;
+        #endif
     }
 
-    #ifdef TESTING
-        cout << "Compatability: " << probChange << endl;
-    #endif
+    
 
     return probChange;
 }
