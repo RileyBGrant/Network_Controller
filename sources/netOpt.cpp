@@ -778,6 +778,23 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     activityRecord *a1;
     activityRecord *a2;
     activityRecord *a3;
+
+    #ifdef TESTING
+    uint8_t mac[6];
+        unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
+        cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        unpackMAC(d1->macAddr, mac);
+        cout << dec << " and main dev " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        cout << dec << endl;
+    #endif
     
     int probChange = 0;
     
@@ -838,6 +855,10 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         }
         
     }
+
+    #ifdef TESTING
+        cout << "Compatability: " << probchange << endl;
+    #endif
 
     return probChange;
 }
