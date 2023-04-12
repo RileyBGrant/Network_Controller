@@ -27,8 +27,8 @@ struct devRecord
     uint64_t macAddr;
     uint8_t devType;
     linkedList_t activity; //list of activity record types
-    linkedList_t groups;
-    linkedList_t rooms;
+    linkedList_t groups; //list of devGroups that this dev is a part of
+    linkedList_t rooms; //list of devRooms that this dev is a part of
 };
 
 //Class for the network interface
@@ -84,7 +84,7 @@ public:
     linkedList_t *getGroups();
     int addDevice(devRecord *newDev);
     int groupLights();
-    int inactivity(string *message);
+    string inactivity(devRecord *d0);
 
     #ifdef TESTING
         int printDevs();
@@ -122,6 +122,8 @@ public:
     int optimise();
     int groupRooms();
     int8_t light2Light(roomMember *m1, roomMember *m2);
+    int8_t light2mainDev(roomMember *light, roomMember *mainDev);
+    int8_t tv2tv(roomMember *m1, roomMember *m2);
     int activeRoomUpdate();
     int sendDevStims();
 

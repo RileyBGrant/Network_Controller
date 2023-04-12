@@ -286,6 +286,39 @@ int lightOptimiser::groupLights()
     return 0;
 }
 
+string lightOptimiser::inactivity(devRecord *d0)
+{
+    string message = "";
+    uint8_t macAddr[6];
+    unpackMAC(d0->macAddr, macAddr);
+
+    #ifdef TESTING
+        cout << hex << stoi(to_string(macAddr[0]));
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << stoi(to_string(macAddr[i]));
+        }
+        cout << dec << endl;
+    #endif
+
+    for(int i = 0; i < 6; i++) //MAC
+    {
+        message += (char)macAddr[i];
+    }
+
+    message += ","; 
+    message += (char)0; //varID
+    message += ",";
+    message += '0'; //signal
+
+    for(int i = 0; i < 6; i++)
+    {
+        message += (char)0; //padding
+    }
+
+    return message;
+}
+
 #ifdef TESTING
     int lightOptimiser::printDevs()
     {

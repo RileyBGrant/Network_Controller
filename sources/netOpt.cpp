@@ -115,10 +115,10 @@ int netOpt::groupRooms()
 
                 switch(((devGroup *)m1->member)->devtype)
                 {
-                case 0:
+                case 0: //light
                     switch (((devGroup *)m2->member)->devtype)
                     {
-                    case 0:
+                    case 0: //light
                         probChange = light2Light(m1,m2);
                         
                         break;
@@ -153,6 +153,147 @@ int netOpt::groupRooms()
                 }
 
                 listIteratorM2 = r1->groups.getNext(listIteratorM2);
+            }
+
+            listIteratorM2 = r1->mems.getHead();
+
+            while(listIteratorM2)
+            {
+                m2 = (roomMember *)listIteratorM2->data;
+
+                switch(((devRecord *)m1->member)->devType)
+                {
+                case 0: //light
+                    switch (((devGroup *)m2->member)->devtype)
+                    {
+                    case 1: //tv
+                        probChange = light2mainDev(m1,m2);
+                        
+                        break;
+                    }
+                    break;
+                }          
+
+                if(probChange + m1->memberProb < 0)
+                {
+                    m1->memberProb = 0;
+                }
+                else if (probChange + m1->memberProb > 255)
+                {
+                    m1->memberProb = 255;
+                }
+                else
+                {
+                    m1->memberProb += probChange;
+                }
+
+                if(probChange + m2->memberProb < 0)
+                {
+                    m2->memberProb = 0;
+                }
+                else if (probChange + m2->memberProb > 255)
+                {
+                    m2->memberProb = 255;
+                }
+                else
+                {
+                    m2->memberProb += probChange;
+                }
+
+                listIteratorM2 = r1->mems.getNext(listIteratorM2);
+            }
+
+            if(counterM1 > 0 && m1->memberProb < 100)
+            {
+                listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+
+                while (listIteratorD1)
+                {
+                    d1 = (devRecord *)listIteratorD1->data;
+                    listIteratorR2 = d1->rooms.getHead();
+                    counterR2 = 0;
+
+                    while(listIteratorR2)
+                    {
+                        r2 = (devRoom *)listIteratorR2->data;
+
+                        if(r2 == r1)
+                        {
+                            listIteratorR2 = d1->rooms.getNext(listIteratorR2);
+                            d1->rooms.remove(counterR2);
+                        }
+                        else
+                        {
+                            listIteratorR2 = d1->rooms.getNext(listIteratorR2);
+                            counterR2++;
+                        }
+                    }
+
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                }
+
+                delete(m1);
+                listIteratorM1 = r1->groups.getNext(listIteratorM1);
+                r1->groups.remove(counterM1);
+            }
+            else
+            {
+                listIteratorM1 = r1->groups.getNext(listIteratorM1);
+                counterM1++;
+            }
+        }
+
+        listIteratorM1 = r1->mems.getHead();
+
+        while(listIteratorM1)
+        {
+            m1 = (roomMember *)listIteratorM1->data;
+            listIteratorM2 = r1->mems.getHead();
+
+            while(listIteratorM2)
+            {
+                m2 = (roomMember *)listIteratorM2->data;
+
+                switch(((devRecord *)m1->member)->devType)
+                {
+                case 1: //tv
+                    switch (((devGroup *)m2->member)->devtype)
+                    {
+                    case 1: //tv
+                        probChange = tv2tv(m1,m2);
+                        
+                        break;
+                    }
+                    break;
+                }          
+
+                if(probChange + m1->memberProb < 0)
+                {
+                    m1->memberProb = 0;
+                }
+                else if (probChange + m1->memberProb > 255)
+                {
+                    m1->memberProb = 255;
+                }
+                else
+                {
+                    m1->memberProb += probChange;
+                }
+
+                if(probChange + m2->memberProb < 0)
+                {
+                    m2->memberProb = 0;
+                }
+                else if (probChange + m2->memberProb > 255)
+                {
+                    m2->memberProb = 255;
+                }
+                else
+                {
+                    m2->memberProb += probChange;
+                }
+
+                listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
             if(counterM1 > 0 && m1->memberProb < 100)
@@ -270,6 +411,27 @@ int netOpt::groupRooms()
                         listIteratorM2 = r1->mems.getNext(listIteratorM2);
                     }
 
+                    listIteratorM2 = r1->mems.getHead();
+
+                    while(listIteratorM2)
+                    {
+                        m2 = (roomMember *)listIteratorM2->data;
+
+                        switch(((devGroup *)m1->member)->devtype)
+                        {
+                        case 0:
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                            case 1:
+                                compatability += light2mainDev(m1,m2);   
+                                break;
+                            }
+                            break;
+                        }  
+
+                        listIteratorM2 = r1->mems.getNext(listIteratorM2);
+                    }
+
                     if(compatability > 0)
                     {
                         #ifdef TESTING
@@ -342,6 +504,155 @@ int netOpt::groupRooms()
         }     
         
         listIteratorL1 = groups.getNext(listIteratorL1);
+    }
+
+    listIteratorD1 = devices->getHead();
+
+    while(listIteratorD1)
+    {
+        d1 = (devRecord *)listIteratorD1->data;
+
+        #ifdef TESTING
+            uint8_t mac[6];
+            
+            cout << "Device is ";
+            unpackMAC(d1->macAddr, mac);
+            cout << hex << stoi(to_string(mac[0]));
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << stoi(to_string(mac[i]));
+            }
+            cout << dec << " assigned to " << d1->rooms.getLen() << " rooms" << endl;
+            cout << "First room pointer is " << rooms.getHead() << endl;
+        #endif
+
+        if(d1->rooms.getLen() == 0)
+        {
+            #ifdef TESTING
+                cout << "Device has no room assigned" << endl;
+            #endif
+            m1 = new roomMember;
+            m1->member = g1;
+            roomFound = false;
+
+            //check if this group fits into an existing room
+            listIteratorR1 = rooms.getHead();
+
+            while(listIteratorR1)
+            {
+                compatability = 0;
+                r1 = (devRoom *)listIteratorR1->data;
+                listIteratorM2 = r1->groups.getHead();
+
+                while(listIteratorM2)
+                {
+                    m2 = (roomMember *)listIteratorM2->data;
+
+                    switch(((devGroup *)m1->member)->devtype)
+                    {
+                    case 1:
+                        switch (((devGroup *)m2->member)->devtype)
+                        {
+                        case 0:
+                            compatability += light2mainDev(m2,m1);   
+                            break;
+                        }
+                        break;
+                    }  
+
+                    listIteratorM2 = r1->mems.getNext(listIteratorM2);
+                }
+
+                listIteratorM2 = r1->mems.getHead();
+
+                while(listIteratorM2)
+                {
+                    m2 = (roomMember *)listIteratorM2->data;
+
+                    switch(((devGroup *)m1->member)->devtype)
+                    {
+                    case 1:
+                        switch (((devGroup *)m2->member)->devtype)
+                        {
+                        case 1:
+                            compatability += tv2tv(m1,m2);   
+                            break;
+                        }
+                        break;
+                    }  
+
+                    listIteratorM2 = r1->mems.getNext(listIteratorM2);
+                }
+
+                if(compatability > 0)
+                {
+                    #ifdef TESTING
+                        cout << "group compatible with a room" << endl;
+                    #endif
+                    
+                    if(compatability + 128 < 0)
+                    {
+                        m1->memberProb = 0;
+                    }
+                    else if (compatability + 128 > 255)
+                    {
+                        m1->memberProb = 255;
+                    }
+                    else
+                    {
+                        m1->memberProb = compatability + 128;
+                    }
+                    r1->groups.append(m1);
+                    roomFound = true;
+                    listIteratorR1 = NULL;
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+                
+                    while(listIteratorD1)
+                    {
+                        d1 = (devRecord *)listIteratorD1->data;
+                        
+                        d1->rooms.append(r1);
+
+                        listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                    }
+                }
+                else
+                {
+                    listIteratorR1 = rooms.getNext(listIteratorR1);
+                }
+            }
+
+            if(roomFound == false)
+            {
+                #ifdef TESTING
+                    cout << "No compatible rooms, creating new room" << endl;
+                #endif
+
+                r1 = new devRoom;
+                m1->memberProb = 255;
+                r1->activeProb = 0;
+                r1->groups.append(m1);
+                rooms.append(r1);
+                listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+                
+                while(listIteratorD1)
+                {
+                    d1 = (devRecord *)listIteratorD1->data;
+                    
+                    d1->rooms.append(r1);
+
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                }
+            }
+        }
+        #ifdef TESTING
+            else
+            {
+                cout << "Group already part of a room" << endl;
+            }
+        #endif
+
+        listIteratorD1 = devices->getNext(listIteratorD1);
     }
 
     return 0;
@@ -429,6 +740,222 @@ int8_t netOpt::light2Light(roomMember *m1, roomMember *m2)
     #ifdef TESTIN
         cout << "Test complete, probability change of " << probChange << endl;
     #endif
+
+    return probChange;
+}
+
+int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
+{
+    devGroup *l1 = (devGroup *)light->member;
+    devRecord *d1 = (devRecord *)mainDev->member;
+    node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
+    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+    node_t *listIteratorA3 = d1->activity.getHead();
+    activityRecord *a1;
+    activityRecord *a2;
+    activityRecord *a3;
+    
+    int probChange = 0;
+    
+    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
+    {
+        a1 = (activityRecord *)listIteratorA1->data;
+        a2 = (activityRecord *)listIteratorA2->data;
+        a3 = (activityRecord *)listIteratorA3->data;
+        
+        if(a1->variable == 0 && a1->state == 1)
+        {
+            if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
+            {
+                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
+                {
+                    if(a2->timestamp >= a3->timestamp)
+                    {
+                        if(probChange <= 117)
+                        {
+                            probChange = probChange + 10;
+                        }
+                        else
+                        {
+                            probChange = 127;
+                        }
+
+                        listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                    }
+                    else
+                    {
+                        if(probChange >= -123)
+                        {
+                            probChange -= 5;
+                        }
+                        else
+                        {
+                            probChange = -128;
+                        }
+
+                        listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+                        listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                    }
+                }
+                else
+                {
+                    listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                }
+            }
+            else
+            {
+                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+            }
+        }
+        else
+        {
+            listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+        }
+        
+    }
+
+    return probChange;
+}
+
+int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
+{
+    devRecord *d1 = (devRecord *)m1->member;
+    devRecord *d2 = (devRecord *)m2->member;
+    node_t *listIteratorA1 = d1->activity.getHead();
+    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA2);
+    node_t *listIteratorA3 = d2->activity.getHead();
+    node_t *listIteratorA4 =  d2->activity.getNext(listIteratorA4);
+    activityRecord *a1;
+    activityRecord *a2;
+    activityRecord *a3;
+    activityRecord *a4;
+
+    int probChange = 0;
+    int timeDiff = 0;
+
+    while(listIteratorA1 != NULL && listIteratorA2 != NULL)
+    {
+        a1 = (activityRecord *)listIteratorA1->data;
+        a2 = (activityRecord *)listIteratorA2->data;
+        a1 = (activityRecord *)listIteratorA1->data;
+        a2 = (activityRecord *)listIteratorA2->data;
+        timeDiff = a1->timestamp - a3->timestamp;
+
+        if(a1->variable == a3->variable && a3->state == a3->state && (timeDiff > 5 || timeDiff < -5))
+        {
+            if(probChange <= 117)
+            {
+                probChange = probChange + 10;
+            }
+            else
+            {
+                probChange = 127;
+            }
+            
+            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+            listIteratorA2 = d1->activity.getNext(listIteratorA1);
+            listIteratorA3 = d2->activity.getNext(listIteratorA3);
+            listIteratorA4 = d2->activity.getNext(listIteratorA3);
+        }
+        else
+        {
+            if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
+            {
+                if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
+                {
+                    if(a3->variable == 0 && (a3->state == 3 || a3->state == 4))
+                    {
+                        if(a4->variable == 0 && (a4->state == 0 || a4->state == 1 || a4->state == 2))
+                        {
+                            if(a1->timestamp < a3->timestamp)
+                            {
+                                if(a2->timestamp > a3->timestamp)
+                                {
+                                    if(probChange >= -125)
+                                    {
+                                        probChange -= 3;
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                    }
+
+                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                                else
+                                {
+                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                }
+                            }
+                            else if(a1->timestamp > a3->timestamp)
+                            {
+                                if(a4->timestamp > a1->timestamp)
+                                {
+                                    if(probChange >= -125)
+                                    {
+                                        probChange -= 3;
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                    }
+
+                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                }
+                                else
+                                {
+                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                            }
+                            else
+                            {
+                                if(a2->timestamp > a4->timestamp)
+                                {
+                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                                else if(a2->timestamp < a4->timestamp)
+                                {
+                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                }
+                                else
+                                {
+                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            listIteratorA4 = d2->activity.getNext(listIteratorA4);
+                        }
+                    }
+                    else
+                    {
+                        listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                    }
+                }
+                else
+                {
+                    listIteratorA2 = d2->activity.getNext(listIteratorA2);
+                }
+            }
+            else
+            {
+                listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+            }
+        }
+    }
 
     return probChange;
 }
@@ -568,6 +1095,46 @@ int netOpt::activeRoomUpdate()
                         }
 
                         break;
+
+                    case 1:
+                        if(v1 == 0)
+                        {
+                            if(s1 == 3 || s1 == 4)
+                            {
+                                if(r1->activeProb <= 50.0)
+                                {
+                                    r1->activeProb += 50.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 100.0;
+                                }
+                            }
+                            else if(s1 == 0 || s1 == 2)
+                            {
+                                if(r1->activeProb >= 60.0)
+                                {
+                                    r1->activeProb -= 60.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            else
+                            {
+                                if(r1->activeProb <= 95.0)
+                                {
+                                    r1->activeProb += 50.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 100.0;
+                                }
+                            }
+                        }
+                        
+                        break;
                     }
                 }
                 else
@@ -587,6 +1154,21 @@ int netOpt::activeRoomUpdate()
                                 r1->activeProb = 0.0;
                             }
                         }
+                        break;
+
+                    case 1:
+                        if(v1 == 0 && (s1 == 3 || s1 == 4))
+                        {              
+                            if(r1->activeProb >= 25.0)
+                            {
+                                r1->activeProb -= 25.0;
+                            }
+                            else
+                            {
+                                r1->activeProb = 0.0;
+                            }
+                        }
+
                         break;
                     }
                     
@@ -687,33 +1269,7 @@ int netOpt::sendDevStims()
                             cout << "Sending message to turn off device ";
                         #endif
                         
-                        string message = "";
-
-                        unpackMAC(d1->macAddr, macAddr);
-
-                        #ifdef TESTING
-                            cout << hex << stoi(to_string(macAddr[0]));
-                            for(int i = 1; i < 6; i++)
-                            {
-                                cout << "." << stoi(to_string(macAddr[i]));
-                            }
-                            cout << dec << endl;
-                        #endif
-
-                        for(int i = 0; i < 6; i++) //MAC
-                        {
-                            message += (char)macAddr[i];
-                        }
-
-                        message += ","; 
-                        message += (char)0; //varID
-                        message += ",";
-                        message += '0'; //signal
-
-                        for(int i = 0; i < 6; i++)
-                        {
-                            message += (char)0; //padding
-                        }
+                        string message = lightOpt.inactivity(d1);                       
 
                         #ifdef TESTING
                             cout << "Message: " << message << endl;
