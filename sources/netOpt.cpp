@@ -270,6 +270,7 @@ int netOpt::groupRooms()
 
             while(listIteratorM2)
             {
+                cout << listIteratorM2 << endl;
                 m2 = (roomMember *)listIteratorM2->data;
 
                 switch(((devRecord *)m1->member)->devType)
