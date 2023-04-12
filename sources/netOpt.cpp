@@ -773,7 +773,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     devGroup *l1 = (devGroup *)light->member;
     devRecord *d1 = (devRecord *)mainDev->member;
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
     node_t *listIteratorA3 = d1->activity.getHead();
     activityRecord *a1;
     activityRecord *a2;
