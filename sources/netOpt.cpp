@@ -37,12 +37,19 @@ int netOpt::sortDevs()
 
         switch(type)
         {
-        case 0:
-            lightOpt.addDevice(dev);
-            break;
-        default:
-            #ifdef TESTING
-                cout << "DevType not found" << endl;
+            case 0:
+            {
+                lightOpt.addDevice(dev);
+                break;
+            }
+
+            #ifdef TESTING    
+                default:
+                {
+                    
+                        cout << "DevType not found" << endl;
+                    
+                }
             #endif
         }
 
@@ -115,15 +122,18 @@ int netOpt::groupRooms()
 
                 switch(((devGroup *)m1->member)->devtype)
                 {
-                case 0: //light
-                    switch (((devGroup *)m2->member)->devtype)
-                    {
                     case 0: //light
-                        probChange = light2Light(m1,m2);
-                        
+                    {
+                        switch (((devGroup *)m2->member)->devtype)
+                        {
+                            case 0: //light
+                            { 
+                                probChange = light2Light(m1,m2);
+                                break;
+                            }
+                        }
                         break;
                     }
-                    break;
                 }          
 
                 if(probChange + m1->memberProb < 0)
@@ -163,15 +173,18 @@ int netOpt::groupRooms()
 
                 switch(((devRecord *)m1->member)->devType)
                 {
-                case 0: //light
-                    switch (((devGroup *)m2->member)->devtype)
+                    case 0: //light
                     {
-                    case 1: //tv
-                        probChange = light2mainDev(m1,m2);
-                        
+                        switch (((devGroup *)m2->member)->devtype)
+                        {
+                            case 1: //tv
+                            {
+                                probChange = light2mainDev(m1,m2);                                
+                                break;
+                            }
+                        }
                         break;
                     }
-                    break;
                 }          
 
                 if(probChange + m1->memberProb < 0)
@@ -1046,95 +1059,99 @@ int netOpt::activeRoomUpdate()
                 {
                     switch(lastDevUpdated->devType)
                     {
-                    case 0:
-                        int numLights = 0;
-                        listIteratorG1 = r1->groups.getHead();
-
-                        while(listIteratorG1)
+                        case 0:
                         {
-                            g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+                            int numLights = 0;
+                            listIteratorG1 = r1->groups.getHead();
 
-                            if(g1->devtype == 0)
+                            while(listIteratorG1)
                             {
-                                numLights++;
-                            }
+                                g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
 
-                            listIteratorG1 = r1->groups.getNext(listIteratorG1);
-                        }
+                                if(g1->devtype == 0)
+                                {
+                                    numLights++;
+                                }
 
-                        #ifdef TESTING
-                            cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
-                        #endif
-
-                        if(v1 == 0 && s1 == 1)
-                        {
-                            if(r1->activeProb <= 100.0 - (1.0 / numLights))
-                            {
-                                r1->activeProb += 1.0 / numLights;
-                            }
-                            else
-                            {
-                                r1->activeProb = 100.0;
+                                listIteratorG1 = r1->groups.getNext(listIteratorG1);
                             }
 
                             #ifdef TESTING
-                                cout << ", new room probability is " << r1->activeProb << endl;
+                                cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
                             #endif
-                        }
-                        else if (v1 == 0 && s1 == 0)
-                        {
-                            if(r1->activeProb >= 1.0 / numLights)
-                            {
-                                r1->activeProb -= 1.0 / numLights;
 
-                            }
-                            else
+                            if(v1 == 0 && s1 == 1)
                             {
-                                r1->activeProb = 0.0;
-                            }
-                        }
-
-                        break;
-
-                    case 1:
-                        if(v1 == 0)
-                        {
-                            if(s1 == 3 || s1 == 4)
-                            {
-                                if(r1->activeProb <= 50.0)
+                                if(r1->activeProb <= 100.0 - (1.0 / numLights))
                                 {
-                                    r1->activeProb += 50.0;
+                                    r1->activeProb += 1.0 / numLights;
                                 }
                                 else
                                 {
                                     r1->activeProb = 100.0;
                                 }
+
+                                #ifdef TESTING
+                                    cout << ", new room probability is " << r1->activeProb << endl;
+                                #endif
                             }
-                            else if(s1 == 0 || s1 == 2)
+                            else if (v1 == 0 && s1 == 0)
                             {
-                                if(r1->activeProb >= 60.0)
+                                if(r1->activeProb >= 1.0 / numLights)
                                 {
-                                    r1->activeProb -= 60.0;
+                                    r1->activeProb -= 1.0 / numLights;
+
                                 }
                                 else
                                 {
                                     r1->activeProb = 0.0;
                                 }
                             }
-                            else
+
+                            break;
+                        }
+
+                        case 1:
+                        {
+                            if(v1 == 0)
                             {
-                                if(r1->activeProb <= 95.0)
+                                if(s1 == 3 || s1 == 4)
                                 {
-                                    r1->activeProb += 50.0;
+                                    if(r1->activeProb <= 50.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0 || s1 == 2)
+                                {
+                                    if(r1->activeProb >= 60.0)
+                                    {
+                                        r1->activeProb -= 60.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
                                 }
                                 else
                                 {
-                                    r1->activeProb = 100.0;
+                                    if(r1->activeProb <= 95.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
                                 }
                             }
+                            
+                            break;
                         }
-                        
-                        break;
                     }
                 }
                 else
