@@ -800,6 +800,16 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     
     while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
     {
+        #ifdef  TESTING
+            tm tempTime;
+            tempTime = *gmtime(&a1->timestamp);
+            cout << "a1: " << listIteratorA1 << ", variable " << a1->variable << ", state " << a1->state << ", timestamp " << asctime(&tempTime);
+            tempTime = *gmtime(&a2->timestamp);
+            cout << "a2: " << listIteratorA2 << ", variable " << a2->variable << ", state " << a2->state << ", timestamp " << asctime(&tempTime);
+            tempTime = *gmtime(&a3->timestamp);
+            cout << "a3: " << listIteratorA3 << ", variable " << a3->variable << ", state " << a3->state << ", timestamp " << asctime(&tempTime);
+        #endif
+        
         a1 = (activityRecord *)listIteratorA1->data;
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
@@ -841,7 +851,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                 else
                 {
                     #ifdef TESTING
-                        cout << "a3 invalid" << endl;
+                        cout << "a3 invalid: " << endl;
                     #endif
                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
                 }
