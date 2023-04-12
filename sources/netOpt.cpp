@@ -266,11 +266,10 @@ int netOpt::groupRooms()
             m1 = (roomMember *)listIteratorM1->data;
             probChange = 0;
 
-            listIteratorM2 = r1->mems.getNext(listIteratorM2);
+            listIteratorM2 = r1->mems.getNext(listIteratorM1);
 
             while(listIteratorM2)
             {
-                cout << listIteratorM2 << endl;
                 m2 = (roomMember *)listIteratorM2->data;
 
                 switch(((devRecord *)m1->member)->devType)
