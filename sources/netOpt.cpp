@@ -556,7 +556,7 @@ int netOpt::groupRooms()
                 cout << "Device has no room assigned" << endl;
             #endif
             m1 = new roomMember;
-            m1->member = g1;
+            m1->member = d1;
             roomFound = false;
 
             //check if this group fits into an existing room
