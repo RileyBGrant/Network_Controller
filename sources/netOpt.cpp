@@ -407,7 +407,7 @@ int netOpt::groupRooms()
             if(r1->mems.getLen() == 1)
             {
                 #ifdef TESTING
-                    cout << "Device no longer in room";
+                    cout << "Removing solo member";
                 #endif
 
                 d1 = (devRecord *)m1->member;
@@ -431,9 +431,9 @@ int netOpt::groupRooms()
                     }
                 }
 
+                cout << m1 << endl;
+
                 delete(m1);
-                listIteratorM1 = r1->mems.getNext(listIteratorM1);
-                r1->mems.remove(counterM1);
 
                 #ifdef TESTING
                     cout << "solo member removed" << endl;
