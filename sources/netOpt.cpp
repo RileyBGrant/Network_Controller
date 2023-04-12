@@ -813,7 +813,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
 
         #ifdef  TESTING
             tm tempTime;
-            cout << &a1->timestamp << endl;
+            cout << a1->timestamp << endl;
             tempTime = *gmtime(&a1->timestamp);
             cout << asctime(&tempTime);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << asctime(&tempTime);
