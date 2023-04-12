@@ -1485,7 +1485,7 @@ int netOpt::sendDevStims()
             }
             else
             {
-                d1 = (devRecord *)((devGroup *)((roomMember *)r1->mems.getHead()->data)->member)->mems.getHead()->data;
+                d1 = (devRecord *)((roomMember *)r1->mems.getHead()->data)->member;
             }
             unpackMAC(d1->macAddr, mac);
             cout << "with lead device " << hex << (int)mac[0];
