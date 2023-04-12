@@ -80,6 +80,7 @@ int netOpt::optimise()
 int netOpt::groupRooms()
 {
     node_t *listIteratorR1 = rooms.getHead();
+    int counterR1 = 0;
     node_t *listIteratorR2;
     devRoom *r1;
     devRoom *r2;
@@ -96,7 +97,7 @@ int netOpt::groupRooms()
     //check exisiting rooms
     #ifdef TESTING
         cout << rooms.getLen() << " exisiting rooms" << endl;
-        int counterR1 = 0;
+        
         printRooms();
     #endif
     while (listIteratorR1)
@@ -107,7 +108,6 @@ int netOpt::groupRooms()
 
         #ifdef TESTING
             cout << "Checking room " << counterR1 << endl;
-            counterR1 ++;
         #endif
 
         while(listIteratorM1)
@@ -351,14 +351,96 @@ int netOpt::groupRooms()
             else
             {
                 #ifdef TESTING
-                    cout << "Device still in room";
+                    cout << "Device still in room" << endl;
                 #endif
                 listIteratorM1 = r1->mems.getNext(listIteratorM1);
                 counterM1++;
             }
         }
 
-        listIteratorR1 = rooms.getNext(listIteratorR1);
+        if(r1->groups.getLen() + r1->mems.getLen() < 2)
+        {
+            #ifdef TESTING
+                cout << "Room with 1 memebr deletign room" << endl;
+            #endif
+            if(r1->groups.getLen() == 1)
+            {
+                m1 = ((roomMember *)r1->groups.getHead()->data);
+                listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+
+                while (listIteratorD1)
+                {
+                    d1 = (devRecord *)listIteratorD1->data;
+                    listIteratorR2 = d1->rooms.getHead();
+                    counterR2 = 0;
+
+                    while(listIteratorR2)
+                    {
+                        r2 = (devRoom *)listIteratorR2->data;
+
+                        if(r2 == r1)
+                        {
+                            listIteratorR2 = d1->rooms.getNext(listIteratorR2);
+                            d1->rooms.remove(counterR2);
+                        }
+                        else
+                        {
+                            listIteratorR2 = d1->rooms.getNext(listIteratorR2);
+                            counterR2++;
+                        }
+                    }
+
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                }
+
+                delete(m1);
+                listIteratorM1 = r1->groups.getNext(listIteratorM1);
+                r1->groups.remove(counterM1);
+            }
+
+            if(r1->mems.getLen() == 1)
+            {
+                #ifdef TESTING
+                    cout << "Device no longer in room";
+                #endif
+
+                d1 = (devRecord *)m1->member;
+
+                listIteratorR2 = d1->rooms.getHead();
+                counterR2 = 0;
+
+                while(listIteratorR2)
+                {
+                    r2 = (devRoom *)listIteratorR2->data;
+
+                    if(r2 == r1)
+                    {
+                        listIteratorR2 = d1->rooms.getNext(listIteratorR2);
+                        d1->rooms.remove(counterR2);
+                    }
+                    else
+                    {
+                        listIteratorR2 = d1->rooms.getNext(listIteratorR2);
+                        counterR2++;
+                    }
+                }
+
+                delete(m1);
+                listIteratorM1 = r1->mems.getNext(listIteratorM1);
+                r1->mems.remove(counterM1);
+            }
+
+            delete(r1);
+            listIteratorR1 = rooms.getNext(listIteratorR1);
+            rooms.remove(counterR1);
+
+        }
+        else
+        {
+            listIteratorR1 = rooms.getNext(listIteratorR1);
+            counterR1++;
+        }
+        
     }
 
     //Fit unroomed devices into rooms
