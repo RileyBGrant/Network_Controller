@@ -803,13 +803,13 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         #ifdef TESTING
             cout << listIteratorA1->data << " " << listIteratorA2->data << " " << listIteratorA3->data << endl;
         #endif
-        a3 = (activityRecord *)listIteratorA3->data;
-        cout << "3 ";
+        
         a1 = (activityRecord *)listIteratorA1->data;
         cout << "1 ";
         a2 = (activityRecord *)listIteratorA2->data;
-        cout << "2" << endl;
-        
+        cout << "2" ;
+        a3 = (activityRecord *)listIteratorA3->data;
+        cout << "3 " << endl;
 
         #ifdef  TESTING
             tm tempTime;
