@@ -269,15 +269,18 @@ int netOpt::groupRooms()
 
                 switch(((devRecord *)m1->member)->devType)
                 {
-                case 1: //tv
-                    switch (((devGroup *)m2->member)->devtype)
-                    {
                     case 1: //tv
-                        probChange = tv2tv(m1,m2);
-                        
+                    {
+                        switch (((devGroup *)m2->member)->devtype)
+                        {
+                            case 1: //tv
+                            {
+                                probChange = tv2tv(m1,m2);
+                                break;
+                            }  
+                        }
                         break;
                     }
-                    break;
                 }          
 
                 if(probChange + m1->memberProb < 0)
@@ -411,14 +414,18 @@ int netOpt::groupRooms()
 
                         switch(((devGroup *)m1->member)->devtype)
                         {
-                        case 0:
-                            switch (((devGroup *)m2->member)->devtype)
-                            {
                             case 0:
-                                compatability += light2Light(m1,m2);   
+                            {
+                                switch (((devGroup *)m2->member)->devtype)
+                                {
+                                    case 0:
+                                    {
+                                        compatability += light2Light(m1,m2);   
+                                        break;
+                                    }
+                                }
                                 break;
-                            }
-                            break;
+                            }   
                         }  
 
                         listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -432,14 +439,18 @@ int netOpt::groupRooms()
 
                         switch(((devGroup *)m1->member)->devtype)
                         {
-                        case 0:
-                            switch (((devGroup *)m2->member)->devtype)
+                            case 0:
                             {
-                            case 1:
-                                compatability += light2mainDev(m1,m2);   
+                                switch (((devGroup *)m2->member)->devtype)
+                                {
+                                    case 1:
+                                    {
+                                        compatability += light2mainDev(m1,m2);   
+                                        break;
+                                    }
+                                }
                                 break;
                             }
-                            break;
                         }  
 
                         listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -563,14 +574,18 @@ int netOpt::groupRooms()
 
                     switch(((devGroup *)m1->member)->devtype)
                     {
-                    case 1:
-                        switch (((devGroup *)m2->member)->devtype)
+                        case 1:
                         {
-                        case 0:
-                            compatability += light2mainDev(m2,m1);   
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0:
+                                {
+                                    compatability += light2mainDev(m2,m1);   
+                                    break;
+                                }
+                            }
                             break;
                         }
-                        break;
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -584,14 +599,18 @@ int netOpt::groupRooms()
 
                     switch(((devGroup *)m1->member)->devtype)
                     {
-                    case 1:
-                        switch (((devGroup *)m2->member)->devtype)
-                        {
                         case 1:
-                            compatability += tv2tv(m1,m2);   
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 1:
+                                {
+                                    compatability += tv2tv(m1,m2);   
+                                    break;
+                                }
+                            }
                             break;
                         }
-                        break;
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -1158,37 +1177,40 @@ int netOpt::activeRoomUpdate()
                 {
                     switch(lastDevUpdated->devType)
                     {
-                    case 0:
-                        if(v1 == 0 && s1 == 1)
+                        case 0:
                         {
-                            if(r1->activeProb >= 1.0)
+                            if(v1 == 0 && s1 == 1)
                             {
-                                r1->activeProb -= 1.0;
+                                if(r1->activeProb >= 1.0)
+                                {
+                                    r1->activeProb -= 1.0;
 
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
                             }
-                            else
-                            {
-                                r1->activeProb = 0.0;
-                            }
-                        }
-                        break;
-
-                    case 1:
-                        if(v1 == 0 && (s1 == 3 || s1 == 4))
-                        {              
-                            if(r1->activeProb >= 25.0)
-                            {
-                                r1->activeProb -= 25.0;
-                            }
-                            else
-                            {
-                                r1->activeProb = 0.0;
-                            }
+                            break;
                         }
 
-                        break;
+                        case 1:
+                        {
+                            if(v1 == 0 && (s1 == 3 || s1 == 4))
+                            {              
+                                if(r1->activeProb >= 25.0)
+                                {
+                                    r1->activeProb -= 25.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+
+                            break;
+                        }
                     }
-                    
                 }
 
                 listIteratorR1 = rooms.getNext(listIteratorR1);
