@@ -803,11 +803,11 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         #ifdef  TESTING
             tm tempTime;
             tempTime = *gmtime(&a1->timestamp);
-            cout << "a1: " << listIteratorA1 << ", variable " << a1->variable << ", state " << a1->state << ", timestamp " << asctime(&tempTime);
+            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << asctime(&tempTime);
             tempTime = *gmtime(&a2->timestamp);
-            cout << "a2: " << listIteratorA2 << ", variable " << a2->variable << ", state " << a2->state << ", timestamp " << asctime(&tempTime);
+            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << asctime(&tempTime);
             tempTime = *gmtime(&a3->timestamp);
-            cout << "a3: " << listIteratorA3 << ", variable " << a3->variable << ", state " << a3->state << ", timestamp " << asctime(&tempTime);
+            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << asctime(&tempTime);
         #endif
         
         a1 = (activityRecord *)listIteratorA1->data;
