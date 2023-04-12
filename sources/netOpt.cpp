@@ -316,6 +316,10 @@ int netOpt::groupRooms()
 
             if(counterM1 > 0 && m1->memberProb < 100)
             {
+                #ifdef TESTING
+                    cout << "Device no longer in room";
+                #endif
+
                 d1 = (devRecord *)m1->member;
 
                 listIteratorR2 = d1->rooms.getHead();
@@ -343,6 +347,9 @@ int netOpt::groupRooms()
             }
             else
             {
+                #ifdef TESTING
+                    cout << "Device still in room";
+                #endif
                 listIteratorM1 = r1->mems.getNext(listIteratorM1);
                 counterM1++;
             }
