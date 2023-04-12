@@ -918,6 +918,34 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
     int probChange = 0;
     int timeDiff = 0;
 
+    #ifdef TESTING
+    uint8_t mac[6];
+        unpackMAC(d1->macAddr, mac);
+        cout << "Compatability test between tv " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        unpackMAC(d1->macAddr, mac);
+        cout << dec << " and tv " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        cout << dec << endl;
+
+        
+    #endif
+
+    if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
+    {
+        #ifdef TESTING
+            cout << "activity records are too short" << endl;
+        #endif
+
+        return -1;
+    }
+
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
     {
         a1 = (activityRecord *)listIteratorA1->data;
