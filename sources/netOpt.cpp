@@ -366,6 +366,7 @@ int netOpt::groupRooms()
 
             if(r1->groups.getLen() == 1)
             {
+                cout << "Deleting group" << endl;
                 m1 = ((roomMember *)r1->groups.getHead()->data);
 
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
