@@ -773,14 +773,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     devGroup *l1 = (devGroup *)light->member;
     devRecord *d1 = (devRecord *)mainDev->member;
 
-    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
-    {
-        #ifdef TESTING
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
+    
 
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
     node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
@@ -805,7 +798,16 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         }
         cout << dec << endl;
     #endif
-    
+
+    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
+    {
+        #ifdef TESTING
+            cout << "activity records are too short" << endl;
+        #endif
+
+        return -1;
+    }
+
     int probChange = 0;
     
     while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
@@ -823,9 +825,9 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             //tempTime = *gmtime(&a2->timestamp);
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a1->timestamp << endl;
+            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             //tempTime = *gmtime(&a3->timestamp);
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a1->timestamp << endl;
+            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
         #endif
 
         if(a1->variable == 0 && a1->state == 1)
