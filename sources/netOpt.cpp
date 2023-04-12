@@ -560,7 +560,7 @@ int netOpt::groupRooms()
                     if(compatability > 0)
                     {
                         #ifdef TESTING
-                            cout << "group compatible with a room" << endl;
+                            cout << "Group compatible with a room" << endl;
                         #endif
                         
                         if(compatability + 128 < 0)
@@ -720,7 +720,7 @@ int netOpt::groupRooms()
                 if(compatability > 0)
                 {
                     #ifdef TESTING
-                        cout << "group compatible with a room" << endl;
+                        cout << "Solo dev compatible with a room" << endl;
                     #endif
                     
                     if(compatability + 128 < 0)
@@ -735,19 +735,11 @@ int netOpt::groupRooms()
                     {
                         m1->memberProb = compatability + 128;
                     }
-                    r1->groups.append(m1);
+                    r1->mems.append(m1);
                     roomFound = true;
+                    ((devRecord *)m1->member)->rooms.append(r1);
+                    
                     listIteratorR1 = NULL;
-                    listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
-                
-                    while(listIteratorD1)
-                    {
-                        d1 = (devRecord *)listIteratorD1->data;
-                        
-                        d1->rooms.append(r1);
-
-                        listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
-                    }
                 }
                 else
                 {
