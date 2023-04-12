@@ -605,7 +605,6 @@ int netOpt::groupRooms()
                             {
                                 case 1:
                                 {
-                                    cout << "tv2 tv" << endl;
                                     compatability += tv2tv(m1,m2);   
                                     break;
                                 }
@@ -907,17 +906,6 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
 {
     devRecord *d1 = (devRecord *)m1->member;
     devRecord *d2 = (devRecord *)m2->member;
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA2);
-    node_t *listIteratorA3 = d2->activity.getHead();
-    node_t *listIteratorA4 =  d2->activity.getNext(listIteratorA4);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
 
     #ifdef TESTING
     uint8_t mac[6];
@@ -934,8 +922,6 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
             cout << "." << (int)mac[i];
         }
         cout << dec << endl;
-
-        
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
@@ -946,6 +932,20 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
 
         return -1;
     }
+    
+    node_t *listIteratorA1 = d1->activity.getHead();
+    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA2);
+    node_t *listIteratorA3 = d2->activity.getHead();
+    node_t *listIteratorA4 =  d2->activity.getNext(listIteratorA4);
+    activityRecord *a1;
+    activityRecord *a2;
+    activityRecord *a3;
+    activityRecord *a4;
+
+    int probChange = 0;
+    int timeDiff = 0;
+
+    
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
     {
