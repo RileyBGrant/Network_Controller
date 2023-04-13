@@ -50,6 +50,11 @@ int lightOptimiser::groupLights()
     node_t *listIteratorD2;
     node_t *listIteratorA1;
     node_t *listIteratorA2;
+    node_t *listIteratorR1;
+    node_t *listIteratorR2;
+    devRoom *r1;
+    devRoom *r2;
+    int counterR1;
     devGroup *group;
     int counterG1 = 0;
     int counterG2 = 0;
@@ -60,6 +65,7 @@ int lightOptimiser::groupLights()
     activityRecord *activity2;
     int len;
     bool devMatch;
+    bool roomMatch;
 
     //check current groups are accurate, WITH EXTRA TIME ADD MEMBERSHIP PROBABILITY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     while(listIteratorG1)
@@ -133,8 +139,42 @@ int lightOptimiser::groupLights()
                         {
                             if(listIteratorG2->data == group)
                             {
-                                
                                 dev->groups.remove(counterG2);
+                                listIteratorR1 = dev->rooms.getHead();
+                                counterR1 = 0;
+
+                                while(listIteratorR1)
+                                {
+                                    r1 = (devRoom *)listIteratorR1->data;
+                                    roomMatch = false;
+                                    listIteratorR2 = masterDev->rooms.getHead();
+
+                                    while(listIteratorR2)
+                                    {
+                                        r2 = (devRoom *)listIteratorR2->data;
+
+                                        if(r2 == r1)
+                                        {
+                                            roomMatch = true;
+                                            listIteratorR2 = NULL;
+                                        }
+                                        else
+                                        {
+                                            listIteratorR2 = masterDev->rooms.getNext(listIteratorR2);
+                                        }
+                                    }
+
+                                    listIteratorR1 = dev->rooms.getNext(listIteratorR1);
+                                    if(roomMatch == true)
+                                    {
+                                        dev->rooms.remove(counterR1);
+                                    }
+                                    else
+                                    {
+                                        counterR1++;
+                                    }
+                                }
+
                                 listIteratorG2 = NULL;
                             }
                             else
