@@ -70,6 +70,7 @@ int lightOptimiser::groupLights()
         masterDev = (devRecord *)listIteratorD1->data;
         len = masterDev->activity.getLen();
         listIteratorD1 = group->mems.getNext(listIteratorD1);
+        counterD = 1;
 
         while(listIteratorD1)
         {
@@ -88,16 +89,25 @@ int lightOptimiser::groupLights()
 
                     if(activity1->timestamp != activity2->timestamp)
                     {
+                        #ifdef TESTING
+                            cout << "Light Optimiser: Timestep mismatch, masterDev: " << activity1->timestamp << ", dev " << activity2->timestamp << endl;
+                        #endif
                         devMatch = false;
                     }
 
                     if(activity1->state != activity2->state)
                     {
+                        #ifdef TESTING
+                            cout << "Light Optimiser: Activity mismatch, masterDev: " << activity1->state << ", dev " << activity2->state << endl;
+                        #endif
                         devMatch = false;
                     }
 
                     if(activity1->variable != activity2->variable)
                     {
+                        #ifdef TESTING
+                            cout << "Light Optimiser: Variable mismatch, masterDev: " << activity1->variable << ", dev " << activity2->variable << endl;
+                        #endif
                         devMatch = false;
                     }
 
@@ -106,7 +116,7 @@ int lightOptimiser::groupLights()
                         #ifdef TESTING
                             uint8_t mac[6];
                             unpackMAC(dev->macAddr, mac);
-                            cout << "Removing device " << hex << (int)mac[0];
+                            cout << "light Optimiser: Removing device " << hex << (int)mac[0];
                             for(int i = 1; i < 6; i++)
                             {
                                 cout << "." << (int)mac[i];
