@@ -1055,7 +1055,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
             cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
         #endif
 
-        if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff > 5 || timeDiff < -5))
+        if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff < 5 && timeDiff > -5))
         {
             if(probChange <= 117)
             {
@@ -1206,7 +1206,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
         }
 
         #ifdef TESTING
-            cout << "compatability" << probChange << endl;
+            cout << "Compatability: " << probChange << endl;
         #endif
     }
 
