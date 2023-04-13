@@ -138,7 +138,7 @@ int netOpt::groupRooms()
                         {
                             case 0: //light
                             { 
-                                probChange += light2Light(m1,m2);
+                                probChange += light2light(m1,m2);
                                 break;
                             }
                             case 2: //speaker
@@ -160,7 +160,7 @@ int netOpt::groupRooms()
                             }
                             case 2: //speaker
                             {
-                                probChange += speaker2Speaker(m1,m2);
+                                probChange += speaker2speaker(m1,m2);
                                 break;
                             }
                         }
@@ -223,7 +223,7 @@ int netOpt::groupRooms()
                         {
                             case 1: //tv
                             {
-                                probChange += tv2Speaker(m2,m1);                                
+                                probChange += tv2speaker(m2,m1);                                
                                 break;
                             }
                         }
