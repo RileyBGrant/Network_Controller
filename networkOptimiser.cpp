@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    uint8_t intAddr[4] = {192,168,0,75};
+    uint8_t intAddr[4] = {192,168,0,154};
     netInt interface(intAddr);
     netOpt optimiser(&interface);
     time_t lastOpt = 0;
