@@ -103,6 +103,16 @@ int lightOptimiser::groupLights()
 
                     if(devMatch == false)
                     {
+                        #ifdef TESTING
+                            uint8_t mac[6];
+                            unpackMAC(dev->macAddr, mac);
+                            cout << "Removing device " << hex << (int)mac[0];
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << (int)mac[i];
+                            }
+                            cout << " from group" << endl;
+                        #endif
                         listIteratorA1 = NULL;
                         listIteratorA2 = NULL;
 
@@ -113,16 +123,7 @@ int lightOptimiser::groupLights()
                         {
                             if(listIteratorG2->data == &group)
                             {
-                                #ifdef TESTING
-                                    uint8_t mac[6];
-                                    unpackMAC(dev->macAddr, mac);
-                                    cout << "Removing device " << hex << (int)mac[0];
-                                    for(int i = 1; i < 6; i++)
-                                    {
-                                        cout << "." << (int)mac[i];
-                                    }
-                                    cout << " from group" << endl;
-                                #endif
+                                
                                 dev->groups.remove(counterG2);
                                 listIteratorG2 = NULL;
                             }
