@@ -871,7 +871,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     devGroup *l1 = (devGroup *)light->member;
     devRecord *d1 = (devRecord *)mainDev->member;
 
-    #ifdef TESTING
+    #ifdef TESTIN
     uint8_t mac[6];
         unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
         cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
@@ -890,7 +890,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
     {
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "activity records are too short" << endl;
         #endif
 
@@ -916,7 +916,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
 
-        #ifdef  TESTING
+        #ifdef  TESTIN
             //tm tempTime;
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -966,7 +966,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                 }
                 else
                 {
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         cout << "a3 invalid: " << endl;
                     #endif
                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
@@ -974,7 +974,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             }
             else
             {
-                #ifdef TESTING
+                #ifdef TESTIN
                     cout << "a2 invalid" << endl;
                 #endif
                 listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
@@ -982,7 +982,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         }
         else
         {
-            #ifdef TESTING
+            #ifdef TESTIN
                 cout << "a1 invalid" << endl;
             #endif
             
@@ -993,12 +993,12 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
 
-    #ifdef TESTING
+    #ifdef TESTIN
         cout << "Compatability: " << probChange << endl;
     #endif
 
@@ -1010,7 +1010,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
     devRecord *d1 = (devRecord *)m1->member;
     devRecord *d2 = (devRecord *)m2->member;
 
-    #ifdef TESTING
+    #ifdef TESTIN
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
         cout << "Compatability test between tv " << hex << (int)mac[0];
@@ -1029,7 +1029,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
     {
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "activity records are too short" << endl;
         #endif
 
@@ -1056,7 +1056,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
         a4 = (activityRecord *)listIteratorA4->data;
         timeDiff = a1->timestamp - a3->timestamp;
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
@@ -1213,7 +1213,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "compatability" << probChange << endl;
         #endif
     }
