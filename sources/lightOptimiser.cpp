@@ -111,7 +111,7 @@ int lightOptimiser::groupLights()
                             {
                                 cout << "." << (int)mac[i];
                             }
-                            cout << " from group" << endl;
+                            cout << dec << " from group" << endl;
                         #endif
                         listIteratorA1 = NULL;
                         listIteratorA2 = NULL;
@@ -121,7 +121,7 @@ int lightOptimiser::groupLights()
 
                         while(listIteratorG2)
                         {
-                            if(listIteratorG2->data == &group)
+                            if(listIteratorG2->data == group)
                             {
                                 
                                 dev->groups.remove(counterG2);
