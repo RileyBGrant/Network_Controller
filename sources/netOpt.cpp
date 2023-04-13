@@ -1317,7 +1317,7 @@ int netOpt::activeRoomUpdate()
                             }
 
                             #ifdef TESTING
-                                cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb;
+                                cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb << endl;
                             #endif
 
                             if(v1 == 0 && s1 == 1)

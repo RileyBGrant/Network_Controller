@@ -336,6 +336,8 @@ int lightOptimiser::groupLights()
             lightGroups.append(newGroup);
             masterDev->groups.append(newGroup);
         }
+        else
+        
 
         listIteratorD1 = lightDevs.getNext(listIteratorD1);
     }
