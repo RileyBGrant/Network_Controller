@@ -5,17 +5,17 @@
 
 using namespace std;
 
-linkedList_t *lightOptimiser::getGroups()
+linkedList_t *speakerOptimiser::getGroups()
 {
-    return &lightGroups;
+    return &speakerGroups;
 }
 
-int lightOptimiser::addDevice(devRecord *newDev)
+int speakerOptimiser::addDevice(devRecord *newDev)
 {
     #ifdef TESTING
-        cout << "Light optimiser: Adding new device" << endl;
+        cout << "Speaker optimiser: Adding new device" << endl;
     #endif
-    node_t *listIterator = lightDevs.getHead();
+    node_t *listIterator = speakerDevs.getHead();
     devRecord *dev;
     while(listIterator)
     {
@@ -23,28 +23,28 @@ int lightOptimiser::addDevice(devRecord *newDev)
         if(dev->macAddr == newDev->macAddr)
         {
             #ifdef TESTING
-                cout << "Light optimiser: Device already added" << endl;
+                cout << "Speaker optimiser: Device already added" << endl;
             #endif
 
             return 0;
         }
-        listIterator = lightDevs.getNext(listIterator);
+        listIterator = speakerDevs.getNext(listIterator);
     }
     #ifdef TESTING
-        cout << "Light optimiser: Device not found adding to list" << endl;
+        cout << "Speaker optimiser: Device not found adding to list" << endl;
     #endif
-    lightDevs.append(newDev);
+    speakerDevs.append(newDev);
     //printDevs();
 
     return 0;
 }
 
-int lightOptimiser::groupLights()
+int speakerOptimiser::groupSpeakers()
 {
     #ifdef TESTING
-        cout << "Light optimiser: Grouping lights" << endl;
+        cout << "Speaker optimiser: Grouping speakers" << endl;
     #endif
-    node_t *listIteratorG1 = lightGroups.getHead();
+    node_t *listIteratorG1 = speakerGroups.getHead();
     node_t *listIteratorG2;
     node_t *listIteratorD1;
     node_t *listIteratorD2;
@@ -96,7 +96,7 @@ int lightOptimiser::groupLights()
                     if(activity1->timestamp != activity2->timestamp)
                     {
                         #ifdef TESTING
-                            cout << "Light Optimiser: Timestep mismatch, masterDev: " << activity1->timestamp << ", dev " << activity2->timestamp << endl;
+                            cout << "Speaker Optimiser: Timestep mismatch, masterDev: " << activity1->timestamp << ", dev " << activity2->timestamp << endl;
                         #endif
                         devMatch = false;
                     }
@@ -104,7 +104,7 @@ int lightOptimiser::groupLights()
                     if(activity1->state != activity2->state)
                     {
                         #ifdef TESTING
-                            cout << "Light Optimiser: Activity mismatch, masterDev: " << activity1->state << ", dev " << activity2->state << endl;
+                            cout << "Speaker Optimiser: Activity mismatch, masterDev: " << activity1->state << ", dev " << activity2->state << endl;
                         #endif
                         devMatch = false;
                     }
@@ -112,7 +112,7 @@ int lightOptimiser::groupLights()
                     if(activity1->variable != activity2->variable)
                     {
                         #ifdef TESTING
-                            cout << "Light Optimiser: Variable mismatch, masterDev: " << activity1->variable << ", dev " << activity2->variable << endl;
+                            cout << "Speaker Optimiser: Variable mismatch, masterDev: " << activity1->variable << ", dev " << activity2->variable << endl;
                         #endif
                         devMatch = false;
                     }
@@ -122,7 +122,7 @@ int lightOptimiser::groupLights()
                         #ifdef TESTING
                             uint8_t mac[6];
                             unpackMAC(dev->macAddr, mac);
-                            cout << "Light Optimiser: Removing device " << hex << (int)mac[0];
+                            cout << "Speaker Optimiser: Removing device " << hex << (int)mac[0];
                             for(int i = 1; i < 6; i++)
                             {
                                 cout << "." << (int)mac[i];
@@ -203,23 +203,12 @@ int lightOptimiser::groupLights()
             }
         }
 
-        /*if(group->mems.getLen() <= 1)
-        {
-            listIteratorG1 = lightGroups.getNext(listIteratorG1);
-            group->mems.remove(counterG1);
-        }
-        else
-        {
-            listIteratorG1 = lightGroups.getNext(listIteratorG1);
-            counterG1++;
-        }*/
-
-        listIteratorG1 = lightGroups.getNext(listIteratorG1);
+        listIteratorG1 = speakerGroups.getNext(listIteratorG1);
         counterG1++;
     }
 
     //check if any other groups need to be created
-    listIteratorD1 = lightDevs.getHead();
+    listIteratorD1 = speakerDevs.getHead();
 
     while(listIteratorD1)
     {
@@ -230,11 +219,11 @@ int lightOptimiser::groupLights()
         #endif
 
         //Check if device can be added to an existing group
-        listIteratorG1 = lightGroups.getHead();
+        listIteratorG1 = speakerGroups.getHead();
         while(listIteratorG1 != NULL && masterDev->groups.getLen() < 1)
         {
             #ifdef TESTING
-                cout << "Light optimiser: Checking for match with group " << counter << endl;
+                cout << "Speaker optimiser: Checking for match with group " << counter << endl;
                 counter++;
             #endif
             group = (devGroup *)listIteratorG1->data;
@@ -242,8 +231,8 @@ int lightOptimiser::groupLights()
             dev = (devRecord *)listIteratorD2->data;
 
             #ifdef TESTING
-                cout << "Light optimiser: Master Dev record length is  " << masterDev->activity.getLen() << endl;
-                cout << "Light optimiser: Group Dev record length is  " << dev->activity.getLen() << endl;
+                cout << "Speaker optimiser: Master Dev record length is  " << masterDev->activity.getLen() << endl;
+                cout << "Speaker optimiser: Group Dev record length is  " << dev->activity.getLen() << endl;
             #endif
 
             if(dev != masterDev)
@@ -251,7 +240,7 @@ int lightOptimiser::groupLights()
                 if(dev->activity.getLen() == masterDev->activity.getLen())
                 {
                     #ifdef TESTING
-                        cout << "Light optimiser: length match " << endl;
+                        cout << "Speaker optimiser: length match " << endl;
                     #endif
                     
                     listIteratorA1 = masterDev->activity.getHead();
@@ -320,26 +309,26 @@ int lightOptimiser::groupLights()
                 }
             }
 
-            listIteratorG1 = lightGroups.getNext(listIteratorG1);
+            listIteratorG1 = speakerGroups.getNext(listIteratorG1);
         }
 
         //create new group
         if(masterDev->groups.getLen() < 1)
         {
             #ifdef TESTING
-                cout << "Light optimiser: No matching group found, creating new group" << endl;
+                cout << "Speaker optimiser: No matching group found, creating new group" << endl;
             #endif
             devGroup *newGroup = new devGroup;
             newGroup->mems.append(masterDev);
             newGroup->devtype = masterDev->devType;
 
-            lightGroups.append(newGroup);
+            speakerGroups.append(newGroup);
             masterDev->groups.append(newGroup);
         }
         else
         
 
-        listIteratorD1 = lightDevs.getNext(listIteratorD1);
+        listIteratorD1 = speakerDevs.getNext(listIteratorD1);
     }
 
     #ifdef TESTING
@@ -349,7 +338,7 @@ int lightOptimiser::groupLights()
     return 0;
 }
 
-string lightOptimiser::inactivity(devRecord *d0)
+string speakerOptimiser::inactivity(devRecord *d0)
 {
     string message = "";
     uint8_t macAddr[6];
@@ -383,32 +372,32 @@ string lightOptimiser::inactivity(devRecord *d0)
 }
 
 #ifdef TESTING
-    int lightOptimiser::printDevs()
+    int speakerOptimiser::printDevs()
     {
-        cout << "Light Optimiser: Light devices" << endl;
-        node_t *listIteratorD = lightDevs.getHead();
+        cout << "Speaker Optimiser: Speaker devices" << endl;
+        node_t *listIteratorD = speakerDevs.getHead();
         devRecord *dev;
         uint8_t mac[6];
         while(listIteratorD)
         {
             dev = (devRecord *)listIteratorD->data;
             unpackMAC(dev->macAddr, mac);
-            cout << "Light Optimiser: " << hex << stoi(to_string(mac[0]));
+            cout << "Speaker Optimiser: " << hex << stoi(to_string(mac[0]));
             for(int i = 1; i < 6; i++)
             {
                 cout << "." << stoi(to_string(mac[i]));
             }
             cout << dec << endl;
 
-            listIteratorD = lightDevs.getNext(listIteratorD);
+            listIteratorD = speakerDevs.getNext(listIteratorD);
         }
         return 0;
     }
 
-    int lightOptimiser::printGroups()
+    int speakerOptimiser::printGroups()
     {
-        cout << "Light Optimiser: Light groups" << endl;
-        node_t *listIteratorG = lightGroups.getHead();
+        cout << "Speaker Optimiser: Speaker groups" << endl;
+        node_t *listIteratorG = speakerGroups.getHead();
         devGroup *group;
         node_t *listIteratorM;
         devRecord *dev;
@@ -438,7 +427,7 @@ string lightOptimiser::inactivity(devRecord *d0)
                 listIteratorM = group->mems.getNext(listIteratorM);
             }
 
-            listIteratorG = lightGroups.getNext(listIteratorG);
+            listIteratorG = speakerGroups.getNext(listIteratorG);
         }
         return 0;
     }

@@ -43,7 +43,7 @@ headers::
 	$(CPP) -c $(SRCS_path)/LList.cpp $(APPINCLUDE) -o $(OBJ_path)/LList.o
 	$(CPP) -c $(SRCS_path)/netOpt.cpp $(APPINCLUDE) -o $(OBJ_path)/netOpt.o
 	$(CPP) -c $(SRCS_path)/lightOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/lightOptimiser.o
-	$(CPP) -c $(SRCS_path)/tvOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/tvOptimiser.o
+	$(CPP) -c $(SRCS_path)/speakerOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/speakerOptimiser.o
 
 #	$(CPP) -o simNet $(OBJ_path)/LList.o
 

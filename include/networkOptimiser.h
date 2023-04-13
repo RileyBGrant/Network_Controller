@@ -92,6 +92,24 @@ public:
     #endif
 };
 
+class speakerOptimiser
+{
+private:
+    linkedList_t speakerDevs;
+    linkedList_t speakerGroups;
+
+public:
+    linkedList_t *getGroups();
+    int addDevice(devRecord *newDev);
+    int groupSpeakers();
+    string inactivity(devRecord *d0);
+
+    #ifdef TESTING
+        int printDevs();
+        int printGroups();
+    #endif
+};
+
 struct roomMember
 {
     void *member;
@@ -115,15 +133,19 @@ private:
     linkedList_t rooms; //devRoom
     devRoom *activeRoom;
     lightOptimiser lightOpt;
+    speakerOptimiser speakerOpt;
     
 public:
     netOpt(netInt *netInterface);
     int sortDevs();
     int optimise();
     int groupRooms();
-    int8_t light2Light(roomMember *m1, roomMember *m2);
+    int8_t light2light(roomMember *m1, roomMember *m2);
     int8_t light2mainDev(roomMember *light, roomMember *mainDev);
+    int8_t light2mainGroup(roomMember *light, roomMember *mainGroup);
     int8_t tv2tv(roomMember *m1, roomMember *m2);
+    int8_t tv2speaker(roomMember *tv, roomMember *speaker);
+    int8_t speaker2speaker(roomMember *m1, roomMember *m2);
     int activeRoomUpdate();
     int sendDevStims();
 
