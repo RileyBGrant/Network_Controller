@@ -350,7 +350,7 @@ int netOpt::groupRooms()
             }
             else
             {
-                #ifdef TESTING
+                #ifdef TESTIN
                     cout << "Device still in room" << endl;
                 #endif
                 listIteratorM1 = r1->mems.getNext(listIteratorM1);
@@ -372,7 +372,6 @@ int netOpt::groupRooms()
 
                 while(listIteratorD1)
                 {
-                    cout << "removing room from device" << endl;
                     d1 = (devRecord *)listIteratorD1->data;
                     listIteratorR2 = d1->rooms.getHead();
                     counterR2 = 0;
@@ -396,12 +395,7 @@ int netOpt::groupRooms()
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
                 }
 
-                cout << "room cleared from all devs" << endl;
-
-                cout << m1 << endl;
-
                 delete(m1);
-                cout << "memory freed" << endl;
             }
 
             if(r1->mems.getLen() == 1)
@@ -431,11 +425,9 @@ int netOpt::groupRooms()
                     }
                 }
 
-                cout << m1 << endl;
-
                 delete(m1);
 
-                #ifdef TESTING
+                #ifdef TESTIN
                     cout << "solo member removed" << endl;
                 #endif
             }
