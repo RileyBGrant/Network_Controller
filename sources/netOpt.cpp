@@ -730,7 +730,7 @@ int netOpt::groupRooms()
                     {
                         m1->memberProb = compatability + 128;
                     }
-                    r1->groups.append(m1);
+                    r3->groups.append(m1);
                     listIteratorR1 = NULL;
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
                 
@@ -738,7 +738,7 @@ int netOpt::groupRooms()
                     {
                         d1 = (devRecord *)listIteratorD1->data;
                         
-                        d1->rooms.append(r1);
+                        d1->rooms.append(r3);
 
                         listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
                     }
