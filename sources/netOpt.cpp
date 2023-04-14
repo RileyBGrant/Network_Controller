@@ -1038,7 +1038,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         {
             if(probChange < 123)
             {
-                probChange = probChange + 5;
+                probChange = probChange + 4;
             }
             else
             {
@@ -1050,7 +1050,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         }
     }
 
-    #ifdef TESTIN
+    #ifdef TESTING
         cout << "Test complete, probability change of " << probChange << endl;
     #endif
 
