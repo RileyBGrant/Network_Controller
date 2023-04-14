@@ -145,7 +145,10 @@ public:
     int8_t light2mainGroup(roomMember *light, roomMember *mainGroup);
     int8_t tv2tv(roomMember *m1, roomMember *m2);
     int8_t tv2speaker(roomMember *tv, roomMember *speaker);
+    int8_t tv2mainDev(roomMember *tv, roomMember *mainDev);
     int8_t speaker2speaker(roomMember *m1, roomMember *m2);
+    int8_t speaker2audioDev(roomMember *speaker, roomMember *audioDev);
+    int8_t recordPlayer2recordPlayer(roomMember *m1, roomMember *m2);
     int activeRoomUpdate();
     int sendDevStims();
 
