@@ -1119,7 +1119,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                     {
                         if(probChange >= -123)
                         {
-                            probChange -= 5;
+                            probChange -= 1;
                         }
                         else
                         {
