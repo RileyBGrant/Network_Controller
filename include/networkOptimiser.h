@@ -141,13 +141,14 @@ public:
     int optimise();
     int groupRooms();
     int8_t light2light(roomMember *m1, roomMember *m2);
-    int8_t light2mainDev(roomMember *light, roomMember *mainDev);
-    int8_t light2mainGroup(roomMember *light, roomMember *mainGroup);
+    int8_t light2tv(roomMember *light, roomMember *tv);
+    int8_t light2speaker(roomMember *light, roomMember *speaker);
+    int8_t light2recordPlayer(roomMember *light, roomMember *recordPlayer);
     int8_t tv2tv(roomMember *m1, roomMember *m2);
     int8_t tv2speaker(roomMember *tv, roomMember *speaker);
-    int8_t tv2mainDev(roomMember *tv, roomMember *mainDev);
+    int8_t tv2recordPlayer(roomMember *tv, roomMember *recordPlayer);
     int8_t speaker2speaker(roomMember *m1, roomMember *m2);
-    int8_t speaker2audioDev(roomMember *speaker, roomMember *audioDev);
+    int8_t speaker2recordPlayer(roomMember *speaker, roomMember *audioDev);
     int8_t recordPlayer2recordPlayer(roomMember *m1, roomMember *m2);
     int activeRoomUpdate();
     int sendDevStims();
