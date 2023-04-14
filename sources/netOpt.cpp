@@ -203,11 +203,11 @@ int netOpt::groupRooms()
             {
                 m2 = (roomMember *)listIteratorM2->data;
 
-                switch(((devRecord *)m1->member)->devType)
+                switch(((devGroup *)m1->member)->devType)
                 {
                     case 0: //light
                     {
-                        switch (((devGroup *)m2->member)->devtype)
+                        switch (((devRecord *)m2->member)->devtype)
                         {
                             case 1: //tv
                             {
