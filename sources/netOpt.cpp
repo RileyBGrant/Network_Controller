@@ -685,7 +685,7 @@ int netOpt::groupRooms()
 
                         r3 = r1;
                         r3Compatability = compatability;
-                        
+                        roomFound = true;
                     }
 
                     listIteratorR1 = rooms.getNext(listIteratorR1);
@@ -731,7 +731,6 @@ int netOpt::groupRooms()
                         m1->memberProb = compatability + 128;
                     }
                     r1->groups.append(m1);
-                    roomFound = true;
                     listIteratorR1 = NULL;
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
                 
@@ -903,6 +902,7 @@ int netOpt::groupRooms()
 
                     r3 = r1;
                     r3Compatability = compatability;
+                    roomFound = true;
                 }
                 
                 listIteratorR1 = rooms.getNext(listIteratorR1);
@@ -940,7 +940,6 @@ int netOpt::groupRooms()
                     m1->memberProb = compatability + 128;
                 }
                 r3->mems.append(m1);
-                roomFound = true;
                 ((devRecord *)m1->member)->rooms.append(r3);
             }
         }
