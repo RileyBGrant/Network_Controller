@@ -270,7 +270,7 @@ int netOpt::groupRooms()
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
-            if(counterM1 > 0 && m1->memberProb < 128)
+            if(counterM1 > 0 && m1->memberProb < 100)
             {
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
