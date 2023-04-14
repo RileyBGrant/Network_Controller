@@ -100,7 +100,7 @@ int netOpt::groupRooms()
     roomMember *m2;
     node_t *listIteratorD1;
     devRecord *d1;
-    int16_t probChange = 0;  
+    int16_t probChange = 0;
 
     //check exisiting rooms
     #ifdef TESTING
@@ -530,6 +530,8 @@ int netOpt::groupRooms()
     node_t *listIteratorG1;
     devGroup *g1;
     int compatability = 0;
+    devRoom *r3;
+    int r3Compatability= 0;
     bool roomFound;
 
     #ifdef TESTING
@@ -564,6 +566,8 @@ int netOpt::groupRooms()
                 #ifdef TESTING
                     cout << "Group has no room assigned" << endl;
                 #endif
+                r3 = NULL;
+                r3Compatability = 0;
                 m1 = new roomMember;
                 m1->member = g1;
                 roomFound = false;
@@ -673,42 +677,18 @@ int netOpt::groupRooms()
                         cout << "Room compatability: " << compatability << endl;
                     #endif
 
-                    if(compatability > 0)
+                    if(compatability > r3Compatability)
                     {
                         #ifdef TESTING
                             cout << "Group compatible with a room" << endl;
                         #endif
-                        
-                        if(compatability + 128 < 0)
-                        {
-                            m1->memberProb = 0;
-                        }
-                        else if (compatability + 128 > 255)
-                        {
-                            m1->memberProb = 255;
-                        }
-                        else
-                        {
-                            m1->memberProb = compatability + 128;
-                        }
-                        r1->groups.append(m1);
-                        roomFound = true;
-                        listIteratorR1 = NULL;
-                        listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
-                    
-                        while(listIteratorD1)
-                        {
-                            d1 = (devRecord *)listIteratorD1->data;
-                            
-                            d1->rooms.append(r1);
 
-                            listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
-                        }
+                        r3 = r1;
+                        r3Compatability = compatability;
+                        
                     }
-                    else
-                    {
-                        listIteratorR1 = rooms.getNext(listIteratorR1);
-                    }
+
+                    listIteratorR1 = rooms.getNext(listIteratorR1);
                 }
 
                 if(roomFound == false)
@@ -724,6 +704,37 @@ int netOpt::groupRooms()
                     rooms.append(r1);
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
                     
+                    while(listIteratorD1)
+                    {
+                        d1 = (devRecord *)listIteratorD1->data;
+                        
+                        d1->rooms.append(r1);
+
+                        listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
+                    }
+                }
+                else
+                {
+                    #ifdef TESTING
+                        cout << "Adding group to room" << endl;
+                    #endif
+                    if(compatability + 128 < 0)
+                    {
+                        m1->memberProb = 0;
+                    }
+                    else if (compatability + 128 > 255)
+                    {
+                        m1->memberProb = 255;
+                    }
+                    else
+                    {
+                        m1->memberProb = compatability + 128;
+                    }
+                    r1->groups.append(m1);
+                    roomFound = true;
+                    listIteratorR1 = NULL;
+                    listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
+                
                     while(listIteratorD1)
                     {
                         d1 = (devRecord *)listIteratorD1->data;
@@ -751,6 +762,8 @@ int netOpt::groupRooms()
 
     while(listIteratorD1)
     {
+        r3 = NULL;
+        r3Compatability = 0;
         d1 = (devRecord *)listIteratorD1->data;
 
         #ifdef TESTING
@@ -882,34 +895,17 @@ int netOpt::groupRooms()
                     cout << "Room compatibility: " << compatability << endl;
                 #endif
 
-                if(compatability > 0)
+                if(compatability > r3Compatability)
                 {
                     #ifdef TESTING
                         cout << "Solo dev compatible with a room" << endl;
                     #endif
-                    
-                    if(compatability + 128 < 0)
-                    {
-                        m1->memberProb = 0;
-                    }
-                    else if (compatability + 128 > 255)
-                    {
-                        m1->memberProb = 255;
-                    }
-                    else
-                    {
-                        m1->memberProb = compatability + 128;
-                    }
-                    r1->mems.append(m1);
-                    roomFound = true;
-                    ((devRecord *)m1->member)->rooms.append(r1);
 
-                    listIteratorR1 = NULL;
+                    r3 = r1;
+                    r3Compatability = compatability;
                 }
-                else
-                {
-                    listIteratorR1 = rooms.getNext(listIteratorR1);
-                }
+                
+                listIteratorR1 = rooms.getNext(listIteratorR1);
             }
 
             if(roomFound == false)
@@ -925,6 +921,27 @@ int netOpt::groupRooms()
                 rooms.append(r1);
                 
                 d1->rooms.append(r1);
+            }
+            else
+            {
+                #ifdef TESTING
+                    cout << "Adding device to room" << endl;
+                #endif
+                if(compatability + 128 < 0)
+                {
+                    m1->memberProb = 0;
+                }
+                else if (compatability + 128 > 255)
+                {
+                    m1->memberProb = 255;
+                }
+                else
+                {
+                    m1->memberProb = compatability + 128;
+                }
+                r3->mems.append(m1);
+                roomFound = true;
+                ((devRecord *)m1->member)->rooms.append(r3);
             }
         }
         #ifdef TESTING
