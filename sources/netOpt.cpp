@@ -945,7 +945,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
     devGroup *g1 = (devGroup *)m1->member;
     devGroup *g2 = (devGroup *)m2->member;
     
-    #ifdef TESTIN
+    #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
         cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
@@ -1185,7 +1185,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
     devGroup *l1 = (devGroup *)light->member;
     devGroup *g1 = (devGroup *)mainGroup->member;
 
-    #ifdef TESTIN
+    #ifdef TESTING
     uint8_t mac[6];
         unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
         cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
@@ -1463,7 +1463,7 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
     devRecord *d1 = (devRecord *)m1->member;
     devRecord *d2 = (devRecord *)m2->member;
 
-    #ifdef TESTIN
+    #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
         cout << "Compatability test between tv " << hex << (int)mac[0];
@@ -2078,7 +2078,7 @@ int8_t netOpt::speaker2speaker(roomMember *m1, roomMember *m2)
     devGroup *g1 = (devGroup *)m1->member;
     devGroup *g2 = (devGroup *)m2->member;
 
-    #ifdef TESTIN
+    #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
         cout << "Compatability test between speaker group with lead device " << hex << (int)mac[0];
