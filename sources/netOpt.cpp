@@ -1607,9 +1607,9 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                             {
                                 if(a3->state == 2)
                                 {
-                                    if(probChange <= 117)
+                                    if(probChange <= 102)
                                     {
-                                        probChange = probChange + 10;
+                                        probChange = probChange + 25;
                                     }
                                     else
                                     {
@@ -1658,9 +1658,9 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                             {
                                 if(a3->state == 3)
                                 {
-                                    if(probChange <= 117)
+                                    if(probChange <= 102)
                                     {
-                                        probChange = probChange + 10;
+                                        probChange = probChange + 25;
                                     }
                                     else
                                     {
@@ -2222,9 +2222,9 @@ int8_t netOpt::speaker2audioDev(roomMember *speaker, roomMember *audioDev)
                             {
                                 if(a3->state == 3 || a3->state == 5)
                                 {
-                                    if(probChange <= 117)
+                                    if(probChange <= 102)
                                     {
-                                        probChange = probChange + 10;
+                                        probChange = probChange + 25;
                                     }
                                     else
                                     {
@@ -2273,9 +2273,9 @@ int8_t netOpt::speaker2audioDev(roomMember *speaker, roomMember *audioDev)
                             {
                                 if(a3->state == 3)
                                 {
-                                    if(probChange <= 117)
+                                    if(probChange <= 102)
                                     {
-                                        probChange = probChange + 10;
+                                        probChange = probChange + 25;
                                     }
                                     else
                                     {
