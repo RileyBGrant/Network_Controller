@@ -1105,7 +1105,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         { 
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
-                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
+                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp <= a1->timestamp)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
@@ -1540,7 +1540,7 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
     devRecord *d1 = (devRecord *)tv->member;
     devGroup *g1 = (devGroup *)speaker->member;
 
-    #ifdef TESTIN
+    #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
         cout << "Compatability test between tv " << hex << (int)mac[0];
@@ -1559,7 +1559,7 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
 
     if(d1->activity.getLen() < 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2)
     {
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "activity records are too short" << endl;
         #endif
 
