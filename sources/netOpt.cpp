@@ -1104,9 +1104,9 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(probChange <= 117)
+                        if(probChange <= 77)
                         {
-                            probChange = probChange + 10;
+                            probChange = probChange + 50;
                         }
                         else
                         {
@@ -1117,7 +1117,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                     }
                     else
                     {
-                        if(probChange >= -123)
+                        if(probChange >= -127)
                         {
                             probChange -= 1;
                         }
