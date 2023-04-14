@@ -1138,9 +1138,9 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *mainDev)
                     }
                     else
                     {
-                        if(probChange >= -127)
+                        if(probChange >= -125)
                         {
-                            probChange -= 1;
+                            probChange -= 3;
                         }
                         else
                         {
