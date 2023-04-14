@@ -241,30 +241,30 @@ int netOpt::groupRooms()
                     }
                 }          
 
-                if(probChange + m1->memberProb < 0)
+                if(probChange + 128 < 0)
                 {
                     m1->memberProb = 0;
                 }
-                else if (probChange + m1->memberProb > 255)
+                else if (probChange + 128 > 255)
                 {
                     m1->memberProb = 255;
                 }
                 else
                 {
-                    m1->memberProb += probChange;
+                    m1->memberProb = probChange + 128;
                 }
 
-                if(probChange + m2->memberProb < 0)
+                if(probChange + 128 < 0)
                 {
                     m2->memberProb = 0;
                 }
-                else if (probChange + m2->memberProb > 255)
+                else if (probChange + 128 > 255)
                 {
                     m2->memberProb = 255;
                 }
                 else
                 {
-                    m2->memberProb += probChange;
+                    m2->memberProb = probChange + 128;
                 }
 
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -361,32 +361,33 @@ int netOpt::groupRooms()
                         break;
                     }
                     
-                }          
+                }
+      
 
-                if(probChange + m1->memberProb < 0)
+                if(probChange + 128 < 0)
                 {
                     m1->memberProb = 0;
                 }
-                else if (probChange + m1->memberProb > 255)
+                else if (probChange + 128 > 255)
                 {
                     m1->memberProb = 255;
                 }
                 else
                 {
-                    m1->memberProb += probChange;
+                    m1->memberProb = probChange + 128;
                 }
 
-                if(probChange + m2->memberProb < 0)
+                if(probChange + 128 < 0)
                 {
                     m2->memberProb = 0;
                 }
-                else if (probChange + m2->memberProb > 255)
+                else if (probChange + 128 > 255)
                 {
                     m2->memberProb = 255;
                 }
                 else
                 {
-                    m2->memberProb += probChange;
+                    m2->memberProb = probChange + 128;
                 }
 
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
