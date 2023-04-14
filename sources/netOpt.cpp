@@ -1046,7 +1046,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
     devGroup *l1 = (devGroup *)light->member;
     devRecord *d1 = (devRecord *)mainDev->member;
 
-    #ifdef TESTIN
+    #ifdef TESTING
     uint8_t mac[6];
         unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
         cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
@@ -1091,7 +1091,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
 
-        #ifdef  TESTIN
+        #ifdef  TESTING
             //tm tempTime;
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -1141,7 +1141,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
                 }
                 else
                 {
-                    #ifdef TESTIN
+                    #ifdef TESTING
                         cout << "a3 invalid: " << endl;
                     #endif
                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
@@ -1149,7 +1149,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             }
             else
             {
-                #ifdef TESTIN
+                #ifdef TESTING
                     cout << "a2 invalid" << endl;
                 #endif
                 listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
@@ -1157,7 +1157,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
         }
         else
         {
-            #ifdef TESTIN
+            #ifdef TESTING
                 cout << "a1 invalid" << endl;
             #endif
             
@@ -1168,7 +1168,7 @@ int8_t netOpt::light2mainDev(roomMember *light, roomMember *mainDev)
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }
