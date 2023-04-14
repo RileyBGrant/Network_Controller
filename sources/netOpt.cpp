@@ -669,6 +669,10 @@ int netOpt::groupRooms()
                         listIteratorM2 = r1->mems.getNext(listIteratorM2);
                     }
 
+                    #ifdef TESTING
+                        cout << "Room compatability: " << compatability << endl;
+                    #endif
+
                     if(compatability > 0)
                     {
                         #ifdef TESTING
