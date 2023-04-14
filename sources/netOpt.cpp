@@ -1387,9 +1387,9 @@ int8_t netOpt::light2recordPlayer(roomMember *light, roomMember *recordPlayer)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(probChange <= 77)
+                        if(probChange <= 117)
                         {
-                            probChange = probChange + 50;
+                            probChange = probChange + 10;
                         }
                         else
                         {
