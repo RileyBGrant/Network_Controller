@@ -31,7 +31,7 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
 
     if(d1->activity.getLen() < 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2)
     {
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "activity records are too short" << endl;
         #endif
 
@@ -207,10 +207,14 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
+
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
+    #endif
 
     return probChange;
 }

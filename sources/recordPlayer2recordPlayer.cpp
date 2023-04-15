@@ -12,16 +12,16 @@ int8_t netOpt::recordPlayer2recordPlayer(roomMember *m1, roomMember *m2)
     devRecord *d1 = (devRecord *)m1->member;
     devRecord *d2 = (devRecord *)m2->member;
 
-    #ifdef TESTIN
+    #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
+        cout << "Compatability test between record player " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         unpackMAC(d2->macAddr, mac);
-        cout << dec << " and tv " << hex << (int)mac[0];
+        cout << dec << " and record player " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -219,6 +219,10 @@ int8_t netOpt::recordPlayer2recordPlayer(roomMember *m1, roomMember *m2)
             cout << "Compatability: " << probChange << endl;
         #endif
     }
+
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
+    #endif
 
     return probChange;
 }

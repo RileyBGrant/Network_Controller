@@ -21,7 +21,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
             cout << "." << (int)mac[i];
         }
         unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and main group with lead device " << hex << (int)mac[0];
+        cout << dec << " and speaker group with lead device " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -139,8 +139,8 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
         #endif
     }
 
-    #ifdef TESTIN
-        cout << "Compatability: " << probChange << endl;
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
     #endif
 
     return probChange;

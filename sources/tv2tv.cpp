@@ -215,10 +215,14 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
+
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
+    #endif
 
     return probChange;
 }

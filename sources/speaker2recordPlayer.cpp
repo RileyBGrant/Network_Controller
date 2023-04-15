@@ -14,24 +14,25 @@ int8_t netOpt::speaker2recordPlayer(roomMember *speaker, roomMember *audioDev)
 
     #ifdef TESTING
         uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
         unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and speaker group with lead device " << hex << (int)mac[0];
+        cout << dec << "Compatability test between speaker group with lead device " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         cout << dec << endl;
+        unpackMAC(d1->macAddr, mac);
+        cout << " and record player " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        
     #endif
 
     if(d1->activity.getLen() < 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2)
     {
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "activity records are too short" << endl;
         #endif
 
@@ -207,10 +208,14 @@ int8_t netOpt::speaker2recordPlayer(roomMember *speaker, roomMember *audioDev)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
+
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
+    #endif
 
     return probChange;
 }

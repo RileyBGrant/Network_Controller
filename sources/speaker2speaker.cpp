@@ -220,5 +220,9 @@ int8_t netOpt::speaker2speaker(roomMember *m1, roomMember *m2)
         #endif
     }
 
+    #ifdef TESTING
+        cout << "Test complete, probability change of " << probChange << endl;
+    #endif
+
     return probChange;
 }
