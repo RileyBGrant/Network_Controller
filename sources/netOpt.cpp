@@ -278,7 +278,7 @@ int netOpt::groupRooms()
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
-            if(counterM1 > 0 && m1->memberProb < 100)
+            if(r1->groups.getLen() + r1->mems.getLen() > 1 && m1->memberProb < 100)
             {
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
@@ -433,7 +433,7 @@ int netOpt::groupRooms()
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
-            if(counterM1 + r1->groups.getLen() > 0 && m1->memberProb < 100)
+            if(r1->groups.getLen() + r1->mems.getLen() > 1 && m1->memberProb < 100)
             {
                 #ifdef TESTING
                     cout << "Device no longer in room";
