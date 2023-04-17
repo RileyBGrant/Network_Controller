@@ -222,6 +222,11 @@ int netOpt::groupRooms()
                                 probChange += light2oven(m1,m2);                                
                                 break;
                             }
+                            case 5: //Fridge
+                            {
+                                probChange += light2fridge(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -242,6 +247,11 @@ int netOpt::groupRooms()
                             case 4: //Oven
                             {
                                 probChange += speaker2oven(m1,m2);                                
+                                break;
+                            }
+                            case 5: //Fridge
+                            {
+                                probChange += speaker2fridge(m1,m2);                                
                                 break;
                             }
                         }
@@ -353,6 +363,11 @@ int netOpt::groupRooms()
                                 probChange += tv2oven(m1,m2);                                
                                 break;
                             }
+                            case 5: //Fridge
+                            {
+                                probChange += tv2fridge(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -375,6 +390,11 @@ int netOpt::groupRooms()
                                 probChange += recordPlayer2oven(m1,m2);                                
                                 break;
                             }
+                            case 5: //Fridge
+                            {
+                                probChange += recordPlayer2fridge(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -395,6 +415,38 @@ int netOpt::groupRooms()
                             case 4: //Oven
                             {
                                 probChange += oven2oven(m1,m2);                                
+                                break;
+                            }
+                            case 5: //Fridge
+                            {
+                                probChange += oven2fridge(m1,m2);                                
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case 5: //Fridge
+                    {
+                        switch (((devRecord *)m2->member)->devType)
+                        {
+                            case 1: //tv
+                            {
+                                probChange += tv2fridge(m2,m1);
+                                break;
+                            }
+                            case 3: //Record player
+                            {
+                                probChange += recordPlayer2fridge(m2,m1);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += oven2fridge(m2,m1);                                
+                                break;
+                            }
+                            case 5: //Fridge
+                            {
+                                probChange += fridge2fridge(m1,m2);                                
                                 break;
                             }
                         }
@@ -693,6 +745,11 @@ int netOpt::groupRooms()
                                         compatability += light2oven(m1,m2);   
                                         break;
                                     }
+                                    case 5: //Fridge
+                                    {
+                                        compatability += light2fridge(m1,m2);   
+                                        break;
+                                    }
                                 }
                                 break;
                             }
@@ -713,6 +770,11 @@ int netOpt::groupRooms()
                                     case 4: //Oven
                                     {
                                         compatability += speaker2oven(m1,m2);   
+                                        break;
+                                    }
+                                    case 5: //Fridge
+                                    {
+                                        compatability += speaker2fridge(m1,m2);   
                                         break;
                                     }
                                 }
@@ -904,6 +966,23 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
+                        case 5: //Fridge
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0: //light
+                                {
+                                    compatability += light2fridge(m2,m1);   
+                                    break;
+                                }
+                                case 2: //speaker
+                                {
+                                    compatability += speaker2fridge(m2,m1);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -937,6 +1016,11 @@ int netOpt::groupRooms()
                                     compatability += tv2oven(m1,m2);   
                                     break;
                                 }
+                                case 5: //Fridge
+                                {
+                                    compatability += tv2fridge(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -959,6 +1043,11 @@ int netOpt::groupRooms()
                                     compatability += recordPlayer2oven(m1,m2);   
                                     break;
                                 }
+                                case 5: //Fridge
+                                {
+                                    compatability += recordPlayer2fridge(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -979,6 +1068,38 @@ int netOpt::groupRooms()
                                 case 4: //Oven
                                 {
                                     compatability += oven2oven(m1,m2);   
+                                    break;
+                                }
+                                case 5: //Fridge
+                                {
+                                    compatability += oven2fridge(m1,m2);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 5: //Fridge
+                        {
+                            switch (((devRecord *)m2->member)->devType)
+                            {
+                                case 1: //tv
+                                {
+                                    compatability += tv2fridge(m2,m1);   
+                                    break;
+                                }
+                                case 3: //Record player
+                                {
+                                    compatability += recordPlayer2fridge(m2,m1);   
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    compatability += oven2fridge(m2,m1);   
+                                    break;
+                                }
+                                case 5: //Fridge
+                                {
+                                    compatability += fridge2fridge(m1,m2);   
                                     break;
                                 }
                             }
