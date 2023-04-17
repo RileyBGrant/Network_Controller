@@ -48,12 +48,17 @@ headers::
 	$(CPP) -c $(SRCS_path)/light2tv.cpp $(APPINCLUDE) -o $(OBJ_path)/light2tv.o
 	$(CPP) -c $(SRCS_path)/light2speaker.cpp $(APPINCLUDE) -o $(OBJ_path)/light2speaker.o
 	$(CPP) -c $(SRCS_path)/light2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/light2recordPlayer.o
+	$(CPP) -c $(SRCS_path)/light2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/light2oven.o
 	$(CPP) -c $(SRCS_path)/tv2tv.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2tv.o
 	$(CPP) -c $(SRCS_path)/tv2speaker.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2speaker.o
 	$(CPP) -c $(SRCS_path)/tv2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2recordPlayer.o
+	$(CPP) -c $(SRCS_path)/tv2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2oven.o
 	$(CPP) -c $(SRCS_path)/speaker2speaker.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2speaker.o
 	$(CPP) -c $(SRCS_path)/speaker2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2recordPlayer.o
+	$(CPP) -c $(SRCS_path)/speaker2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2oven.o
 	$(CPP) -c $(SRCS_path)/recordPlayer2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2recordPlayer.o
+	$(CPP) -c $(SRCS_path)/recordPlayer2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2oven.o
+	$(CPP) -c $(SRCS_path)/oven2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2oven.o
 
 
 #	$(CPP) -o simNet $(OBJ_path)/LList.o
