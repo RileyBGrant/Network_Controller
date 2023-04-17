@@ -68,7 +68,7 @@ int8_t netOpt::oven2oven(roomMember *m1, roomMember *m2)
             }
             else if(a1->timestamp > a2->timestamp)
             {
-                listIteratorA2 = d2->activity..getNext(listIteratorA2);
+                listIteratorA2 = d2->activity.getNext(listIteratorA2);
             }
             else
             {
