@@ -77,7 +77,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
                     {
                         if(probChange <= 117)
                         {
-                            probChange = probChange + 10;
+                            probChange = probChange + 7;
                         }
                         else
                         {
