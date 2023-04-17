@@ -144,12 +144,17 @@ public:
     int8_t light2tv(roomMember *light, roomMember *tv);
     int8_t light2speaker(roomMember *light, roomMember *speaker);
     int8_t light2recordPlayer(roomMember *light, roomMember *recordPlayer);
+    int8_t light2oven(roomMember *light, roomMember *oven);
     int8_t tv2tv(roomMember *m1, roomMember *m2);
     int8_t tv2speaker(roomMember *tv, roomMember *speaker);
     int8_t tv2recordPlayer(roomMember *tv, roomMember *recordPlayer);
+    int8_t tv2oven(roomMember *tv, roomMember *oven);
     int8_t speaker2speaker(roomMember *m1, roomMember *m2);
     int8_t speaker2recordPlayer(roomMember *speaker, roomMember *audioDev);
+    int8_t speaker2oven(roomMember *speaker, roomMember *oven);
     int8_t recordPlayer2recordPlayer(roomMember *m1, roomMember *m2);
+    int8_t recordPlayer2oven(roomMember *recordPlayer, roomMember *oven);
+    int8_t oven2oven(roomMember *m1, roomMember *m2);
     int activeRoomUpdate();
     int sendDevStims();
 

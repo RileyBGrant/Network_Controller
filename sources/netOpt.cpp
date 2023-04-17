@@ -52,9 +52,7 @@ int netOpt::sortDevs()
             #ifdef TESTING    
                 default:
                 {
-                    
-                        cout << "Not a group DevType not found" << endl;
-                    
+                    cout << "Not a group DevType not found" << endl;
                 }
             #endif
         }
@@ -219,6 +217,11 @@ int netOpt::groupRooms()
                                 probChange += light2recordPlayer(m1,m2);                                
                                 break;
                             }
+                            case 4: //Oven
+                            {
+                                probChange += light2oven(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -234,6 +237,11 @@ int netOpt::groupRooms()
                             case 3: //Record player
                             {
                                 probChange += speaker2recordPlayer(m1,m2);                                
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += speaker2oven(m1,m2);                                
                                 break;
                             }
                         }
@@ -340,6 +348,11 @@ int netOpt::groupRooms()
                                 probChange += tv2recordPlayer(m1,m2);
                                 break;
                             }
+                            case 4: //Oven
+                            {
+                                probChange += tv2oven(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -355,6 +368,33 @@ int netOpt::groupRooms()
                             case 3: //Record player
                             {
                                 probChange += recordPlayer2recordPlayer(m1,m2);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += recordPlayer2oven(m1,m2);                                
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case 4: //Oven
+                    {
+                        switch (((devRecord *)m2->member)->devType)
+                        {
+                            case 1: //tv
+                            {
+                                probChange += tv2oven(m2,m1);
+                                break;
+                            }
+                            case 3: //Record player
+                            {
+                                probChange += recordPlayer2oven(m2,m1);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += oven2oven(m1,m2);                                
                                 break;
                             }
                         }
@@ -648,6 +688,11 @@ int netOpt::groupRooms()
                                         compatability += light2recordPlayer(m1,m2);   
                                         break;
                                     }
+                                    case 4: //Oven
+                                    {
+                                        compatability += light2oven(m1,m2);   
+                                        break;
+                                    }
                                 }
                                 break;
                             }
@@ -663,6 +708,11 @@ int netOpt::groupRooms()
                                     case 3: //Record player
                                     {
                                         compatability += speaker2recordPlayer(m1,m2);   
+                                        break;
+                                    }
+                                    case 4: //Oven
+                                    {
+                                        compatability += speaker2oven(m1,m2);   
                                         break;
                                     }
                                 }
@@ -837,6 +887,23 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
+                        case 4: //Oven
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0: //light
+                                {
+                                    compatability += light2oven(m2,m1);   
+                                    break;
+                                }
+                                case 2: //speaker
+                                {
+                                    compatability += speaker2oven(m2,m1);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -865,6 +932,11 @@ int netOpt::groupRooms()
                                     compatability += tv2recordPlayer(m1,m2);   
                                     break;
                                 }
+                                case 4: //Oven
+                                {
+                                    compatability += tv2oven(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -880,6 +952,33 @@ int netOpt::groupRooms()
                                 case 3: //Record player
                                 {
                                     compatability += recordPlayer2recordPlayer(m1,m2);   
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    compatability += recordPlayer2oven(m1,m2);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 4: //Oven
+                        {
+                            switch (((devRecord *)m2->member)->devType)
+                            {
+                                case 1: //tv
+                                {
+                                    compatability += tv2oven(m2,m1);   
+                                    break;
+                                }
+                                case 3: //Record player
+                                {
+                                    compatability += recordPlayer2oven(m2,m1);   
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    compatability += oven2oven(m1,m2);   
                                     break;
                                 }
                             }
@@ -954,1779 +1053,6 @@ int netOpt::groupRooms()
     }
 
     return 0;
-}
-
-int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
-{
-    devGroup *g1 = (devGroup *)m1->member;
-    devGroup *g2 = (devGroup *)m2->member;
-    
-    #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(((devRecord *)g2->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and light group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-    
-    
-    node_t *listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)g2->mems.getHead()->data)->activity.getHead();
-    activityRecord *a1;
-    activityRecord *a2;
-    bool devMatch = true;
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL)
-    {
-        bool devMatch = true;
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-
-        timeDiff = a1->timestamp - a2->timestamp;
-        if(timeDiff > 5 || timeDiff < -5)
-        {
-            devMatch = false;
-        }
-
-        if(a1->state != a2->state)
-        {
-            devMatch = false;
-        }
-
-        if(a1->variable != a2->variable)
-        {
-            devMatch = false;
-        }
-
-        if(devMatch == false)
-        {
-            if(probChange > -128)
-            {
-                probChange--;
-            }
-            else
-            {
-                probChange = -128;
-            }
-
-            if(a1->timestamp < a2->timestamp)
-            {
-                listIteratorA1 = g1->mems.getNext(listIteratorA1);
-            }
-            else if(a1->timestamp > a2->timestamp)
-            {
-                listIteratorA2 = g2->mems.getNext(listIteratorA2);
-            }
-            else
-            {
-                listIteratorA1 = g1->mems.getNext(listIteratorA1);
-                listIteratorA2 = g2->mems.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            if(probChange < 123)
-            {
-                probChange = probChange + 4;
-            }
-            else
-            {
-                probChange = 127;
-            } 
-
-            listIteratorA1 = g1->mems.getNext(listIteratorA1);
-            listIteratorA2 = g2->mems.getNext(listIteratorA2);
-        }
-    }
-
-    #ifdef TESTING
-        cout << "Test complete, probability change of " << probChange << endl;
-    #endif
-
-    return probChange;
-}
-
-int8_t netOpt::light2tv(roomMember *light, roomMember *mainDev)
-{
-    devGroup *l1 = (devGroup *)light->member;
-    devRecord *d1 = (devRecord *)mainDev->member;
-
-    #ifdef TESTING
-    uint8_t mac[6];
-        unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(d1->macAddr, mac);
-        cout << dec << " and main dev " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = d1->activity.getHead();
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-
-    int probChange = 0;
-    
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
-    {
-        #ifdef TESTIN
-            cout << listIteratorA1->data << " " << listIteratorA2->data << " " << listIteratorA3->data << endl;
-        #endif
-        
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-
-        #ifdef  TESTING
-            //tm tempTime;
-            //tempTime = *gmtime(&a1->timestamp);
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            //tempTime = *gmtime(&a2->timestamp);
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            //tempTime = *gmtime(&a3->timestamp);
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-        #endif
-
-        if(a1->variable == 0 && a1->state == 1)
-        { 
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
-            {
-                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
-                {
-                    if(a2->timestamp > a3->timestamp)
-                    {
-                        if(probChange <= 117)
-                        {
-                            probChange = probChange + 10;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-
-                        listIteratorA3 = d1->activity.getNext(listIteratorA3);
-                    }
-                    else
-                    {
-                        if(probChange >= -125)
-                        {
-                            probChange -= 3;
-                        }
-                        else
-                        {
-                            probChange = -128;
-                        }
-
-                        listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                        if(listIteratorA1 != NULL)
-                        {
-                            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    #ifdef TESTING
-                        cout << "a3 invalid: " << endl;
-                    #endif
-                    listIteratorA3 = d1->activity.getNext(listIteratorA3);
-                }
-            }
-            else
-            {
-                #ifdef TESTING
-                    cout << "a2 invalid" << endl;
-                #endif
-                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            #ifdef TESTING
-                cout << "a1 invalid" << endl;
-            #endif
-            
-            listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            }
-        }
-
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    #ifdef TESTIN
-        cout << "Compatability: " << probChange << endl;
-    #endif
-
-    return probChange;
-}
-
-int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
-{
-    devGroup *l1 = (devGroup *)light->member;
-    devGroup *g1 = (devGroup *)mainGroup->member;
-
-    #ifdef TESTING
-    uint8_t mac[6];
-        unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and main group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 1)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-
-    int probChange = 0;
-    
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
-    {
-        #ifdef TESTIN
-            cout << listIteratorA1->data << " " << listIteratorA2->data << " " << listIteratorA3->data << endl;
-        #endif
-        
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-
-        #ifdef  TESTIN
-            //tm tempTime;
-            //tempTime = *gmtime(&a1->timestamp);
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            //tempTime = *gmtime(&a2->timestamp);
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            //tempTime = *gmtime(&a3->timestamp);
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-        #endif
-
-        if(a1->variable == 0 && a1->state == 1)
-        { 
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
-            {
-                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
-                {
-                    if(a2->timestamp > a3->timestamp)
-                    {
-                        if(probChange <= 117)
-                        {
-                            probChange = probChange + 10;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-
-                        listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                    }
-                    else
-                    {
-                        if(probChange >= -123)
-                        {
-                            probChange -= 5;
-                        }
-                        else
-                        {
-                            probChange = -128;
-                        }
-
-                        listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                        if(listIteratorA1 != NULL)
-                        {
-                            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    #ifdef TESTIN
-                        cout << "a3 invalid: " << endl;
-                    #endif
-                    listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                }
-            }
-            else
-            {
-                #ifdef TESTIN
-                    cout << "a2 invalid" << endl;
-                #endif
-                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            #ifdef TESTIN
-                cout << "a1 invalid" << endl;
-            #endif
-            
-            listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            }
-        }
-
-        #ifdef TESTIN
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    #ifdef TESTIN
-        cout << "Compatability: " << probChange << endl;
-    #endif
-
-    return probChange;
-}
-
-int8_t netOpt::light2recordPlayer(roomMember *light, roomMember *recordPlayer)
-{
-    devGroup *l1 = (devGroup *)light->member;
-    devRecord *d1 = (devRecord *)recordPlayer->member;
-
-    #ifdef TESTING
-    uint8_t mac[6];
-        unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(d1->macAddr, mac);
-        cout << dec << " and record player " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = d1->activity.getHead();
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-
-    int probChange = 0;
-    
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL)
-    {
-        #ifdef TESTIN
-            cout << listIteratorA1->data << " " << listIteratorA2->data << " " << listIteratorA3->data << endl;
-        #endif
-        
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-
-        #ifdef  TESTING
-            //tm tempTime;
-            //tempTime = *gmtime(&a1->timestamp);
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            //tempTime = *gmtime(&a2->timestamp);
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            //tempTime = *gmtime(&a3->timestamp);
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-        #endif
-
-        if(a1->variable == 0 && a1->state == 1)
-        { 
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
-            {
-                if(a3->variable == 0 && a3->state == 1 && a3->timestamp >= a1->timestamp)
-                {
-                    if(a2->timestamp > a3->timestamp)
-                    {
-                        if(probChange <= 117)
-                        {
-                            probChange = probChange + 10;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-
-                        listIteratorA3 = d1->activity.getNext(listIteratorA3);
-                    }
-                    else
-                    {
-                        if(probChange >= -127)
-                        {
-                            probChange -= 1;
-                        }
-                        else
-                        {
-                            probChange = -128;
-                        }
-
-                        listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                        if(listIteratorA1 != NULL)
-                        {
-                            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    #ifdef TESTING
-                        cout << "a3 invalid: " << endl;
-                    #endif
-                    listIteratorA3 = d1->activity.getNext(listIteratorA3);
-                }
-            }
-            else
-            {
-                #ifdef TESTING
-                    cout << "a2 invalid" << endl;
-                #endif
-                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            #ifdef TESTING
-                cout << "a1 invalid" << endl;
-            #endif
-            
-            listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            }
-        }
-
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    #ifdef TESTIN
-        cout << "Compatability: " << probChange << endl;
-    #endif
-
-    return probChange;
-}
-
-int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
-{
-    devRecord *d1 = (devRecord *)m1->member;
-    devRecord *d2 = (devRecord *)m2->member;
-
-    #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(d2->macAddr, mac);
-        cout << dec << " and tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = d2->activity.getHead();
-    node_t *listIteratorA4 = d2->activity.getNext(listIteratorA3);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
-    {
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
-
-        #ifdef TESTIN
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
-        #endif
-
-        if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff < 5 && timeDiff > -5))
-        {
-            if(probChange <= 117)
-            {
-                probChange = probChange + 10;
-            }
-            else
-            {
-                probChange = 127;
-            }
-            
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
-            }
-            listIteratorA3 = d2->activity.getNext(listIteratorA3);
-            if(listIteratorA3 != NULL)
-            {
-               listIteratorA4 = d2->activity.getNext(listIteratorA3); 
-            }
-        }
-        else
-        {
-            if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
-            {
-                if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
-                {
-                    if(a3->variable == 0 && (a3->state == 3 || a3->state == 4))
-                    {
-                        if(a4->variable == 0 && (a4->state == 0 || a4->state == 1 || a4->state == 2))
-                        {
-                            if(a1->timestamp < a3->timestamp)
-                            {
-                                if(a2->timestamp > a3->timestamp)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                       listIteratorA2 = d1->activity.getNext(listIteratorA1); 
-                                    }
-                                }
-                            }
-                            else if(a1->timestamp > a3->timestamp)
-                            {
-                                if(a4->timestamp > a1->timestamp)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if(a2->timestamp > a4->timestamp)
-                                {
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                                else if(a2->timestamp < a4->timestamp)
-                                {
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                    }
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            listIteratorA4 = d2->activity.getNext(listIteratorA4);
-                        }
-                    }
-                    else
-                    {
-                        listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                        if(listIteratorA3 != NULL)
-                        {
-                            listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                        }
-                    }
-                }
-                else
-                {
-                    listIteratorA2 = d1->activity.getNext(listIteratorA2);
-                }
-            }
-            else
-            {
-                listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                if(listIteratorA1 != NULL)
-                {
-                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                }
-            }
-        }
-
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    return probChange;
-}
-
-int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
-{
-    devRecord *d1 = (devRecord *)tv->member;
-    devGroup *g1 = (devGroup *)speaker->member;
-
-    #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and speaker group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(d1->activity.getLen() < 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2)
-    {
-        #ifdef TESTING
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
-    {
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
-
-        #ifdef TESTIN
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
-        #endif
-
-        if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
-        {
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
-            {
-                if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
-                {
-                    if(a4->variable == 0 && a4->state != a3->state)
-                    {
-                        if(a1->timestamp <= a3->timestamp)
-                        {
-                            if(a2->timestamp > a3->timestamp)
-                            {
-                                if(a3->state == 2)
-                                {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
-                                }
-                                else
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-
-                                listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                }
-                            }
-                            else
-                            {
-                                if(probChange >= -127)
-                                {
-                                    probChange -= 1;
-                                }
-                                else
-                                {
-                                    probChange = -128;
-                                }
-                                
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1); 
-                                }
-                            }
-                        }
-                        else //a1->timestamp > a3->timestamp
-                        {
-                            if(a4->timestamp > a1->timestamp)
-                            {
-                                if(a3->state == 3)
-                                {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
-                                }
-                                else
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                }
-                            }
-                            else
-                            {
-                                if(a3->state = 3)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 5;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-                                
-                                listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA4);
-                    }
-                }
-                else
-                {
-                    listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                    }
-                }
-            }
-            else
-            {
-                listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
-            }
-        }
-
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    return probChange;
-}
-
-int8_t netOpt::tv2recordPlayer(roomMember *tv, roomMember *mainDev)
-{
-    devRecord *d1 = (devRecord *)tv->member;
-    devRecord *d2 = (devRecord *)mainDev->member;
-
-    #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(d2->macAddr, mac);
-        cout << dec << " and main dev " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = d2->activity.getHead();
-    node_t *listIteratorA4 = d2->activity.getNext(listIteratorA3);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
-    {
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
-
-        #ifdef TESTING
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
-        #endif
-
-        if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
-        {
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
-            {
-                if(a3->variable == 0 && a3->state == 1)
-                {
-                    if(a4->variable == 0 && (a4->state == 0 || a4->state == 2))
-                    {
-                        if(a1->timestamp < a3->timestamp)
-                        {
-                            if(a2->timestamp > a3->timestamp)
-                            {
-                                if(probChange >= -125)
-                                {
-                                    probChange -= 3;
-                                }
-                                else
-                                {
-                                    probChange = -128;
-                                }
-
-                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                }
-                            }
-                            else
-                            {
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1); 
-                                }
-                            }
-                        }
-                        else if(a1->timestamp > a3->timestamp)
-                        {
-                            if(a4->timestamp > a1->timestamp)
-                            {
-                                if(probChange >= -125)
-                                {
-                                    probChange -= 3;
-                                }
-                                else
-                                {
-                                    probChange = -128;
-                                }
-
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                }
-                            }
-                            else
-                            {
-                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if(a2->timestamp > a4->timestamp)
-                            {
-                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                }
-                            }
-                            else if(a2->timestamp < a4->timestamp)
-                            {
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                }
-                            }
-                            else
-                            {
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                }
-                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        listIteratorA4 = d2->activity.getNext(listIteratorA4);
-                    }
-                }
-                else
-                {
-                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                    }
-                }
-            }
-            else
-            {
-                listIteratorA2 = d1->activity.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
-            }
-        }
-        
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    return probChange;
-}
-
-int8_t netOpt::speaker2speaker(roomMember *m1, roomMember *m2)
-{
-    devGroup *g1 = (devGroup *)m1->member;
-    devGroup *g2 = (devGroup *)m2->member;
-
-    #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between speaker group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(((devRecord *)g2->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and speaker group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || ((devRecord *)g2->mems.getHead()->data)->activity.getLen() < 2)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
-    {
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
-
-        #ifdef TESTIN
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
-        #endif
-
-        if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff < 5 && timeDiff > -5))
-        {
-            if(probChange <= 117)
-            {
-                probChange = probChange + 10;
-            }
-            else
-            {
-                probChange = 127;
-            }
-            
-            listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-            }
-            listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-            if(listIteratorA3 != NULL)
-            {
-               listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3); 
-            }
-        }
-        else
-        {
-            if(a1->variable == 0 && a1->state != 0 && a1->state != 1)
-            {
-                if(a2->variable == 0 && a2->state != a1->state)
-                {
-                    if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
-                    {
-                        if(a4->variable == 0 && a4->state != a3->state)
-                        {
-                            if(a1->timestamp < a3->timestamp)
-                            {
-                                if(a2->timestamp > a3->timestamp)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-
-                                    listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                       listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1); 
-                                    }
-                                }
-                            }
-                            else if(a1->timestamp > a3->timestamp)
-                            {
-                                if(a4->timestamp > a1->timestamp)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-
-                                    listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if(a2->timestamp > a4->timestamp)
-                                {
-                                    listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                                else if(a2->timestamp < a4->timestamp)
-                                {
-                                    listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                                    }
-                                    listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA4);
-                        }
-                    }
-                    else
-                    {
-                        listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                        if(listIteratorA3 != NULL)
-                        {
-                            listIteratorA4 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                        }
-                    }
-                }
-                else
-                {
-                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                }
-            }
-            else
-            {
-                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                if(listIteratorA1 != NULL)
-                {
-                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                }
-            }
-        }
-
-        #ifdef TESTIN
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    return probChange;
-}
-
-int8_t netOpt::speaker2recordPlayer(roomMember *speaker, roomMember *audioDev)
-{
-    devRecord *d1 = (devRecord *)audioDev->member;
-    devGroup *g1 = (devGroup *)speaker->member;
-
-    #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << dec << " and speaker group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(d1->activity.getLen() < 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2)
-    {
-        #ifdef TESTING
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
-    {
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
-
-        #ifdef TESTIN
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
-        #endif
-
-        if(a1->variable == 0 && a1->state == 1)
-        {
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
-            {
-                if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
-                {
-                    if(a4->variable == 0 && a4->state != a3->state)
-                    {
-                        if(a1->timestamp <= a3->timestamp)
-                        {
-                            if(a2->timestamp > a3->timestamp)
-                            {
-                                if(a3->state == 3 || a3->state == 5)
-                                {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
-                                }
-                                else
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-
-                                listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                }
-                            }
-                            else
-                            {
-                                if(probChange >= -127)
-                                {
-                                    probChange -= 1;
-                                }
-                                else
-                                {
-                                    probChange = -128;
-                                }
-                                
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1); 
-                                }
-                            }
-                        }
-                        else //a1->timestamp > a3->timestamp
-                        {
-                            if(a4->timestamp > a1->timestamp)
-                            {
-                                if(a3->state == 3)
-                                {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
-                                }
-                                else
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                if(listIteratorA1 != NULL)
-                                {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                }
-                            }
-                            else
-                            {
-                                if(a3->state = 3)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 5;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-                                
-                                listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA4);
-                    }
-                }
-                else
-                {
-                    listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
-                    }
-                }
-            }
-            else
-            {
-                listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-            }
-        }
-        else
-        {
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
-            }
-        }
-
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    return probChange;
-}
-
-int8_t netOpt::recordPlayer2recordPlayer(roomMember *m1, roomMember *m2)
-{
-    devRecord *d1 = (devRecord *)m1->member;
-    devRecord *d2 = (devRecord *)m2->member;
-
-    #ifdef TESTIN
-        uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(d2->macAddr, mac);
-        cout << dec << " and tv " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << endl;
-    #endif
-
-    if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
-    {
-        #ifdef TESTIN
-            cout << "activity records are too short" << endl;
-        #endif
-
-        return -1;
-    }
-
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = d2->activity.getHead();
-    node_t *listIteratorA4 = d2->activity.getNext(listIteratorA3);
-    activityRecord *a1;
-    activityRecord *a2;
-    activityRecord *a3;
-    activityRecord *a4;
-
-    int probChange = 0;
-    int timeDiff = 0;
-
-    while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
-    {
-        a1 = (activityRecord *)listIteratorA1->data;
-        a2 = (activityRecord *)listIteratorA2->data;
-        a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
-
-        #ifdef TESTIN
-            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
-        #endif
-
-        if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff < 5 && timeDiff > -5))
-        {
-            if(probChange <= 117)
-            {
-                probChange = probChange + 10;
-            }
-            else
-            {
-                probChange = 127;
-            }
-            
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            if(listIteratorA1 != NULL)
-            {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
-            }
-            listIteratorA3 = d2->activity.getNext(listIteratorA3);
-            if(listIteratorA3 != NULL)
-            {
-               listIteratorA4 = d2->activity.getNext(listIteratorA3); 
-            }
-        }
-        else
-        {
-            if(a1->variable == 0 && a1->state == 1)
-            {
-                if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
-                {
-                    if(a3->variable == 0 && a3->state == 1)
-                    {
-                        if(a4->variable == 0 && (a4->state == 0 || a4->state == 2))
-                        {
-                            if(a1->timestamp < a3->timestamp)
-                            {
-                                if(a2->timestamp > a3->timestamp)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                       listIteratorA2 = d1->activity.getNext(listIteratorA1); 
-                                    }
-                                }
-                            }
-                            else if(a1->timestamp > a3->timestamp)
-                            {
-                                if(a4->timestamp > a1->timestamp)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if(a2->timestamp > a4->timestamp)
-                                {
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                                else if(a2->timestamp < a4->timestamp)
-                                {
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA1 = d1->activity.getNext(listIteratorA2);
-                                    if(listIteratorA1 != NULL)
-                                    {
-                                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                                    }
-                                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                                    if(listIteratorA3 != NULL)
-                                    {
-                                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            listIteratorA4 = d2->activity.getNext(listIteratorA4);
-                        }
-                    }
-                    else
-                    {
-                        listIteratorA3 = d2->activity.getNext(listIteratorA3);
-                        if(listIteratorA3 != NULL)
-                        {
-                            listIteratorA4 = d2->activity.getNext(listIteratorA3);
-                        }
-                    }
-                }
-                else
-                {
-                    listIteratorA2 = d1->activity.getNext(listIteratorA2);
-                }
-            }
-            else
-            {
-                listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                if(listIteratorA1 != NULL)
-                {
-                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
-                }
-            }
-        }
-
-        #ifdef TESTING
-            cout << "Compatability: " << probChange << endl;
-        #endif
-    }
-
-    return probChange;
 }
 
 int netOpt::activeRoomUpdate() 
@@ -3196,7 +1522,76 @@ int netOpt::sendDevStims()
                 }
                 break;
             
-            case 3: //Record
+            case 3: //Record player
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state != 0)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+
+            case 4: //Oven
                 a1 = (activityRecord *)d1->activity.getTail()->data;
                 if(a1->variable == 0 && a1->state != 0)
                 {
@@ -3302,7 +1697,8 @@ int netOpt::sendDevStims()
             {
                 m1 = (roomMember *)listIteratorM1->data;
 
-                cout << "Group " << counterM1 << "(" << m1 << ", " << m1->member << ") with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << (int)m1->memberProb  << ":" << endl;
+                //cout << "Group " << counterM1 << "(" << m1 << ", " << m1->member << ") with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << (int)m1->memberProb  << ":" << endl;
+                cout << "Group " << counterM1 << " with " << ((devGroup *)m1->member)->mems.getLen() << " members, has membership probability " << (int)m1->memberProb  << ":" << endl;
                 counterM1++;
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
@@ -3316,7 +1712,8 @@ int netOpt::sendDevStims()
                     {
                         cout << "." << stoi(to_string(mac[i]));
                     }
-                    cout << dec << " (" << d1 << ")" << endl;
+                    //cout << dec << " (" << d1 << ")" << endl;
+                    cout << dec << endl;
 
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getNext(listIteratorD1);
                 }
