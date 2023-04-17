@@ -75,7 +75,7 @@ int8_t netOpt::light2fridge(roomMember *light, roomMember *fridge)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(probChange <= 117)
+                        if(probChange <= 120)
                         {
                             probChange = probChange + 7;
                         }
@@ -88,7 +88,7 @@ int8_t netOpt::light2fridge(roomMember *light, roomMember *fridge)
                     }
                     else
                     {
-                        if(probChange >= -1257)
+                        if(probChange >= -125)
                         {
                             probChange -= 2;
                         }
