@@ -7,21 +7,21 @@
 
 using namespace std;
 
-int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
+int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
 {
-    devRecord *d1 = (devRecord *)recordPlayer->member;
-    devRecord *OV1 = (devRecord *)fridge->member;
+    devRecord *d1 = (devRecord *)tv->member;
+    devRecord *d2 = (devRecord *)assistant->member;
 
     #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between record player " << hex << (int)mac[0];
+        cout << "Compatability test between tv " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
-        unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and fridge " << hex << (int)mac[0];
+        unpackMAC(d2->macAddr, mac);
+        cout << dec << " and record player " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -29,7 +29,7 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
         cout << dec << endl;
     #endif
 
-    if(d1->activity.getLen() < 2 || OV1->activity.getLen() < 2)
+    if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
     {
         #ifdef TESTIN
             cout << "activity records are too short" << endl;
@@ -40,8 +40,8 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
 
     node_t *listIteratorA1 = d1->activity.getHead();
     node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = OV1->activity.getHead();
-    node_t *listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+    node_t *listIteratorA3 = d2->activity.getHead();
+    node_t *listIteratorA4 = d2->activity.getNext(listIteratorA3);
     activityRecord *a1;
     activityRecord *a2;
     activityRecord *a3;
@@ -69,54 +69,31 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
         {
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
             {
-                if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
+                if(a3->variable == 0 && (a3->state == 2 || a3->state == 3))
                 {
-                    if(a4->variable == 0 && a4->state != a3->state)
+                    if(a4->variable == 0 && (a4->state == 0 || a4->state == 1))
                     {
-                        if(a1->timestamp <= a3->timestamp)
+                        if(a1->timestamp < a3->timestamp)
                         {
                             if(a2->timestamp > a3->timestamp)
                             {
-                                if(a3->state == 2)
+                                if(probChange >= -125)
                                 {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
-                                }
-                                else
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-
-                                listIteratorA3 = OV1->activity.getNext(listIteratorA3);
-                                if(listIteratorA3 != NULL)
-                                {
-                                    listIteratorA4 = OV1->activity.getNext(listIteratorA3);
-                                }
-                            }
-                            else
-                            {
-                                if(probChange >= -127)
-                                {
-                                    probChange -= 1;
+                                    probChange -= 3;
                                 }
                                 else
                                 {
                                     probChange = -128;
                                 }
-                                
+
+                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                if(listIteratorA3 != NULL)
+                                {
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                            }
+                            else
+                            {
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
@@ -124,31 +101,17 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
                                 }
                             }
                         }
-                        else //a1->timestamp > a3->timestamp
+                        else if(a1->timestamp > a3->timestamp)
                         {
                             if(a4->timestamp > a1->timestamp)
                             {
-                                if(a3->state == 3)
+                                if(probChange >= -125)
                                 {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
+                                    probChange -= 3;
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
+                                    probChange = -128;
                                 }
 
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
@@ -159,74 +122,94 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
                             }
                             else
                             {
-                                if(a3->state = 3)
-                                {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 5;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
-                                }
-                                
-                                listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
                                 if(listIteratorA3 != NULL)
                                 {
-                                    listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if(a2->timestamp > a4->timestamp)
+                            {
+                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                if(listIteratorA3 != NULL)
+                                {
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                                }
+                            }
+                            else if(a2->timestamp < a4->timestamp)
+                            {
+                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                if(listIteratorA1 != NULL)
+                                {
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                }
+                            }
+                            else
+                            {
+                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                if(listIteratorA1 != NULL)
+                                {
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                }
+                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                                if(listIteratorA3 != NULL)
+                                {
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
                                 }
                             }
                         }
                     }
                     else
                     {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA4);
+                        listIteratorA4 = d2->activity.getNext(listIteratorA4);
                     }
                 }
-                else if(a3->variable == 0 >= 1 && a3->variable <= 6)
+                else if(a3->variable == 1)
                 {
-                    if(a1->timestamp < a3->timestamp && a2->timestamp > a3->timestamp)
+                    if(a1->timestamp < a3->timestamp)
                     {
-                        if(probChange <= 122)
+                        if(a2->timestamp > a3->timestamp)
                         {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-                    else if((a3->timestamp == a1->timestamp && a3->state == a1->state) || (a3->timestamp == a2->timestamp && a3->state == a2->state))
-                    {
-                        if(probChange <= 122)
-                        {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
+                            if(probChange <= 122)
+                            {
+                                probChange += 5;
+                            }
+                            else
+                            {
+                                probChange = 127;
+                            }
 
-                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                            listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                            }
+                        }
+                        else
+                        {
+                            listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                            if(listIteratorA1 != NULL)
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA1); 
+                            }
+                        }
                     }
                 }
                 else
                 {
-                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
                     if(listIteratorA3 != NULL)
                     {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
                     }
                 }
             }
             else
             {
-                listIteratorA2 = OV1->activity.getNext(listIteratorA2);
+                listIteratorA2 = d1->activity.getNext(listIteratorA2);
             }
         }
         else
@@ -237,7 +220,7 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
                 listIteratorA2 = d1->activity.getNext(listIteratorA1);
             }
         }
-
+        
         #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif

@@ -11,7 +11,8 @@
     "xutility": "cpp",
     "array": "cpp",
     "system_error": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "cstdlib": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

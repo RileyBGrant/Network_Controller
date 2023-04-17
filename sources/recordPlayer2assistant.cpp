@@ -7,29 +7,30 @@
 
 using namespace std;
 
-int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
+int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assistant)
 {
-    devGroup *g1 = (devGroup *)speaker->member;
-    devRecord *OV1 = (devRecord *)fridge->member;
+    devRecord *d1 = (devRecord *)recordPlayer->member;
+    devRecord *d2 = (devRecord *)assistant->member;
 
     #ifdef TESTING
         uint8_t mac[6];
-        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between speaker group with lead device " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and fridge " << hex << (int)mac[0];
+        unpackMAC(d1->macAddr, mac);
+        cout << dec << "Compatability test between record player " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         cout << dec << endl;
+        unpackMAC(d2->macAddr, mac);
+        cout << " and assistant " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        
     #endif
 
-    if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || OV1->activity.getLen() < 2)
+    if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
     {
         #ifdef TESTIN
             cout << "activity records are too short" << endl;
@@ -38,10 +39,10 @@ int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
         return -1;
     }
 
-    node_t *listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-    node_t *listIteratorA3 = OV1->activity.getHead();
-    node_t *listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+    node_t *listIteratorA1 = d1->activity.getHead();
+    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
+    node_t *listIteratorA3 = d2->activity.getHead();
+    node_t *listIteratorA4 = d2->activity.getNext(listIteratorA3);
     activityRecord *a1;
     activityRecord *a2;
     activityRecord *a3;
@@ -58,16 +59,16 @@ int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
         a4 = (activityRecord *)listIteratorA4->data;
         timeDiff = a1->timestamp - a3->timestamp;
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
             cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
         #endif
 
-        if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
+        if(a1->variable == 0 && a1->state == 1)
         {
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
+            if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
                 if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
                 {
@@ -100,10 +101,10 @@ int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
                                     }
                                 }
 
-                                listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
                                 if(listIteratorA3 != NULL)
                                 {
-                                    listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
                                 }
                             }
                             else
@@ -117,10 +118,10 @@ int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
                                     probChange = -128;
                                 }
                                 
-                                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
-                                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1); 
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1); 
                                 }
                             }
                         }
@@ -151,10 +152,10 @@ int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
                                     }
                                 }
 
-                                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
-                                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
                                 }
                             }
                             else
@@ -171,74 +172,60 @@ int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
                                     }
                                 }
                                 
-                                listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                                listIteratorA3 = d2->activity.getNext(listIteratorA3);
                                 if(listIteratorA3 != NULL)
                                 {
-                                    listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
                                 }
                             }
                         }
                     }
                     else
                     {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA4);
+                        listIteratorA4 = d2->activity.getNext(listIteratorA4);
                     }
                 }
-                else if(a3->variable == 0 >= 1 && a3->variable <= 6)
+                else if(a3->variable == 1)
                 {
-                    if(a1->timestamp < a3->timestamp && a2->timestamp > a3->timestamp)
+                    if(a1->timestamp <= a3->timestamp)
                     {
-                        if(probChange <= 122)
+                        if(a2->timestamp > a3->timestamp)
                         {
-                            probChange = probChange + 5;
+                            if(probChange <= 122)
+                            {
+                                probChange = probChange + 5;
+                            }
+                            else
+                            {
+                                probChange = 127;
+                            }
                         }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-                    else if((a3->timestamp == a1->timestamp && a3->state == a1->state) || (a3->timestamp == a2->timestamp && a3->state == a2->state))
-                    {
-                        if(probChange <= 122)
-                        {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-
-                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
                     }
                 }
                 else
                 {
-                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                    listIteratorA3 = d2->activity.getNext(listIteratorA3);
                     if(listIteratorA3 != NULL)
                     {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                        listIteratorA4 = d2->activity.getNext(listIteratorA3);
                     }
                 }
             }
             else
             {
-                listIteratorA2 = OV1->activity.getNext(listIteratorA2);
+                listIteratorA2 = d2->activity.getNext(listIteratorA2);
             }
         }
         else
         {
-            listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+            listIteratorA1 = d1->activity.getNext(listIteratorA1);
             if(listIteratorA1 != NULL)
             {
-                listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                listIteratorA2 = d1->activity.getNext(listIteratorA1);
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }
