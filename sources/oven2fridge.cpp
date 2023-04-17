@@ -35,7 +35,7 @@ int8_t netOpt::oven2fridge(roomMember *oven, roomMember *fridge)
     activityRecord *a1;
     activityRecord *a2;
     bool devMatch = true;
-    int probChange = 10; //devices are likely to be in the same room
+    int probChange = 9; //devices are likely to be in the same room
     int timeDiff = 0;
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
