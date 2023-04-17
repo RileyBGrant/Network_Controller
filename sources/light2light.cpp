@@ -62,9 +62,9 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
 
         if(devMatch == false)
         {
-            if(probChange > -128)
+            if(probChange >= -126)
             {
-                probChange--;
+                probChange -= 2;
             }
             else
             {
