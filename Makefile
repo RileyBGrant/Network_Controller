@@ -70,8 +70,8 @@ headers::
 	$(CPP) -c $(SRCS_path)/oven2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2fridge.o
 	$(CPP) -c $(SRCS_path)/oven2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2assistant.o
 	$(CPP) -c $(SRCS_path)/fridge2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/fridge2fridge.o
-	$(CPP) -c $(SRCS_path)/fridge2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/light2assistant.o
-	$(CPP) -c $(SRCS_path)/light2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/light2assistant.o
+	$(CPP) -c $(SRCS_path)/fridge2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/fridge2assistant.o
+	$(CPP) -c $(SRCS_path)/assistant2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/assistant2assistant.o
 
 
 
