@@ -7,21 +7,21 @@
 
 using namespace std;
 
-int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
+int8_t netOpt::speaker2fridge(roomMember *speaker, roomMember *fridge)
 {
-    devRecord *d1 = (devRecord *)recordPlayer->member;
-    devRecord *OV1 = (devRecord *)oven->member;
+    devGroup *g1 = (devGroup *)speaker->member;
+    devRecord *OV1 = (devRecord *)fridge->member;
 
     #ifdef TESTING
         uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between record player " << hex << (int)mac[0];
+        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
+        cout << "Compatability test between speaker group with lead device " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and oven " << hex << (int)mac[0];
+        cout << dec << " and fridge " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -29,7 +29,7 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
         cout << dec << endl;
     #endif
 
-    if(d1->activity.getLen() < 2 || OV1->activity.getLen() < 2)
+    if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || OV1->activity.getLen() < 2)
     {
         #ifdef TESTIN
             cout << "activity records are too short" << endl;
@@ -38,8 +38,8 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
         return -1;
     }
 
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
+    node_t *listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
+    node_t *listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
     node_t *listIteratorA3 = OV1->activity.getHead();
     node_t *listIteratorA4 = OV1->activity.getNext(listIteratorA3);
     activityRecord *a1;
@@ -58,7 +58,7 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
         a4 = (activityRecord *)listIteratorA4->data;
         timeDiff = a1->timestamp - a3->timestamp;
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
@@ -117,10 +117,10 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
                                     probChange = -128;
                                 }
                                 
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1); 
+                                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1); 
                                 }
                             }
                         }
@@ -151,10 +151,10 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
                                     }
                                 }
 
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
                                 }
                             }
                             else
@@ -231,14 +231,14 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
         }
         else
         {
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+            listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
             if(listIteratorA1 != NULL)
             {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }

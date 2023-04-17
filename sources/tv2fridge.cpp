@@ -7,21 +7,21 @@
 
 using namespace std;
 
-int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
+int8_t netOpt::tv2fridge(roomMember *tv, roomMember *fridge)
 {
-    devRecord *d1 = (devRecord *)recordPlayer->member;
-    devRecord *OV1 = (devRecord *)oven->member;
+    devRecord *d1 = (devRecord *)tv->member;
+    devRecord *OV1 = (devRecord *)fridge->member;
 
     #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between record player " << hex << (int)mac[0];
+        cout << "Compatability test between tv " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and oven " << hex << (int)mac[0];
+        cout << dec << " and fridge " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -58,7 +58,7 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
         a4 = (activityRecord *)listIteratorA4->data;
         timeDiff = a1->timestamp - a3->timestamp;
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
@@ -238,7 +238,7 @@ int8_t netOpt::recordPlayer2oven(roomMember *recordPlayer, roomMember *oven)
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }

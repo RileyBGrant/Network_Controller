@@ -7,10 +7,10 @@
 
 using namespace std;
 
-int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
+int8_t netOpt::light2fridge(roomMember *light, roomMember *fridge)
 {
     devGroup *l1 = (devGroup *)light->member;
-    devRecord *d1 = (devRecord *)oven->member;
+    devRecord *d1 = (devRecord *)fridge->member;
 
     #ifdef TESTING
     uint8_t mac[6];
@@ -21,7 +21,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
             cout << "." << (int)mac[i];
         }
         unpackMAC(d1->macAddr, mac);
-        cout << dec << " and oven " << hex << (int)mac[0];
+        cout << dec << " and fridge " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -57,7 +57,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
 
-        #ifdef  TESTIN
+        #ifdef  TESTING
             //tm tempTime;
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -168,7 +168,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }
