@@ -71,13 +71,47 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
         { 
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
-                if(((a3->variable == 0 && a3->state == 1) || (a3->variable >= 1 && a3->variable <= 6)) && a3->timestamp >= a1->timestamp)
+                if(a3->variable == 0 && a3->state == 1 && a3->timestamp >= a1->timestamp)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
                         if(probChange <= 117)
                         {
                             probChange = probChange + 10;
+                        }
+                        else
+                        {
+                            probChange = 127;
+                        }
+
+                        listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                    }
+                    else
+                    {
+                        if(probChange >= -125)
+                        {
+                            probChange -= 3;
+                        }
+                        else
+                        {
+                            probChange = -128;
+                        }
+
+                        listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+                        if(listIteratorA1 != NULL)
+                        {
+                            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                        }
+                        
+                    }
+                }
+                else if((a3->variable >= 1 && a3->variable <= 6) && a3->timestamp >= a1->timestamp)
+                {
+                    if(a2->timestamp > a3->timestamp)
+                    {
+                        if(probChange <= 117)
+                        {
+                            probChange = probChange + 1;
                         }
                         else
                         {
