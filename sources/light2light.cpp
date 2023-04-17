@@ -45,7 +45,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         a2 = (activityRecord *)listIteratorA2->data;
 
         timeDiff = a1->timestamp - a2->timestamp;
-        if(timeDiff > 5 || timeDiff < -5)
+        if(timeDiff > 30 || timeDiff < -30)
         {
             devMatch = false;
         }
