@@ -7,10 +7,10 @@
 
 using namespace std;
 
-int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
+int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
 {
     devGroup *l1 = (devGroup *)light->member;
-    devRecord *d1 = (devRecord *)tv->member;
+    devRecord *d1 = (devRecord *)oven->member;
 
     #ifdef TESTING
     uint8_t mac[6];
@@ -21,7 +21,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
             cout << "." << (int)mac[i];
         }
         unpackMAC(d1->macAddr, mac);
-        cout << dec << " and tv " << hex << (int)mac[0];
+        cout << dec << " and oven " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -57,7 +57,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
 
-        #ifdef  TESTIN
+        #ifdef  TESTING
             //tm tempTime;
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -71,7 +71,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
         { 
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
-                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
+                if(((a3->variable == 0 && a3->state == 1) || (a3->variable >= 1 && a3->variable <= 6)) && a3->timestamp >= a1->timestamp)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
@@ -134,7 +134,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }

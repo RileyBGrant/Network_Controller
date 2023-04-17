@@ -52,9 +52,7 @@ int netOpt::sortDevs()
             #ifdef TESTING    
                 default:
                 {
-                    
-                        cout << "Not a group DevType not found" << endl;
-                    
+                    cout << "Not a group DevType not found" << endl;
                 }
             #endif
         }
@@ -219,6 +217,11 @@ int netOpt::groupRooms()
                                 probChange += light2recordPlayer(m1,m2);                                
                                 break;
                             }
+                            case 4: //Oven
+                            {
+                                probChange += light2oven(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -234,6 +237,11 @@ int netOpt::groupRooms()
                             case 3: //Record player
                             {
                                 probChange += speaker2recordPlayer(m1,m2);                                
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += speaker2oven(m1,m2);                                
                                 break;
                             }
                         }
@@ -340,6 +348,11 @@ int netOpt::groupRooms()
                                 probChange += tv2recordPlayer(m1,m2);
                                 break;
                             }
+                            case 4: //Oven
+                            {
+                                probChange += tv2oven(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -355,6 +368,33 @@ int netOpt::groupRooms()
                             case 3: //Record player
                             {
                                 probChange += recordPlayer2recordPlayer(m1,m2);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += recordPlayer2oven(m1,m2);                                
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case 4: //Oven
+                    {
+                        switch (((devRecord *)m2->member)->devType)
+                        {
+                            case 1: //tv
+                            {
+                                probChange += tv2oven(m2,m1);
+                                break;
+                            }
+                            case 3: //Record player
+                            {
+                                probChange += recordPlayer2oven(m2,m1);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += oven2oven(m1,m2);                                
                                 break;
                             }
                         }
@@ -648,6 +688,11 @@ int netOpt::groupRooms()
                                         compatability += light2recordPlayer(m1,m2);   
                                         break;
                                     }
+                                    case 4: //Oven
+                                    {
+                                        compatability += light2oven(m1,m2);   
+                                        break;
+                                    }
                                 }
                                 break;
                             }
@@ -663,6 +708,11 @@ int netOpt::groupRooms()
                                     case 3: //Record player
                                     {
                                         compatability += speaker2recordPlayer(m1,m2);   
+                                        break;
+                                    }
+                                    case 4: //Oven
+                                    {
+                                        compatability += speaker2oven(m1,m2);   
                                         break;
                                     }
                                 }
@@ -837,6 +887,23 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
+                        case 4: //Oven
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0: //light
+                                {
+                                    compatability += light2oven(m2,m1);   
+                                    break;
+                                }
+                                case 2: //speaker
+                                {
+                                    compatability += speaker2oven(m2,m1);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -865,6 +932,11 @@ int netOpt::groupRooms()
                                     compatability += tv2recordPlayer(m1,m2);   
                                     break;
                                 }
+                                case 4: //Oven
+                                {
+                                    compatability += tv2oven(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -880,6 +952,33 @@ int netOpt::groupRooms()
                                 case 3: //Record player
                                 {
                                     compatability += recordPlayer2recordPlayer(m1,m2);   
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    compatability += recordPlayer2oven(m1,m2);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 4: //Oven
+                        {
+                            switch (((devRecord *)m2->member)->devType)
+                            {
+                                case 1: //tv
+                                {
+                                    compatability += tv2oven(m2,m1);   
+                                    break;
+                                }
+                                case 3: //Record player
+                                {
+                                    compatability += recordPlayer2oven(m2,m1);   
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    compatability += oven2oven(m1,m2);   
                                     break;
                                 }
                             }
@@ -1423,7 +1522,76 @@ int netOpt::sendDevStims()
                 }
                 break;
             
-            case 3: //Record
+            case 3: //Record player
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state != 0)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+
+            case 4: //Oven
                 a1 = (activityRecord *)d1->activity.getTail()->data;
                 if(a1->variable == 0 && a1->state != 0)
                 {
