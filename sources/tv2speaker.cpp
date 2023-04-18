@@ -159,7 +159,7 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                             }
                             else
                             {
-                                if(a3->state = 3)
+                                /*if(a3->state = 3)
                                 {
                                     if(probChange >= -125)
                                     {
@@ -169,7 +169,7 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                                     {
                                         probChange = -128;
                                     }
-                                }
+                                }*/
                                 
                                 listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
                                 if(listIteratorA3 != NULL)
