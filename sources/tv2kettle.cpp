@@ -184,6 +184,14 @@ int8_t netOpt::tv2kettle(roomMember *tv, roomMember *kettle)
                         listIteratorA4 = OV1->activity.getNext(listIteratorA4);
                     }
                 }
+                else
+                {
+                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                    if(listIteratorA3 != NULL)
+                    {
+                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                    }
+                }
             }
             else
             {
