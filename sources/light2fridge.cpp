@@ -77,7 +77,7 @@ int8_t netOpt::light2fridge(roomMember *light, roomMember *fridge)
                     {
                         if(probChange <= 120)
                         {
-                            probChange = probChange + 7;
+                            probChange = probChange + 6;
                         }
                         else
                         {
@@ -90,7 +90,7 @@ int8_t netOpt::light2fridge(roomMember *light, roomMember *fridge)
                     {
                         if(probChange >= -125)
                         {
-                            probChange -= 2;
+                            probChange -= 3;
                         }
                         else
                         {

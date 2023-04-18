@@ -1054,6 +1054,23 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
+                        case 5: //Assistant
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0: //light
+                                {
+                                    compatability += light2assistant(m2,m1);   
+                                    break;
+                                }
+                                case 2: //speaker
+                                {
+                                    compatability += speaker2assistant(m2,m1);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
