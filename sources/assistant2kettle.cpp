@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int8_t netOpt::oven2assistant(roomMember *assistant, roomMember *kettle)
+int8_t netOpt::assistant2kettle(roomMember *assistant, roomMember *kettle)
 {
     devRecord *d1 = (devRecord *)assistant->member;
     devRecord *OV1 = (devRecord *)kettle->member;
