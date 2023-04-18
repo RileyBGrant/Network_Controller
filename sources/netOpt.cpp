@@ -1054,7 +1054,7 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
-                        case 5: //Assistant
+                        case 6: //Assistant
                         {
                             switch (((devGroup *)m2->member)->devtype)
                             {
