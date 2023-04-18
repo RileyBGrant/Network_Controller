@@ -15,13 +15,13 @@ int8_t netOpt::speaker2assistant(roomMember *speaker, roomMember *assistant)
     #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(((devRecord *)s1->mems.getHead()->data)->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
+        cout << "Compatability test between speaker " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         unpackMAC(d2->macAddr, mac);
-        cout << dec << " and record player " << hex << (int)mac[0];
+        cout << dec << " and assistant " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -196,6 +196,14 @@ int8_t netOpt::speaker2assistant(roomMember *speaker, roomMember *assistant)
                                 listIteratorA2 = ((devRecord *)s1->mems.getHead()->data)->activity.getNext(listIteratorA1); 
                             }
                         }
+                    }
+                    else
+                    {
+                        listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                if(listIteratorA3 != NULL)
+                {
+                    listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                }
                     }
                 }
                 else
