@@ -58,7 +58,7 @@ int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
         a4 = (activityRecord *)listIteratorA4->data;
         timeDiff = a1->timestamp - a3->timestamp;
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
@@ -229,7 +229,7 @@ int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
             }
         }
         
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
