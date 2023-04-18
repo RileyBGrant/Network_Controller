@@ -229,7 +229,7 @@ int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
             }
         }
         
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }
