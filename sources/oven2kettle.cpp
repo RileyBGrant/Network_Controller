@@ -7,21 +7,21 @@
 
 using namespace std;
 
-int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
+int8_t netOpt::recordPlayer2oven(roomMember *kettle, roomMember *oven)
 {
-    devRecord *d1 = (devRecord *)tv->member;
+    devRecord *d1 = (devRecord *)kettle->member;
     devRecord *OV1 = (devRecord *)oven->member;
 
     #ifdef TESTING
         uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
+        unpackMAC(OV1->macAddr, mac);
+        cout << "Compatability test between oven " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
-        unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and oven " << hex << (int)mac[0];
+        unpackMAC(d1->macAddr, mac);
+        cout << dec << " and kettle " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -65,9 +65,9 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
             cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
         #endif
 
-        if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
+        if(a1->variable == 0 && a1->state == 1)
         {
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
+            if(a2->variable == 0 && a2->state == 0)
             {
                 if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
                 {

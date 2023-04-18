@@ -7,21 +7,21 @@
 
 using namespace std;
 
-int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
+int8_t netOpt::speaker2kettle(roomMember *speaker, roomMember *kettle)
 {
-    devRecord *d1 = (devRecord *)tv->member;
-    devRecord *OV1 = (devRecord *)oven->member;
+    devGroup *g1 = (devGroup *)speaker->member;
+    devRecord *OV1 = (devRecord *)kettle->member;
 
     #ifdef TESTING
         uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
+        unpackMAC(((devRecord *)g1->mems.getHead()->data)->macAddr, mac);
+        cout << "Compatability test between speaker group with lead device " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and oven " << hex << (int)mac[0];
+        cout << dec << " and kettle " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -29,7 +29,7 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
         cout << dec << endl;
     #endif
 
-    if(d1->activity.getLen() < 2 || OV1->activity.getLen() < 2)
+    if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || OV1->activity.getLen() < 2)
     {
         #ifdef TESTIN
             cout << "activity records are too short" << endl;
@@ -38,8 +38,8 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
         return -1;
     }
 
-    node_t *listIteratorA1 = d1->activity.getHead();
-    node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
+    node_t *listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getHead();
+    node_t *listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
     node_t *listIteratorA3 = OV1->activity.getHead();
     node_t *listIteratorA4 = OV1->activity.getNext(listIteratorA3);
     activityRecord *a1;
@@ -69,9 +69,9 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
         {
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
             {
-                if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
+                if(a3->variable == 0 && a3->state == 1)
                 {
-                    if(a4->variable == 0 && a4->state != a3->state)
+                    if(a4->variable == 0 && a4->state == 0)
                     {
                         if(a1->timestamp <= a3->timestamp)
                         {
@@ -117,10 +117,10 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
                                     probChange = -128;
                                 }
                                 
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1); 
+                                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1); 
                                 }
                             }
                         }
@@ -151,10 +151,10 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
                                     }
                                 }
 
-                                listIteratorA1 = d1->activity.getNext(listIteratorA2);
+                                listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
-                                    listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                                    listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
                                 }
                             }
                             else
@@ -184,37 +184,6 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
                         listIteratorA4 = OV1->activity.getNext(listIteratorA4);
                     }
                 }
-                else if(a3->variable == 0 >= 1 && a3->variable <= 6)
-                {
-                    if(a1->timestamp < a3->timestamp && a2->timestamp > a3->timestamp)
-                    {
-                        if(probChange <= 122)
-                        {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-                    else if((a3->timestamp == a1->timestamp && a3->state == a1->state) || (a3->timestamp == a2->timestamp && a3->state == a2->state))
-                    {
-                        if(probChange <= 122)
-                        {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-
-                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
-                    }
-                }
                 else
                 {
                     listIteratorA3 = OV1->activity.getNext(listIteratorA3);
@@ -231,10 +200,10 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
         }
         else
         {
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+            listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
             if(listIteratorA1 != NULL)
             {
-                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                listIteratorA2 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA1);
             }
         }
 

@@ -7,21 +7,21 @@
 
 using namespace std;
 
-int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
+int8_t netOpt::oven2assistant(roomMember *assistant, roomMember *kettle)
 {
-    devRecord *d1 = (devRecord *)tv->member;
-    devRecord *OV1 = (devRecord *)oven->member;
+    devRecord *d1 = (devRecord *)assistant->member;
+    devRecord *OV1 = (devRecord *)kettle->member;
 
     #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
+        cout << "Compatability test between assistant " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
         unpackMAC(OV1->macAddr, mac);
-        cout << dec << " and oven " << hex << (int)mac[0];
+        cout << dec << " and kettle " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
@@ -65,39 +65,25 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
             cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
         #endif
 
-        if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
+        if(a1->variable == 0 && (a1->state == 2 || a1->state == 3))
         {
-            if(a2->variable == 0 && (a2->state == 0 || a2->state == 1 || a2->state == 2))
+            if(a2->variable == 0 && (a2->state == 0 || a2->state == 1))
             {
-                if(a3->variable == 0 && a3->state != 0 && a3->state != 1)
+                if(a3->variable == 0 && a3->state == 1)
                 {
-                    if(a4->variable == 0 && a4->state != a3->state)
+                    if(a4->variable == 0 && a4->state == 0)
                     {
                         if(a1->timestamp <= a3->timestamp)
                         {
                             if(a2->timestamp > a3->timestamp)
                             {
-                                if(a3->state == 2)
+                                if(probChange <= 122)
                                 {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
+                                    probChange = probChange + 5;
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
+                                    probChange = 127;
                                 }
 
                                 listIteratorA3 = OV1->activity.getNext(listIteratorA3);
@@ -128,29 +114,15 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
                         {
                             if(a4->timestamp > a1->timestamp)
                             {
-                                if(a3->state == 3)
+                                if(probChange <= 122)
                                 {
-                                    if(probChange <= 102)
-                                    {
-                                        probChange = probChange + 25;
-                                    }
-                                    else
-                                    {
-                                        probChange = 127;
-                                    }
+                                    probChange = probChange + 5;
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
-                                    {
-                                        probChange -= 3;
-                                    }
-                                    else
-                                    {
-                                        probChange = -128;
-                                    }
+                                    probChange = 127;
                                 }
-
+                                
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
                                 if(listIteratorA1 != NULL)
                                 {
@@ -184,37 +156,6 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
                         listIteratorA4 = OV1->activity.getNext(listIteratorA4);
                     }
                 }
-                else if(a3->variable == 0 >= 1 && a3->variable <= 6)
-                {
-                    if(a1->timestamp < a3->timestamp && a2->timestamp > a3->timestamp)
-                    {
-                        if(probChange <= 122)
-                        {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-                    else if((a3->timestamp == a1->timestamp && a3->state == a1->state) || (a3->timestamp == a2->timestamp && a3->state == a2->state))
-                    {
-                        if(probChange <= 122)
-                        {
-                            probChange = probChange + 5;
-                        }
-                        else
-                        {
-                            probChange = 127;
-                        }
-                    }
-
-                    listIteratorA3 = OV1->activity.getNext(listIteratorA3);
-                    if(listIteratorA3 != NULL)
-                    {
-                        listIteratorA4 = OV1->activity.getNext(listIteratorA3);
-                    }
-                }
                 else
                 {
                     listIteratorA3 = OV1->activity.getNext(listIteratorA3);
@@ -227,6 +168,57 @@ int8_t netOpt::tv2oven(roomMember *tv, roomMember *oven)
             else
             {
                 listIteratorA2 = OV1->activity.getNext(listIteratorA2);
+            }
+        }
+        else if (a1->variable == 1)
+        {
+            if(a3->variable == 0 && a3->state == 1)
+            {
+                if(a4->variable == 0 && a4->state == 0)
+                {
+                    if(a1->timestamp > a3->timestamp)
+                    {
+                        if(a1->timestamp < a4->timestamp)
+                        {
+                            if(probChange <= 122)
+                            {
+                                probChange = probChange + 5;
+                            }
+                            else
+                            {
+                                probChange = 127;
+                            }
+                        }
+                        else
+                        {
+                            listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                        if(listIteratorA1 != NULL)
+                        {
+                            listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        }
+                    }
+                }
+                else
+                {
+                    listIteratorA4 = OV1->activity.getNext(listIteratorA4);
+                }
+            }
+            else
+            {
+                listIteratorA3 = OV1->activity.getNext(listIteratorA3);
+                if(listIteratorA3 != NULL)
+                {
+                    listIteratorA4 = OV1->activity.getNext(listIteratorA3);
+                }
             }
         }
         else

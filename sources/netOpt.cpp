@@ -232,6 +232,11 @@ int netOpt::groupRooms()
                                 probChange += light2assistant(m1,m2);                                
                                 break;
                             }
+                            case 7: //Kettle
+                            {
+                                probChange += light2kettle(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -262,6 +267,11 @@ int netOpt::groupRooms()
                             case 6: //Assistant
                             {
                                 probChange += speaker2assistant(m1,m2);                                
+                                break;
+                            }
+                            case 7: //Kettle
+                            {
+                                probChange += speaker2kettle(m1,m2);                                
                                 break;
                             }
                         }
@@ -383,6 +393,11 @@ int netOpt::groupRooms()
                                 probChange += tv2assistant(m1,m2);                                
                                 break;
                             }
+                            case 7: //Kettle
+                            {
+                                probChange += tv2kettle(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -413,6 +428,11 @@ int netOpt::groupRooms()
                             case 6: //Assistant
                             {
                                 probChange += recordPlayer2assistant(m1,m2);                                
+                                break;
+                            }
+                            case 7: //Kettle
+                            {
+                                probChange += recordPlayer2kettle(m1,m2);                                
                                 break;
                             }
                         }
@@ -447,6 +467,11 @@ int netOpt::groupRooms()
                                 probChange += oven2assistant(m1,m2);                                
                                 break;
                             }
+                            case 7: //Kettle
+                            {
+                                probChange += oven2kettle(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -479,6 +504,11 @@ int netOpt::groupRooms()
                                 probChange += fridge2assistant(m1,m2);                                
                                 break;
                             }
+                            case 7: //Kettle
+                            {
+                                probChange += fridge2kettle(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -509,6 +539,48 @@ int netOpt::groupRooms()
                             case 6: //Assistant
                             {
                                 probChange += assistant2assistant(m1,m2);                                
+                                break;
+                            }
+                            case 7: //Kettle
+                            {
+                                probChange += assistant2kettle(m1,m2);                                
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case 7: //Assistant
+                    {
+                        switch (((devRecord *)m2->member)->devType)
+                        {
+                            case 1: //tv
+                            {
+                                probChange += tv2kettle(m2,m1);
+                                break;
+                            }
+                            case 3: //Record player
+                            {
+                                probChange += recordPlayer2kettle(m2,m1);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += oven2kettle(m2,m1);                                
+                                break;
+                            }
+                            case 5: //Fridge
+                            {
+                                probChange += fridge2kettle(m2,m1);                                
+                                break;
+                            }
+                            case 6: //Assistant
+                            {
+                                probChange += assistant2kettle(m2,m1);                                
+                                break;
+                            }
+                            case 7: //Kettle
+                            {
+                                probChange += kettle2kettle(m1,m2);                                
                                 break;
                             }
                         }
@@ -816,6 +888,11 @@ int netOpt::groupRooms()
                                         compatability += light2assistant(m1,m2);   
                                         break;
                                     }
+                                    case 7: //Kettle
+                                    {
+                                        compatability += light2kettle(m1,m2);   
+                                        break;
+                                    }
                                 }
                                 break;
                             }
@@ -846,6 +923,11 @@ int netOpt::groupRooms()
                                     case 6: //Assistant
                                     {
                                         compatability += speaker2assistant(m1,m2);   
+                                        break;
+                                    }
+                                    case 7: //Kettle
+                                    {
+                                        compatability += speaker2kettle(m1,m2);   
                                         break;
                                     }
                                 }
@@ -1071,6 +1153,23 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
+                        case 7: //kettle
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0: //light
+                                {
+                                    compatability += light2kettle(m2,m1);   
+                                    break;
+                                }
+                                case 2: //speaker
+                                {
+                                    compatability += speaker2kettle(m2,m1);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -1114,6 +1213,11 @@ int netOpt::groupRooms()
                                     compatability += tv2assistant(m1,m2);   
                                     break;
                                 }
+                                case 7: //kettle
+                                {
+                                    compatability += tv2kettle(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -1144,6 +1248,11 @@ int netOpt::groupRooms()
                                 case 6: //Assistant
                                 {
                                     compatability += recordPlayer2assistant(m1,m2);   
+                                    break;
+                                }
+                                case 7: //kettle
+                                {
+                                    compatability += recordPlayer2kettle(m1,m2);   
                                     break;
                                 }
                             }
@@ -1178,6 +1287,11 @@ int netOpt::groupRooms()
                                     compatability += oven2assistant(m1,m2);   
                                     break;
                                 }
+                                case 7: //Kettle
+                                {
+                                    compatability += oven2kettle(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -1210,6 +1324,11 @@ int netOpt::groupRooms()
                                     compatability += fridge2assistant(m1,m2);   
                                     break;
                                 }
+                                case 7: //Kettle
+                                {
+                                    compatability += fridge2kettle(m1,m2);   
+                                    break;
+                                }
                             }
                             break;
                         }
@@ -1240,6 +1359,48 @@ int netOpt::groupRooms()
                                 case 6: //Assistant
                                 {
                                     compatability += assistant2assistant(m1,m2);   
+                                    break;
+                                }
+                                case 7: //Kettle
+                                {
+                                    compatability += assistant2kettle(m1,m2);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 7: //Kettle
+                        {
+                            switch (((devRecord *)m2->member)->devType)
+                            {
+                                case 1: //tv
+                                {
+                                    compatability += tv2kettle(m2,m1);   
+                                    break;
+                                }
+                                case 3: //Record player
+                                {
+                                    compatability += recordPlayer2kettle(m2,m1);   
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    compatability += oven2kettle(m2,m1);   
+                                    break;
+                                }
+                                case 5: //Fridge
+                                {
+                                    compatability += fridge2kettle(m2,m1);   
+                                    break;
+                                }
+                                case 6: //Assistant
+                                {
+                                    compatability += assistant2kettle(m2,m1);   
+                                    break;
+                                }
+                                case 7: //Kettle
+                                {
+                                    compatability += kettle2kettle(m1,m2);   
                                     break;
                                 }
                             }
@@ -1853,6 +2014,213 @@ int netOpt::sendDevStims()
                 break;
 
             case 4: //Oven
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state != 0)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+
+            case 5: //Fridge
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state != 0)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+
+            case 6: //Assistant
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state != 0)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+
+            case 7: //Kettle
                 a1 = (activityRecord *)d1->activity.getTail()->data;
                 if(a1->variable == 0 && a1->state != 0)
                 {
