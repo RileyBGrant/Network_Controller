@@ -71,7 +71,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
         { 
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
-                if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
+                if(a3->variable == 0 && (a3->state == 2 || a3->state == 3 || a3->state == 4 || a3->state == 5) && a3->timestamp >= a1->timestamp)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
