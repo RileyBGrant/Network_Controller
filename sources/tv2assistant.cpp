@@ -77,9 +77,9 @@ int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
                         {
                             if(a2->timestamp > a3->timestamp)
                             {
-                                if(probChange >= -125)
+                                if(probChange >= -103)
                                 {
-                                    probChange -= 3;
+                                    probChange -= 25;
                                 }
                                 else
                                 {
@@ -105,9 +105,9 @@ int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
                         {
                             if(a4->timestamp > a1->timestamp)
                             {
-                                if(probChange >= -125)
+                                if(probChange >= -103)
                                 {
-                                    probChange -= 3;
+                                    probChange -= 25;
                                 }
                                 else
                                 {

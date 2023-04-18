@@ -128,7 +128,7 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                         {
                             if(a4->timestamp > a1->timestamp)
                             {
-                                if(a3->state == 3)
+                                if(a3->state == 2)
                                 {
                                     if(probChange <= 102)
                                     {
