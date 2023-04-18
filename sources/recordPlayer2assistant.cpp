@@ -20,14 +20,13 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
         unpackMAC(d2->macAddr, mac);
         cout << " and assistant " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
         }
-        
+        cout << dec << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
@@ -199,6 +198,28 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
                             {
                                 probChange = 127;
                             }
+
+                            listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = d2->activity.getNext(listIteratorA3);
+                            }
+                        }
+                        else
+                        {
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            if(listIteratorA1 != NULL)
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        listIteratorA3 = d2->activity.getNext(listIteratorA3);
+                        if(listIteratorA3 != NULL)
+                        {
+                            listIteratorA4 = d2->activity.getNext(listIteratorA3);
                         }
                     }
                 }
