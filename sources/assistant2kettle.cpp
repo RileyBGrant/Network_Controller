@@ -188,6 +188,12 @@ int8_t netOpt::assistant2kettle(roomMember *assistant, roomMember *kettle)
                             {
                                 probChange = 127;
                             }
+
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            if(listIteratorA1 != NULL)
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                            }
                         }
                         else
                         {
