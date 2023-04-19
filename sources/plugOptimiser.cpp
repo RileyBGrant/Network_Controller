@@ -47,7 +47,7 @@ int plugOptimiser::addDevice(devRecord *newDev)
 int plugOptimiser::pairPlugs(linkedList_t *devices)
 {
     #ifdef TESTING
-        cout << "Light optimiser: Adding new device" << endl;
+        cout << "Plug optimiser: pairing plugs" << endl;
     #endif
 
     node_t *listIteratorD1 = devices->getHead();
