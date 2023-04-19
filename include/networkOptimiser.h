@@ -110,6 +110,28 @@ public:
     #endif
 };
 
+class plugOptimiser
+{
+private:
+    linkedList_t plugs; //list of pluggedDev
+
+public:
+    int addDevice(devRecord *newDev);
+    int pairPlugs(linkedList_t *devices);
+    string inactivity(devRecord *d0);
+
+    #ifdef TESTING
+        int printPlugs();
+    #endif
+};
+
+struct pluggedDev
+{
+    devRecord *plug;
+    devRecord *dev;
+};
+
+
 struct roomMember
 {
     void *member;
@@ -134,7 +156,8 @@ private:
     devRoom *activeRoom;
     lightOptimiser lightOpt;
     speakerOptimiser speakerOpt;
-    
+    plugOptimiser plugOpt;
+
 public:
     netOpt(netInt *netInterface);
     int sortDevs();
@@ -148,6 +171,7 @@ public:
     int8_t light2fridge(roomMember *light, roomMember *fridge);
     int8_t light2assistant(roomMember *light, roomMember *assistant);
     int8_t light2kettle(roomMember *light, roomMember *kettle);
+    int8_t light2washing(roomMember *light, roomMember *washing);
     int8_t tv2tv(roomMember *m1, roomMember *m2);
     int8_t tv2speaker(roomMember *tv, roomMember *speaker);
     int8_t tv2recordPlayer(roomMember *tv, roomMember *recordPlayer);
@@ -155,27 +179,35 @@ public:
     int8_t tv2fridge(roomMember *tv, roomMember *fridge);
     int8_t tv2assistant(roomMember *tv, roomMember *assistant);
     int8_t tv2kettle(roomMember *tv, roomMember *kettle);
+    int8_t tv2washing(roomMember *light, roomMember *washing);
     int8_t speaker2speaker(roomMember *m1, roomMember *m2);
     int8_t speaker2recordPlayer(roomMember *speaker, roomMember *audioDev);
     int8_t speaker2oven(roomMember *speaker, roomMember *oven);
     int8_t speaker2fridge(roomMember *speaker, roomMember *fridge);
     int8_t speaker2assistant(roomMember *speaker, roomMember *assistant);
     int8_t speaker2kettle(roomMember *speaker, roomMember *kettle);
+    int8_t speaker2washing(roomMember *light, roomMember *washing);
     int8_t recordPlayer2recordPlayer(roomMember *m1, roomMember *m2);
     int8_t recordPlayer2oven(roomMember *recordPlayer, roomMember *oven);
     int8_t recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge);
     int8_t recordPlayer2assistant(roomMember *recordPlayer, roomMember *assistant);
     int8_t recordPlayer2kettle(roomMember *recordPlayer, roomMember *kettle);
+    int8_t recordPlayer2washing(roomMember *light, roomMember *washing);
     int8_t oven2oven(roomMember *m1, roomMember *m2);
     int8_t oven2fridge(roomMember *oven, roomMember *fridge);
     int8_t oven2assistant(roomMember *oven, roomMember *assistant);
     int8_t oven2kettle(roomMember *tv, roomMember *kettle);
+    int8_t oven2washing(roomMember *light, roomMember *washing);
     int8_t fridge2fridge(roomMember *m1, roomMember *m2);
     int8_t fridge2assistant(roomMember *light, roomMember *assistant);
     int8_t fridge2kettle(roomMember *fridge, roomMember *kettle);
+    int8_t fridge2washing(roomMember *light, roomMember *washing);
     int8_t assistant2assistant(roomMember *m1, roomMember *m2);
     int8_t assistant2kettle(roomMember *assistant, roomMember *kettle);
+    int8_t assistant2washing(roomMember *light, roomMember *washing);
     int8_t kettle2kettle(roomMember *m1, roomMember *m2);
+    int8_t kettle2washing(roomMember *light, roomMember *washing);
+    int8_t washing2washing(roomMember *light, roomMember *washing);
     int activeRoomUpdate();
     int sendDevStims();
 

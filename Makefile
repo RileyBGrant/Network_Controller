@@ -52,6 +52,7 @@ headers::
 	$(CPP) -c $(SRCS_path)/light2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/light2fridge.o
 	$(CPP) -c $(SRCS_path)/light2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/light2assistant.o
 	$(CPP) -c $(SRCS_path)/light2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/light2kettle.o
+	$(CPP) -c $(SRCS_path)/light2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/light2washing.o
 	$(CPP) -c $(SRCS_path)/tv2tv.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2tv.o
 	$(CPP) -c $(SRCS_path)/tv2speaker.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2speaker.o
 	$(CPP) -c $(SRCS_path)/tv2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2recordPlayer.o
@@ -59,27 +60,35 @@ headers::
 	$(CPP) -c $(SRCS_path)/tv2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2fridge.o
 	$(CPP) -c $(SRCS_path)/tv2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2assistant.o
 	$(CPP) -c $(SRCS_path)/tv2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2kettle.o
+	$(CPP) -c $(SRCS_path)/tv2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/tv2washing.o
 	$(CPP) -c $(SRCS_path)/speaker2speaker.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2speaker.o
 	$(CPP) -c $(SRCS_path)/speaker2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2recordPlayer.o
 	$(CPP) -c $(SRCS_path)/speaker2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2oven.o
 	$(CPP) -c $(SRCS_path)/speaker2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2fridge.o
 	$(CPP) -c $(SRCS_path)/speaker2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2assistant.o
 	$(CPP) -c $(SRCS_path)/speaker2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2kettle.o
+	$(CPP) -c $(SRCS_path)/speaker2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/speaker2washing.o
 	$(CPP) -c $(SRCS_path)/recordPlayer2recordPlayer.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2recordPlayer.o
 	$(CPP) -c $(SRCS_path)/recordPlayer2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2oven.o
 	$(CPP) -c $(SRCS_path)/recordPlayer2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2fridge.o
 	$(CPP) -c $(SRCS_path)/recordPlayer2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2assistant.o
 	$(CPP) -c $(SRCS_path)/recordPlayer2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2kettle.o
+	$(CPP) -c $(SRCS_path)/recordPlayer2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/recordPlayer2washing.o
 	$(CPP) -c $(SRCS_path)/oven2oven.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2oven.o
 	$(CPP) -c $(SRCS_path)/oven2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2fridge.o
 	$(CPP) -c $(SRCS_path)/oven2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2assistant.o
 	$(CPP) -c $(SRCS_path)/oven2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2kettle.o
+	$(CPP) -c $(SRCS_path)/oven2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/oven2washing.o
 	$(CPP) -c $(SRCS_path)/fridge2fridge.cpp $(APPINCLUDE) -o $(OBJ_path)/fridge2fridge.o
 	$(CPP) -c $(SRCS_path)/fridge2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/fridge2assistant.o
 	$(CPP) -c $(SRCS_path)/fridge2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/fridge2kettle.o
+	$(CPP) -c $(SRCS_path)/fridge2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/fridge2washing.o
 	$(CPP) -c $(SRCS_path)/assistant2assistant.cpp $(APPINCLUDE) -o $(OBJ_path)/assistant2assistant.o
 	$(CPP) -c $(SRCS_path)/assistant2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/assistant2kettle.o
+	$(CPP) -c $(SRCS_path)/assistant2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/assistant2washing.o
 	$(CPP) -c $(SRCS_path)/kettle2kettle.cpp $(APPINCLUDE) -o $(OBJ_path)/kettle2kettle.o
+	$(CPP) -c $(SRCS_path)/kettle2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/kettle2washing.o
+	$(CPP) -c $(SRCS_path)/washing2washing.cpp $(APPINCLUDE) -o $(OBJ_path)/washing2washing.o
 
 
 

@@ -49,6 +49,11 @@ int netOpt::sortDevs()
                 speakerOpt.addDevice(dev);
             }
 
+            case 9:
+            {
+                plugOpt.addDevice(dev);
+            }
+
             #ifdef TESTING    
                 default:
                 {
@@ -74,6 +79,7 @@ int netOpt::optimise()
 
     lightOpt.groupLights();
     speakerOpt.groupSpeakers();
+    plugOpt.pairPlugs(devices);
 
     groupRooms();
     #ifdef TESTING
@@ -106,6 +112,7 @@ int netOpt::groupRooms()
         
         printRooms();
     #endif
+
     while (listIteratorR1)
     {
         r1 = (devRoom *) listIteratorR1->data;
@@ -237,6 +244,11 @@ int netOpt::groupRooms()
                                 probChange += light2kettle(m1,m2);                                
                                 break;
                             }
+                            case 8: //Washing machine
+                            {
+                                probChange += light2washing(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -272,6 +284,11 @@ int netOpt::groupRooms()
                             case 7: //Kettle
                             {
                                 probChange += speaker2kettle(m1,m2);                                
+                                break;
+                            }
+                            case 8: //Washing machine
+                            {
+                                probChange += speaker2washing(m1,m2);                                
                                 break;
                             }
                         }
@@ -398,6 +415,11 @@ int netOpt::groupRooms()
                                 probChange += tv2kettle(m1,m2);                                
                                 break;
                             }
+                            case 8: //Washing machine
+                            {
+                                probChange += tv2washing(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -433,6 +455,11 @@ int netOpt::groupRooms()
                             case 7: //Kettle
                             {
                                 probChange += recordPlayer2kettle(m1,m2);                                
+                                break;
+                            }
+                            case 8: //Washing machine
+                            {
+                                probChange += recordPlayer2washing(m1,m2);                                
                                 break;
                             }
                         }
@@ -472,6 +499,11 @@ int netOpt::groupRooms()
                                 probChange += oven2kettle(m1,m2);                                
                                 break;
                             }
+                            case 8: //Washing machine
+                            {
+                                probChange += oven2washing(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
@@ -507,6 +539,11 @@ int netOpt::groupRooms()
                             case 7: //Kettle
                             {
                                 probChange += fridge2kettle(m1,m2);                                
+                                break;
+                            }
+                            case 8: //Washing machine
+                            {
+                                probChange += fridge2washing(m1,m2);                                
                                 break;
                             }
                         }
@@ -546,10 +583,15 @@ int netOpt::groupRooms()
                                 probChange += assistant2kettle(m1,m2);                                
                                 break;
                             }
+                            case 8: //Washing machine
+                            {
+                                probChange += assistant2washing(m1,m2);                                
+                                break;
+                            }
                         }
                         break;
                     }
-                    case 7: //Assistant
+                    case 7: //Kettle
                     {
                         switch (((devRecord *)m2->member)->devType)
                         {
@@ -581,6 +623,53 @@ int netOpt::groupRooms()
                             case 7: //Kettle
                             {
                                 probChange += kettle2kettle(m1,m2);                                
+                                break;
+                            }
+                            case 8: //Washing machine
+                            {
+                                probChange += kettle2washing(m1,m2);                                
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case 8: //Washing machine
+                    {
+                        switch (((devRecord *)m2->member)->devType)
+                        {
+                            case 1: //tv
+                            {
+                                probChange += tv2washing(m2,m1);
+                                break;
+                            }
+                            case 3: //Record player
+                            {
+                                probChange += recordPlayer2washing(m2,m1);
+                                break;
+                            }
+                            case 4: //Oven
+                            {
+                                probChange += oven2washing(m2,m1);                                
+                                break;
+                            }
+                            case 5: //Fridge
+                            {
+                                probChange += fridge2washing(m2,m1);                                
+                                break;
+                            }
+                            case 6: //Assistant
+                            {
+                                probChange += assistant2washing(m2,m1);                                
+                                break;
+                            }
+                            case 7: //Kettle
+                            {
+                                probChange += kettle2washing(m2,m1);                                
+                                break;
+                            }
+                            case 8: //Washing machine
+                            {
+                                probChange += washing2washing(m1,m2);                                
                                 break;
                             }
                         }
@@ -893,6 +982,11 @@ int netOpt::groupRooms()
                                         compatability += light2kettle(m1,m2);   
                                         break;
                                     }
+                                    case 8: //Washing machine
+                                    {
+                                        compatability += light2washing(m1,m2);   
+                                        break;
+                                    }
                                 }
                                 break;
                             }
@@ -928,6 +1022,11 @@ int netOpt::groupRooms()
                                     case 7: //Kettle
                                     {
                                         compatability += speaker2kettle(m1,m2);   
+                                        break;
+                                    }
+                                    case 8: //Washing machine
+                                    {
+                                        compatability += speaker2washing(m1,m2);   
                                         break;
                                     }
                                 }
@@ -1170,6 +1269,23 @@ int netOpt::groupRooms()
                             }
                             break;
                         }
+                        case 8: //Washing machine
+                        {
+                            switch (((devGroup *)m2->member)->devtype)
+                            {
+                                case 0: //light
+                                {
+                                    compatability += light2washing(m2,m1);   
+                                    break;
+                                }
+                                case 2: //speaker
+                                {
+                                    compatability += speaker2washing(m2,m1);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
                     }  
 
                     listIteratorM2 = r1->mems.getNext(listIteratorM2);
@@ -1401,6 +1517,48 @@ int netOpt::groupRooms()
                                 case 7: //Kettle
                                 {
                                     compatability += kettle2kettle(m1,m2);   
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                        case 8: //Washing machine
+                        {
+                            switch (((devRecord *)m2->member)->devType)
+                            {
+                                case 1: //tv
+                                {
+                                    probChange += tv2washing(m2,m1);
+                                    break;
+                                }
+                                case 3: //Record player
+                                {
+                                    probChange += recordPlayer2washing(m2,m1);
+                                    break;
+                                }
+                                case 4: //Oven
+                                {
+                                    probChange += oven2washing(m2,m1);                                
+                                    break;
+                                }
+                                case 5: //Fridge
+                                {
+                                    probChange += fridge2washing(m2,m1);                                
+                                    break;
+                                }
+                                case 6: //Assistant
+                                {
+                                    probChange += assistant2washing(m2,m1);                                
+                                    break;
+                                }
+                                case 7: //Kettle
+                                {
+                                    probChange += kettle2washing(m2,m1);                                
+                                    break;
+                                }
+                                case 8: //Washing machine
+                                {
+                                    probChange += washing2washing(m1,m2);                                
                                     break;
                                 }
                             }
