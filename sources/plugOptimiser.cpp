@@ -206,23 +206,31 @@ string plugOptimiser::inactivity(devRecord *d0)
 
         while(listIteratorP1)
         {
-           cout << "here" << endl;
-           p1 = (pluggedDev *)listIteratorP1->data;
+            cout << "here" << endl;
+            p1 = (pluggedDev *)listIteratorP1->data;
             unpackMAC(p1->plug->macAddr, mac);
             cout << "Plug Optimiser: Plug " << hex << stoi(to_string(mac[0]));
             for(int i = 1; i < 6; i++)
             {
                 cout << "." << stoi(to_string(mac[i]));
             }
-            unpackMAC(p1->dev->macAddr, mac);
-            cout << dec << " connected to " << hex << stoi(to_string(mac[0]));
-            for(int i = 1; i < 6; i++)
-            {
-                cout << "." << stoi(to_string(mac[i]));
-            }
-            cout << dec << endl;
 
-            listIteratorP1 = plugs.getNext(listIteratorP1);
+            if(p1->dev != NULL)
+            {
+                unpackMAC(p1->dev->macAddr, mac);
+                cout << dec << " connected to " << hex << stoi(to_string(mac[0]));
+                for(int i = 1; i < 6; i++)
+                {
+                    cout << "." << stoi(to_string(mac[i]));
+                }
+                cout << dec << endl;
+
+                listIteratorP1 = plugs.getNext(listIteratorP1);
+            }
+            else
+            {
+                cout << dec << " bot connected to a device" << endl;
+            }
         }
 
         return 0;

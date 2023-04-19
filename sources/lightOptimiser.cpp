@@ -95,7 +95,7 @@ int lightOptimiser::groupLights()
 
                     if(activity1->timestamp != activity2->timestamp)
                     {
-                        #ifdef TESTING
+                        #ifdef TESTIN
                             cout << "Light Optimiser: Timestep mismatch, masterDev: " << activity1->timestamp << ", dev " << activity2->timestamp << endl;
                         #endif
                         devMatch = false;
@@ -103,7 +103,7 @@ int lightOptimiser::groupLights()
 
                     if(activity1->state != activity2->state)
                     {
-                        #ifdef TESTING
+                        #ifdef TESTIN
                             cout << "Light Optimiser: Activity mismatch, masterDev: " << activity1->state << ", dev " << activity2->state << endl;
                         #endif
                         devMatch = false;
@@ -111,7 +111,7 @@ int lightOptimiser::groupLights()
 
                     if(activity1->variable != activity2->variable)
                     {
-                        #ifdef TESTING
+                        #ifdef TESTIN
                             cout << "Light Optimiser: Variable mismatch, masterDev: " << activity1->variable << ", dev " << activity2->variable << endl;
                         #endif
                         devMatch = false;
@@ -233,7 +233,7 @@ int lightOptimiser::groupLights()
         listIteratorG1 = lightGroups.getHead();
         while(listIteratorG1 != NULL && masterDev->groups.getLen() < 1)
         {
-            #ifdef TESTING
+            #ifdef TESTIN
                 cout << "Light optimiser: Checking for match with group " << counter << endl;
                 counter++;
             #endif
@@ -241,7 +241,7 @@ int lightOptimiser::groupLights()
             listIteratorD2 = group->mems.getHead();
             dev = (devRecord *)listIteratorD2->data;
 
-            #ifdef TESTING
+            #ifdef TESTIN
                 cout << "Light optimiser: Master Dev record length is  " << masterDev->activity.getLen() << endl;
                 cout << "Light optimiser: Group Dev record length is  " << dev->activity.getLen() << endl;
             #endif
@@ -250,7 +250,7 @@ int lightOptimiser::groupLights()
             {
                 if(dev->activity.getLen() == masterDev->activity.getLen())
                 {
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         cout << "Light optimiser: length match " << endl;
                     #endif
                     
@@ -280,7 +280,7 @@ int lightOptimiser::groupLights()
 
                         if(devMatch == false)
                         {
-                            #ifdef TESTING
+                            #ifdef TESTIN
                                 cout << "Records do not match" << endl;
                                 uint8_t mac[6];
                                 unpackMAC(masterDev->macAddr, mac);
