@@ -8,7 +8,7 @@ using namespace std;
 int plugOptimiser::addDevice(devRecord *newDev)
 {
     #ifdef TESTING
-        cout << "Light optimiser: Adding new device" << endl;
+        cout << "Plug optimiser: Adding new device" << endl;
     #endif
 
     node_t *listIterator = plugs.getHead();
@@ -21,7 +21,7 @@ int plugOptimiser::addDevice(devRecord *newDev)
         if(dev->macAddr == newDev->macAddr)
         {
             #ifdef TESTING
-                cout << "Light optimiser: Device already added" << endl;
+                cout << "Plug optimiser: Device already added" << endl;
             #endif
 
             return 0;
@@ -31,7 +31,7 @@ int plugOptimiser::addDevice(devRecord *newDev)
     }
 
     #ifdef TESTING
-        cout << "Light optimiser: Device not found adding to list" << endl;
+        cout << "Plug optimiser: Device not found adding to list" << endl;
     #endif
 
     pluggedDev *p1 = new pluggedDev;
@@ -206,7 +206,8 @@ string plugOptimiser::inactivity(devRecord *d0)
 
         while(listIteratorP1)
         {
-            p1 = (pluggedDev *)listIteratorP1->data;
+           cout << here << endl;
+           p1 = (pluggedDev *)listIteratorP1->data;
             unpackMAC(p1->plug->macAddr, mac);
             cout << "Plug Optimiser: Plug " << hex << stoi(to_string(mac[0]));
             for(int i = 1; i < 6; i++)
