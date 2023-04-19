@@ -64,146 +64,148 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
     while(listIteratorD1)
     {
         d1 = (devRecord *)listIteratorD1->data;
-        devPaired = false;
-        listIteratorP2 = plugs.getHead();
-
-        #ifdef TESTING
-            uint8_t mac[6];
-            unpackMAC(d1->macAddr, mac);
-            cout << "Pairing test for device " << hex << (int)mac[0];
-            for(int i = 1; i < 6; i++)
-            {
-                cout << "." << (int)mac[i];
-            }
-            cout << dec << endl;
-        #endif
-
-        while(listIteratorP2)
+        if(d1->devType != 9)
         {
-            d2 = ((pluggedDev *)listIteratorP2->data)->dev;
-
-            if(d1 == d2)
-            {
-                devPaired = true;
-                listIteratorP2 = NULL;
-
-                #ifdef TESTING
-                    cout << "Device already paired" << endl;
-                #endif
-            }
-            else
-            {
-                listIteratorP2 = plugs.getNext(listIteratorP2);
-            }
-        }
-
-        if(devPaired == false)
-        {
-            #ifdef TESTING
-                cout << "Device not already paired" << endl;
-            #endif
-            
+            devPaired = false;
             listIteratorP2 = plugs.getHead();
+
+            #ifdef TESTING
+                uint8_t mac[6];
+                unpackMAC(d1->macAddr, mac);
+                cout << "Pairing test for device " << hex << (int)mac[0];
+                for(int i = 1; i < 6; i++)
+                {
+                    cout << "." << (int)mac[i];
+                }
+                cout << dec << endl;
+            #endif
 
             while(listIteratorP2)
             {
-                #ifdef TESTING
-                    unpackMAC(((pluggedDev *)listIteratorP2->data)->plug->macAddr, mac);
-                    cout << dec << "Checking with plug " << hex << (int)mac[0];
-                    for(int i = 1; i < 6; i++)
-                    {
-                        cout << "." << (int)mac[i];
-                    }
-                    cout << dec << endl;
-                #endif
+                d2 = ((pluggedDev *)listIteratorP2->data)->dev;
 
-                if(((pluggedDev *)listIteratorP2->data)->dev == NULL)
+                if(d1 == d2)
                 {
                     devPaired = true;
-                    p2 = ((pluggedDev *)listIteratorP2->data)->plug;
-
-                    listIteratorA1 = d1->activity.getHead();
-                    listIteratorA2 = p2->activity.getHead();
-
-                    while(listIteratorA1 != NULL && listIteratorA2 != NULL)
-                    {
-                        a1 = (activityRecord *)listIteratorA1->data;
-                        a2 = (activityRecord *)listIteratorA2->data;
-
-                        #ifdef TESTING
-                            cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-                            cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-                        #endif
-
-                        if(a1->timestamp > a2->timestamp)
-                        {
-                            listIteratorA1 = NULL;
-                            listIteratorA2 = NULL;
-                            devPaired = false;
-                            #ifdef TESTING
-                                cout << "Fail" << endl;
-                            #endif
-                        }
-                        else if(a1->timestamp < a2->timestamp)
-                        {
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                        }
-                        else
-                        {
-                            if(a1->variable == 0)
-                            {
-                                if(a2->variable == 0)
-                                {
-                                    if(a1->state == a2->state)
-                                    {
-                                        listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                                        listIteratorA2 = p2->activity.getNext(listIteratorA2);
-                                    }
-                                    else
-                                    {
-                                        listIteratorA1 = NULL;
-                                        listIteratorA2 = NULL;
-                                        devPaired = false;
-                                        #ifdef TESTING
-                                            cout << "Fail" << endl;
-                                        #endif
-                                    }
-                                }
-                                else
-                                {
-                                    listIteratorA2 = p2->activity.getNext(listIteratorA2);
-                                }
-                            }
-                            else
-                            {
-                                listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                            }
-                        }
-                    }
-                }
-                #ifdef TESTING
-                    else
-                    {
-                        cout << "Plug already connected to  a different device" << endl;
-                    }
-                #endif
-
-                if(devPaired == true)
-                {
-                    ((pluggedDev *)listIteratorP2->data)->dev = d1;
                     listIteratorP2 = NULL;
+
                     #ifdef TESTING
-                        cout << "Paired" << endl;
+                        cout << "Device already paired" << endl;
                     #endif
                 }
                 else
                 {
                     listIteratorP2 = plugs.getNext(listIteratorP2);
                 }
+            }
+
+            if(devPaired == false)
+            {
+                #ifdef TESTING
+                    cout << "Device not already paired" << endl;
+                #endif
                 
+                listIteratorP2 = plugs.getHead();
+
+                while(listIteratorP2)
+                {
+                    #ifdef TESTING
+                        unpackMAC(((pluggedDev *)listIteratorP2->data)->plug->macAddr, mac);
+                        cout << dec << "Checking with plug " << hex << (int)mac[0];
+                        for(int i = 1; i < 6; i++)
+                        {
+                            cout << "." << (int)mac[i];
+                        }
+                        cout << dec << endl;
+                    #endif
+
+                    if(((pluggedDev *)listIteratorP2->data)->dev == NULL)
+                    {
+                        devPaired = true;
+                        p2 = ((pluggedDev *)listIteratorP2->data)->plug;
+
+                        listIteratorA1 = d1->activity.getHead();
+                        listIteratorA2 = p2->activity.getHead();
+
+                        while(listIteratorA1 != NULL && listIteratorA2 != NULL)
+                        {
+                            a1 = (activityRecord *)listIteratorA1->data;
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
+                                cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
+                            #endif
+
+                            if(a1->timestamp > a2->timestamp)
+                            {
+                                listIteratorA1 = NULL;
+                                listIteratorA2 = NULL;
+                                devPaired = false;
+                                #ifdef TESTING
+                                    cout << "Fail" << endl;
+                                #endif
+                            }
+                            else if(a1->timestamp < a2->timestamp)
+                            {
+                                listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            }
+                            else
+                            {
+                                if(a1->variable == 0)
+                                {
+                                    if(a2->variable == 0)
+                                    {
+                                        if(a1->state == a2->state)
+                                        {
+                                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                                            listIteratorA2 = p2->activity.getNext(listIteratorA2);
+                                        }
+                                        else
+                                        {
+                                            listIteratorA1 = NULL;
+                                            listIteratorA2 = NULL;
+                                            devPaired = false;
+                                            #ifdef TESTING
+                                                cout << "Fail" << endl;
+                                            #endif
+                                        }
+                                    }
+                                    else
+                                    {
+                                        listIteratorA2 = p2->activity.getNext(listIteratorA2);
+                                    }
+                                }
+                                else
+                                {
+                                    listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                                }
+                            }
+                        }
+                    }
+                    #ifdef TESTING
+                        else
+                        {
+                            cout << "Plug already connected to  a different device" << endl;
+                        }
+                    #endif
+
+                    if(devPaired == true)
+                    {
+                        ((pluggedDev *)listIteratorP2->data)->dev = d1;
+                        listIteratorP2 = NULL;
+                        #ifdef TESTING
+                            cout << "Paired" << endl;
+                        #endif
+                    }
+                    else
+                    {
+                        listIteratorP2 = plugs.getNext(listIteratorP2);
+                    }
+                    
+                }
             }
         }
-
         listIteratorD1 = devices->getNext(listIteratorD1);
     }
 
