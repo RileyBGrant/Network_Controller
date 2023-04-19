@@ -1588,19 +1588,22 @@ int netOpt::groupRooms()
                 listIteratorR1 = rooms.getNext(listIteratorR1);
             }
 
-            if(roomFound == false && ((devRecord *)m1->member)->devType != 9)
+            if(roomFound == false)
             {
-                #ifdef TESTING
-                    cout << "No compatible rooms, creating new room" << endl;
-                #endif
+                if(((devRecord *)m1->member)->devType != 9)
+                {
+                    #ifdef TESTING
+                        cout << "No compatible rooms, creating new room" << endl;
+                    #endif
 
-                r1 = new devRoom;
-                m1->memberProb = 255;
-                r1->activeProb = 0;
-                r1->mems.append(m1);
-                rooms.append(r1);
+                    r1 = new devRoom;
+                    m1->memberProb = 255;
+                    r1->activeProb = 0;
+                    r1->mems.append(m1);
+                    rooms.append(r1);
                 
-                d1->rooms.append(r1);
+                    d1->rooms.append(r1);
+                }
             }
             else
             {
