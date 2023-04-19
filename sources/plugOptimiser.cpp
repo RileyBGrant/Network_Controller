@@ -134,13 +134,10 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                                     listIteratorA2 = p2->activity.getNext(listIteratorA2);
                                 }
                             }
-                            else if (/* condition */)
+                            else
                             {
                                 listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             }
-                            
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                            listIteratorA2 = p2->activity.getNext(listIteratorA2);
                         }
                     }
                 }
