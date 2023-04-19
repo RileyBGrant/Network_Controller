@@ -116,13 +116,11 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     }
                     cout << dec << endl;
                 #endif
-                
+
                 if(((pluggedDev *)listIteratorP2->data)->dev != NULL)
                 {
                     devPaired = true;
                     p2 = ((pluggedDev *)listIteratorP2->data)->plug;
-
-                    
 
                     listIteratorA1 = d1->activity.getHead();
                     listIteratorA2 = p2->activity.getHead();
@@ -183,6 +181,12 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                         }
                     }
                 }
+                #ifdef TESTING
+                    else
+                    {
+                        cout << "Plug already connected to  a different device" << endl;
+                    }
+                #endif
 
                 if(devPaired == true)
                 {
