@@ -47,11 +47,13 @@ int netOpt::sortDevs()
             case 2:
             {
                 speakerOpt.addDevice(dev);
+                break;
             }
 
             case 9:
             {
                 plugOpt.addDevice(dev);
+                break;
             }
 
             #ifdef TESTING    
