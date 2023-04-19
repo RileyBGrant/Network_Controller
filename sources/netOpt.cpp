@@ -84,6 +84,7 @@ int netOpt::optimise()
     groupRooms();
     #ifdef TESTING
         printRooms();
+        plugOpt.printPlugs();
     #endif
 
     return 0;
@@ -1587,7 +1588,7 @@ int netOpt::groupRooms()
                 listIteratorR1 = rooms.getNext(listIteratorR1);
             }
 
-            if(roomFound == false)
+            if(roomFound == false && ((devRecord *)m1->member)->devType != 9)
             {
                 #ifdef TESTING
                     cout << "No compatible rooms, creating new room" << endl;
