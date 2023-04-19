@@ -36,7 +36,7 @@ int plugOptimiser::addDevice(devRecord *newDev)
 
     pluggedDev *p1 = new pluggedDev;
     p1->plug = newDev;
-    p1->dev = NULL;
+    p1->dev = newDev;
 
     plugs.append(p1);
     //printDevs();
@@ -70,7 +70,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
         #ifdef TESTING
             uint8_t mac[6];
             unpackMAC(d1->macAddr, mac);
-            cout << "Pairing test between device " << hex << (int)mac[0];
+            cout << "Pairing test for device " << hex << (int)mac[0];
             for(int i = 1; i < 6; i++)
             {
                 cout << "." << (int)mac[i];
@@ -108,7 +108,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
             while(listIteratorP2)
             {
                 #ifdef TESTING
-                    unpackMAC(p2->macAddr, mac);
+                    unpackMAC(((pluggedDev *)listIteratorP2->data)->plug->macAddr, mac);
                     cout << dec << "Checking with plug " << hex << (int)mac[0];
                     for(int i = 1; i < 6; i++)
                     {
@@ -117,7 +117,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     cout << dec << endl;
                 #endif
 
-                if(((pluggedDev *)listIteratorP2->data)->dev != NULL)
+                if(((pluggedDev *)listIteratorP2->data)->dev != ((pluggedDev *)listIteratorP2->data)->plug)
                 {
                     devPaired = true;
                     p2 = ((pluggedDev *)listIteratorP2->data)->plug;
