@@ -206,7 +206,7 @@ string plugOptimiser::inactivity(devRecord *d0)
 
         while(listIteratorP1)
         {
-           cout << here << endl;
+           cout << "here" << endl;
            p1 = (pluggedDev *)listIteratorP1->data;
             unpackMAC(p1->plug->macAddr, mac);
             cout << "Plug Optimiser: Plug " << hex << stoi(to_string(mac[0]));
