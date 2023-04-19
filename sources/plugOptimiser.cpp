@@ -36,7 +36,7 @@ int plugOptimiser::addDevice(devRecord *newDev)
 
     pluggedDev *p1 = new pluggedDev;
     p1->plug = newDev;
-    p1->dev = newDev;
+    p1->dev = NULL;
 
     plugs.append(p1);
     //printDevs();
@@ -117,7 +117,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     cout << dec << endl;
                 #endif
 
-                if(((pluggedDev *)listIteratorP2->data)->dev != ((pluggedDev *)listIteratorP2->data)->plug)
+                if(((pluggedDev *)listIteratorP2->data)->dev == NULL)
                 {
                     devPaired = true;
                     p2 = ((pluggedDev *)listIteratorP2->data)->plug;
