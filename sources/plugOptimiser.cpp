@@ -61,76 +61,89 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
     activityRecord *a2;
     bool devPaired;
 
+    #ifdef TESTING
+        cout << "Checking exisiting plugs" << endl;
+    #endif
+
     while(listIteratorP2)
     {
-        devPaired = true;
-        p2 = ((pluggedDev *)listIteratorP2->data)->plug;
         d2 = ((pluggedDev *)listIteratorP2->data)->dev;
-
-        listIteratorA1 = d2->activity.getHead();
-        listIteratorA2 = p2->activity.getHead();
-
-        while(listIteratorA1 != NULL && listIteratorA2 != NULL)
+        if(d2 != NULL)
         {
-            a1 = (activityRecord *)listIteratorA1->data;
-            a2 = (activityRecord *)listIteratorA2->data;
+            devPaired = true;
+            p2 = ((pluggedDev *)listIteratorP2->data)->plug;
+            
 
-            #ifdef TESTING
-                cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
-                cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
-            #endif
+            listIteratorA1 = d2->activity.getHead();
+            listIteratorA2 = p2->activity.getHead();
 
-            if(a1->timestamp > a2->timestamp)
+            while(listIteratorA1 != NULL && listIteratorA2 != NULL)
             {
-                listIteratorA1 = NULL;
-                listIteratorA2 = NULL;
-                devPaired = false;
+                a1 = (activityRecord *)listIteratorA1->data;
+                a2 = (activityRecord *)listIteratorA2->data;
+
                 #ifdef TESTING
-                    cout << "Fail" << endl;
+                    cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
+                    cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                 #endif
-            }
-            else if(a1->timestamp < a2->timestamp)
-            {
-                listIteratorA1 = d1->activity.getNext(listIteratorA1);
-            }
-            else
-            {
-                if(a1->variable == 0)
+
+                if(a1->timestamp > a2->timestamp)
                 {
-                    if(a2->variable == 0)
+                    listIteratorA1 = NULL;
+                    listIteratorA2 = NULL;
+                    devPaired = false;
+                    #ifdef TESTING
+                        cout << "Fail" << endl;
+                    #endif
+                }
+                else if(a1->timestamp < a2->timestamp)
+                {
+                    listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                }
+                else
+                {
+                    if(a1->variable == 0)
                     {
-                        if(a1->state == a2->state)
+                        if(a2->variable == 0)
                         {
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                            listIteratorA2 = p2->activity.getNext(listIteratorA2);
+                            if(a1->state == a2->state)
+                            {
+                                listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                                listIteratorA2 = p2->activity.getNext(listIteratorA2);
+                            }
+                            else
+                            {
+                                listIteratorA1 = NULL;
+                                listIteratorA2 = NULL;
+                                devPaired = false;
+                                #ifdef TESTING
+                                    cout << "Fail" << endl;
+                                #endif
+                            }
                         }
                         else
                         {
-                            listIteratorA1 = NULL;
-                            listIteratorA2 = NULL;
-                            devPaired = false;
-                            #ifdef TESTING
-                                cout << "Fail" << endl;
-                            #endif
+                            listIteratorA2 = p2->activity.getNext(listIteratorA2);
                         }
                     }
                     else
                     {
-                        listIteratorA2 = p2->activity.getNext(listIteratorA2);
+                        listIteratorA1 = d1->activity.getNext(listIteratorA1);
                     }
                 }
-                else
-                {
-                    listIteratorA1 = d1->activity.getNext(listIteratorA1);
-                }
+            }
+
+            if(devPaired == false)
+            {
+                ((pluggedDev *)listIteratorP2->data)->dev = NULL;
             }
         }
-
-        if(devPaired == false)
-        {
-            ((pluggedDev *)listIteratorP2->data)->dev = NULL;
-        }
+        listIteratorP2 = plugs.getNext(listIteratorP2);
     }
+
+    #ifdef TESTING
+        cout << "Checking new pairs" << endl;
+    #endif
 
     while(listIteratorD1)
     {
