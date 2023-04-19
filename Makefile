@@ -44,6 +44,7 @@ headers::
 	$(CPP) -c $(SRCS_path)/netOpt.cpp $(APPINCLUDE) -o $(OBJ_path)/netOpt.o
 	$(CPP) -c $(SRCS_path)/lightOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/lightOptimiser.o
 	$(CPP) -c $(SRCS_path)/speakerOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/speakerOptimiser.o
+	$(CPP) -c $(SRCS_path)/plugOptimiser.cpp $(APPINCLUDE) -o $(OBJ_path)/plugOptimiser.o
 	$(CPP) -c $(SRCS_path)/light2light.cpp $(APPINCLUDE) -o $(OBJ_path)/light2light.o
 	$(CPP) -c $(SRCS_path)/light2tv.cpp $(APPINCLUDE) -o $(OBJ_path)/light2tv.o
 	$(CPP) -c $(SRCS_path)/light2speaker.cpp $(APPINCLUDE) -o $(OBJ_path)/light2speaker.o
