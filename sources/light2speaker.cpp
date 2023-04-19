@@ -57,7 +57,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
 
-        #ifdef  TESTING
+        #ifdef  TESTIN
             //tm tempTime;
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -134,7 +134,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
