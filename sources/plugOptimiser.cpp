@@ -67,6 +67,17 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
         devPaired = false;
         listIteratorP2 = plugs.getHead();
 
+        #ifdef TESTING
+            uint8_t mac[6];
+            unpackMAC(d1->macAddr, mac);
+            cout << "Pairing test between device " << hex << (int)mac[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << (int)mac[i];
+            }
+            cout << dec << endl;
+        #endif
+
         while(listIteratorP2)
         {
             d2 = ((pluggedDev *)listIteratorP2->data)->dev;
@@ -96,27 +107,22 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
 
             while(listIteratorP2)
             {
+                #ifdef TESTING
+                    unpackMAC(p2->macAddr, mac);
+                    cout << dec << "Checking with plug " << hex << (int)mac[0];
+                    for(int i = 1; i < 6; i++)
+                    {
+                        cout << "." << (int)mac[i];
+                    }
+                    cout << dec << endl;
+                #endif
+                
                 if(((pluggedDev *)listIteratorP2->data)->dev != NULL)
                 {
                     devPaired = true;
                     p2 = ((pluggedDev *)listIteratorP2->data)->plug;
 
-                    #ifdef TESTING
-                        uint8_t mac[6];
-                        unpackMAC(d1->macAddr, mac);
-                        cout << "Pairing test between device " << hex << (int)mac[0];
-                        for(int i = 1; i < 6; i++)
-                        {
-                            cout << "." << (int)mac[i];
-                        }
-                        unpackMAC(p2->macAddr, mac);
-                        cout << dec << " and plug " << hex << (int)mac[0];
-                        for(int i = 1; i < 6; i++)
-                        {
-                            cout << "." << (int)mac[i];
-                        }
-                        cout << dec << endl;
-                    #endif
+                    
 
                     listIteratorA1 = d1->activity.getHead();
                     listIteratorA2 = p2->activity.getHead();
@@ -160,6 +166,9 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                                         listIteratorA1 = NULL;
                                         listIteratorA2 = NULL;
                                         devPaired = false;
+                                        #ifdef TESTING
+                                            cout << "Fail" << endl;
+                                        #endif
                                     }
                                 }
                                 else
@@ -242,7 +251,6 @@ string plugOptimiser::inactivity(devRecord *d0)
 
         while(listIteratorP1)
         {
-            cout << "here" << endl;
             p1 = (pluggedDev *)listIteratorP1->data;
             unpackMAC(p1->plug->macAddr, mac);
             cout << "Plug Optimiser: Plug " << hex << stoi(to_string(mac[0]));

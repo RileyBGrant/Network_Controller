@@ -13,7 +13,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
     devRecord *d1 = (devRecord *)oven->member;
 
     #ifdef TESTING
-    uint8_t mac[6];
+        uint8_t mac[6];
         unpackMAC(((devRecord *)l1->mems.getHead()->data)->macAddr, mac);
         cout << "Compatability test between light group with lead device " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
