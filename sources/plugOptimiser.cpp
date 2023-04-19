@@ -224,13 +224,13 @@ string plugOptimiser::inactivity(devRecord *d0)
                     cout << "." << stoi(to_string(mac[i]));
                 }
                 cout << dec << endl;
-
-                listIteratorP1 = plugs.getNext(listIteratorP1);
             }
             else
             {
-                cout << dec << " bot connected to a device" << endl;
+                cout << dec << " not connected to a device" << endl;
             }
+            
+            listIteratorP1 = plugs.getNext(listIteratorP1);
         }
 
         return 0;
