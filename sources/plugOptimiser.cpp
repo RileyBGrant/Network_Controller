@@ -72,6 +72,17 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
         {
             devPaired = true;
             p2 = ((pluggedDev *)listIteratorP2->data)->plug;
+
+            #ifdef TESTING
+                uint8_t mac[6];
+                unpackMAC(p2->macAddr, mac);
+                cout << "Checking plug " << hex << (int)mac[0];
+                for(int i = 1; i < 6; i++)
+                {
+                    cout << "." << (int)mac[i];
+                }
+                cout << dec << endl;
+            #endif
             
 
             listIteratorA1 = d2->activity.getHead();
@@ -82,7 +93,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                 a1 = (activityRecord *)listIteratorA1->data;
                 a2 = (activityRecord *)listIteratorA2->data;
 
-                #ifdef TESTING
+                #ifdef TESTIN
                     cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                     cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                 #endif
@@ -216,7 +227,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                             a1 = (activityRecord *)listIteratorA1->data;
                             a2 = (activityRecord *)listIteratorA2->data;
 
-                            #ifdef TESTING
+                            #ifdef TESTIN
                                 cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                                 cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                             #endif

@@ -1641,6 +1641,244 @@ int netOpt::groupRooms()
     return 0;
 }
 
+int netOpt::characteriseUsage()
+{
+    node_t *listIteratorD1 = devices->getHead();
+    devRecord *d1;
+    node_t *listIteratorA1;
+    activityRecord *a1;
+    time_t time1 = 0;
+    node_t *listIteratorA2;
+    activityRecord *a2;
+    time_t time2 = 0;
+
+    bool winSet = false;
+    int day1 = 0;
+    int day2 = 0;
+    tm tempTime = *gmtime(&time1);
+    double timeDiff;
+    int dayCounter = 0;
+    time_t timeBin1 = 0;
+    time_t timeBin2 = 0;
+
+    while(listIteratorD1)
+    {
+        d1 = (devRecord *)listIteratorD1->data;
+        listIteratorA1 = d1->activity.getHead();
+
+        while(listIteratorA1)
+        {
+            a1 = (activityRecord *)listIteratorA1->data;
+            winSet = false;
+
+            //set timeA1 and timeA2
+            switch(d1->devType)
+            {
+                case 0:
+                {
+                    if(a1->variable == 0 && a1->state == 1)
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA2);
+
+                        while(listIteratorA2 && (a2->variable != 0 || a2->state == 1))
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                        }
+
+                        if(a2 != NULL)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                            winSet = true;
+                        }
+                    }
+                }
+            }
+
+            if(winSet == true)
+            {
+                d1->usage.numOfSample++;
+
+                day1 = gmtime(&time1)->tm_wday; //sunday = 0
+                day2 = gmtime(&time2)->tm_wday;
+                timeDiff == difftime(time1,time2);
+
+                tempTime.tm_sec = gmtime(&time1)->tm_sec;
+                tempTime.tm_min = gmtime(&time1)->tm_min;
+                tempTime.tm_hour = gmtime(&time1)->tm_hour;
+                time1 = mktime(&tempTime);
+
+                tempTime.tm_sec = gmtime(&time2)->tm_sec;
+                tempTime.tm_min = gmtime(&time2)->tm_min;
+                tempTime.tm_hour = gmtime(&time2)->tm_hour;
+                time2 = mktime(&tempTime);
+
+                if(day1 == day2)
+                {
+                    if(time1 <= time2)
+                    {
+                        for(int i = 0; i < 48; i++)
+                        {
+                            timeBin1 = i * 1800;
+                            timeBin2 = (i + 1) * 1800;
+
+                            if(timeBin1 < time2 && timeBin2 > time1)
+                            {
+                                d1->usage.time[day1][i]++;
+
+                                if(d1->usage.time[day1][i] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                {
+                                    d1->usage.modeTime[0] = day1;
+                                    d1->usage.modeTime[1] = i;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for(int i = 0; i < 48; i++)
+                        {
+                            timeBin1 = i * 1800;
+                            timeBin2 = (i + 1) * 1800;
+
+                            if(timeBin1 < time2 || timeBin2 > time1)
+                            {
+                                d1->usage.time[day1][i]++;
+
+                                if(d1->usage.time[day1][i] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                {
+                                    d1->usage.modeTime[0] = day1;
+                                    d1->usage.modeTime[1] = i;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(day1 < day2)
+                {
+                    for(int i = 0; i < 7; i++)
+                    {
+                        if(i == day1)
+                        {
+                            for(int j = 0; j < 48; j++)
+                            {
+                                timeBin2 = (i + 1) * 1800;
+
+                                if(timeBin2 > time1)
+                                {
+                                    d1->usage.time[i][j]++;
+
+                                    if(d1->usage.time[i][j] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                    {
+                                        d1->usage.modeTime[0] = i;
+                                        d1->usage.modeTime[1] = j;
+                                    }
+                                }
+                            }
+                        }
+                        else if(i > day1 && i < day2)
+                        {
+                            for(int j = 0; j < 48; j++)
+                            {
+                                d1->usage.time[i][j]++;
+
+                                if(d1->usage.time[i][j] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                {
+                                    d1->usage.modeTime[0] = i;
+                                    d1->usage.modeTime[1] = j;
+                                }
+                                
+                            }
+                        }
+                        else if(i = day2)
+                        {
+                            for(int j = 0; j < 48; j++)
+                            {
+                                timeBin1 = i * 1800;
+
+                                if(timeBin1 < time2)
+                                {
+                                    d1->usage.time[i][j]++;
+
+                                    if(d1->usage.time[i][j] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                    {
+                                        d1->usage.modeTime[0] = i;
+                                        d1->usage.modeTime[1] = j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(day1 > day2)
+                {
+                    for(int i = 0; i < 7; i++)
+                    {
+                        if(i == day1)
+                        {
+                            for(int j = 0; j < 48; j++)
+                            {
+                                timeBin2 = (i + 1) * 1800;
+
+                                if(timeBin2 > time1)
+                                {
+                                    d1->usage.time[i][j]++;
+
+                                    if(d1->usage.time[i][j] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                    {
+                                        d1->usage.modeTime[0] = i;
+                                        d1->usage.modeTime[1] = j;
+                                    }
+                                }
+                            }
+                        }
+                        else if(i > day1 || i < day2)
+                        {
+                            for(int j = 0; j < 48; j++)
+                            {
+                                d1->usage.time[i][j]++;
+
+                                if(d1->usage.time[i][j] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                {
+                                    d1->usage.modeTime[0] = i;
+                                    d1->usage.modeTime[1] = j;
+                                }
+                                
+                            }
+                        }
+                        else if(i = day2)
+                        {
+                            for(int j = 0; j < 48; j++)
+                            {
+                                timeBin1 = i * 1800;
+
+                                if(timeBin1 < time2)
+                                {
+                                    d1->usage.time[i][j]++;
+
+                                    if(d1->usage.time[i][j] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
+                                    {
+                                        d1->usage.modeTime[0] = i;
+                                        d1->usage.modeTime[1] = j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+        }
+
+        listIteratorD1 = devices->getNext(listIteratorD1);
+    }
+
+    return 1;
+}
+
 int netOpt::activeRoomUpdate() 
 {
     #ifdef TESTING
@@ -2574,5 +2812,49 @@ int netOpt::sendDevStims()
         }
 
         return 0;
+    }
+#endif
+#ifdef LOG
+    int netOpt::saveUsage()
+    {
+        node_t *listIteratorD1 = devices->getHead();
+        devRecord *d1;
+        uint8_t mac[6];
+
+        ofstream ofile;
+        ostringstream ss;
+
+        while(listIteratorD1)
+        {
+            d1 = (devRecord *)listIteratorD1->data;
+
+            unpackMAC(d1->macAddr, mac);
+            ss << hex;
+            for(int i = 0; i < 6; i++)
+            {
+                ss << mac[i];
+            }
+            ss << dec;
+
+            string csv = ss.str();
+
+            if(!ofile.is_open())
+            {
+                ofile.open("logs/usage/" + csv + ".csv", ios::out);
+
+                for(int i = 0; i < 7; i++)
+                {
+                    for(int j = 0; j < 47; j++)
+                    {
+                        ofile << d1->usage.time[i][j] << ",";
+                    }
+                    ofile << d1->usage.time[i][47] << endl;
+                }
+
+                ofile.close();
+            }
+
+            listIteratorD1 = devices->getNext(listIteratorD1);
+        }
     }
 #endif

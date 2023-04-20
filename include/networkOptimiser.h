@@ -22,6 +22,13 @@
 
 using namespace std;
 
+struct usageProfile
+{
+    int numOfSample;
+    int modeTime[2];
+    int time[7][48];
+};
+
 struct devRecord
 {
     uint64_t macAddr;
@@ -29,6 +36,7 @@ struct devRecord
     linkedList_t activity; //list of activity record types
     linkedList_t groups; //list of devGroups that this dev is a part of
     linkedList_t rooms; //list of devRooms that this dev is a part of
+    usageProfile usage;
 };
 
 //Class for the network interface
@@ -64,8 +72,6 @@ public:
         int printRecords();
     #endif
 };
-
-
 
 struct activityRecord
 { 
@@ -130,7 +136,6 @@ struct pluggedDev
     devRecord *plug;
     devRecord *dev;
 };
-
 
 struct roomMember
 {
@@ -208,12 +213,16 @@ public:
     int8_t kettle2kettle(roomMember *m1, roomMember *m2);
     int8_t kettle2washing(roomMember *light, roomMember *washing);
     int8_t washing2washing(roomMember *light, roomMember *washing);
+    int characteriseUsage();
     int activeRoomUpdate();
     int sendDevStims();
 
     #ifdef TESTING
         int printRooms();
         int printActivity();
+    #endif
+    #ifdef LOG
+        int saveUsage();
     #endif
 };
 
