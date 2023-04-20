@@ -1693,6 +1693,10 @@ int netOpt::characteriseUsage()
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
 
+            #ifdef TESTING
+                cout << "a1: variable: " << a1->variable << ", state: " << a1->state << ", timestamp" << a1->timestamp << endl;
+            #endif
+
             //set timeA1 and timeA2
             switch(d1->devType)
             {
@@ -1705,6 +1709,10 @@ int netOpt::characteriseUsage()
                         while(listIteratorA2 && (a2->variable != 0 || a2->state == 1))
                         {
                             a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << a2->variable << ", state: " << a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
 
                             listIteratorA2 = d1->activity.getNext(listIteratorA2);
                         }
@@ -1722,7 +1730,7 @@ int netOpt::characteriseUsage()
             if(winSet == true)
             {
                 #ifdef TESTING
-                    cout << "Window set " << time1 << " to " << time2 << endl;
+                    cout << "Window set " << time1 << " to " << time2 << endl << endl;
                 #endif
 
                 d1->usage.numOfSample++;
