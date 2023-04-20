@@ -2857,5 +2857,7 @@ int netOpt::sendDevStims()
 
             listIteratorD1 = devices->getNext(listIteratorD1);
         }
+
+        return 0;
     }
 #endif
