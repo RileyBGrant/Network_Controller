@@ -1706,7 +1706,7 @@ int netOpt::characteriseUsage()
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA2);
 
-                        while(listIteratorA2 && (a2->variable != 0 || a2->state == 1))
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
                             a2 = (activityRecord *)listIteratorA2->data;
 
