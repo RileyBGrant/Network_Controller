@@ -1738,6 +1738,8 @@ int netOpt::characteriseUsage()
             {
                 #ifdef TESTING
                     cout << "Window set " << time1 << " to " << time2 << endl;
+                    cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
+                    cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
                 #endif
 
                 d1->usage.numOfSample++;
@@ -1759,6 +1761,8 @@ int netOpt::characteriseUsage()
                 #ifdef TESTING
                     cout << "day1: " << day1 << ", day2: " << day2 << endl;
                     cout << "tod1: " << time1 << ", tod2: " << time2 << endl << endl;
+                    cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
+                    cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
                 #endif
 
                 if(day1 == day2)
