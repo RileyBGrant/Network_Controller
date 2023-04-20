@@ -1824,7 +1824,7 @@ int netOpt::characteriseUsage()
                                 timeBin2 = (j + 1) * 1800;
 
                                 #ifdef TESTING
-                                    cout  << "Timebin2" << timeBin2 << endl;
+                                    cout  << "Timebin2: " << timeBin2 << endl;
                                 #endif
 
                                 if(timeBin2 > time1)
@@ -1860,7 +1860,7 @@ int netOpt::characteriseUsage()
                                 timeBin1 = j * 1800;
 
                                 #ifdef TESTING
-                                    cout << "Timebin1" << timeBin1 << endl;
+                                    cout << "Timebin1: " << timeBin1 << ", i: " << i << ", j: " << j << endl;
                                 #endif
 
                                 if(timeBin1 < time2)
