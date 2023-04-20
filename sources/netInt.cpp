@@ -331,6 +331,15 @@ int netInt::readFromHost()
                 
                 newDev->macAddr = packMAC(macAddr);
 
+                for(int dayCounter = 0; dayCounter < 7; dayCounter++)
+                {
+                    for(int binCounter = 0; binCounter < 48; binCounter++)
+                    newDev->usage.time[dayCounter][binCounter] = 0;
+                }s
+                newDev->usage.modeTime[0] = 0;
+                newDev->usage.modeTime[1] = 0;
+                newDev->usage.numOfSample = 0;
+
                 newDev->devType = rBuffer[i + 7]  - '0';
                 devices.append(newDev);
                 #ifdef TESTING
