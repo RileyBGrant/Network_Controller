@@ -2910,6 +2910,10 @@ int netOpt::sendDevStims()
 
             if(!ofile.is_open())
             {
+                #ifdef TESTING
+                    cout << "opening file: " << "logs/usage/" << csv << ".csv" << endl;
+                #endif
+
                 ofile.open("logs/usage/" + csv + ".csv", ios::out);
 
                 for(int i = 0; i < 7; i++)
