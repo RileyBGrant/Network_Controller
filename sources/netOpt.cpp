@@ -1738,8 +1738,8 @@ int netOpt::characteriseUsage()
             {
                 #ifdef TESTING
                     cout << "Window set " << time1 << " to " << time2 << endl;
-                    cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
-                    cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
+                    //cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
+                    //cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
                 #endif
 
                 d1->usage.numOfSample++;
@@ -1761,8 +1761,8 @@ int netOpt::characteriseUsage()
                 #ifdef TESTING
                     cout << "day1: " << day1 << ", day2: " << day2 << endl;
                     cout << "tod1: " << time1 << ", tod2: " << time2 << endl << endl;
-                    cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
-                    cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
+                    //cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
+                    //cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
                 #endif
 
                 if(day1 == day2)
@@ -1773,9 +1773,16 @@ int netOpt::characteriseUsage()
                         {
                             timeBin1 = i * 1800;
                             timeBin2 = (i + 1) * 1800;
+                            
+                            #ifdef TESTING
+                                cout << timeBin1 << " - " << timeBin2 << endl;
+                            #endif
 
                             if(timeBin1 < time2 && timeBin2 > time1)
                             {
+                                #ifdef TESTING
+                                    cout << "Incremented" << endl;
+                                #endif
                                 d1->usage.time[day1][i]++;
 
                                 if(d1->usage.time[day1][i] > d1->usage.time[d1->usage.modeTime[0]][d1->usage.modeTime[1]])
