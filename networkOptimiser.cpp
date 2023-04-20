@@ -41,11 +41,13 @@ int main()
         }
     }
 
-    //cout << interface.getLastTimestamp() << endl;
+    
     optimiser.sortDevs();
     optimiser.optimise();
     optimiser.characteriseUsage();
 
+    cout << interface.getLastTimestamp() << endl;
+    
     #ifdef LOG
         optimiser.saveUsage();
     #endif

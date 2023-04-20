@@ -2821,7 +2821,7 @@ int netOpt::sendDevStims()
         #ifdef TESTING
             cout << "Saving usage" << endl;
         #endif
-        
+
         node_t *listIteratorD1 = devices->getHead();
         devRecord *d1;
         uint8_t mac[6];
@@ -2861,6 +2861,10 @@ int netOpt::sendDevStims()
 
             listIteratorD1 = devices->getNext(listIteratorD1);
         }
+
+        #ifdef TESTING
+            cout << "Usage saved" << endl;
+        #endif
 
         return 0;
     }
