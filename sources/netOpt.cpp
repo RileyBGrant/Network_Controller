@@ -1821,7 +1821,7 @@ int netOpt::characteriseUsage()
                         {
                             for(int j = 0; j < 48; j++)
                             {
-                                timeBin2 = (i + 1) * 1800;
+                                timeBin2 = (j + 1) * 1800;
 
                                 if(timeBin2 > time1)
                                 {
@@ -1853,7 +1853,7 @@ int netOpt::characteriseUsage()
                         {
                             for(int j = 0; j < 48; j++)
                             {
-                                timeBin1 = i * 1800;
+                                timeBin1 = j * 1800;
 
                                 if(timeBin1 < time2)
                                 {
@@ -1877,7 +1877,7 @@ int netOpt::characteriseUsage()
                         {
                             for(int j = 0; j < 48; j++)
                             {
-                                timeBin2 = (i + 1) * 1800;
+                                timeBin2 = (j + 1) * 1800;
 
                                 if(timeBin2 > time1)
                                 {
@@ -1909,7 +1909,7 @@ int netOpt::characteriseUsage()
                         {
                             for(int j = 0; j < 48; j++)
                             {
-                                timeBin1 = i * 1800;
+                                timeBin1 = j * 1800;
 
                                 if(timeBin1 < time2)
                                 {
