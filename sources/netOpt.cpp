@@ -1709,6 +1709,7 @@ int netOpt::characteriseUsage()
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
                             a2 = (activityRecord *)listIteratorA2->data;
+                            cout << "here" << endl;
 
                             #ifdef TESTING
                                 cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
