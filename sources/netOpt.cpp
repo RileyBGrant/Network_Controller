@@ -1704,7 +1704,7 @@ int netOpt::characteriseUsage()
                 {
                     if(a1->variable == 0 && a1->state == 1)
                     {
-                        listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
