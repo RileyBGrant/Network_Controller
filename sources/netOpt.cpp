@@ -1668,10 +1668,25 @@ int netOpt::characteriseUsage()
     time_t timeBin1 = 0;
     time_t timeBin2 = 0;
 
+    #ifdef TESTING
+        cout << "Chracterising usage" << endl;
+    #endif
+
     while(listIteratorD1)
     {
         d1 = (devRecord *)listIteratorD1->data;
         listIteratorA1 = d1->activity.getHead();
+
+        #ifdef TESTING
+            uint8_t mac[6];
+            unpackMAC(d1->macAddr, mac);
+            cout << "Characterising device " << hex << (int)mac[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << (int)mac[i];
+            }
+            cout << dec << endl;
+        #endif
 
         while(listIteratorA1)
         {
@@ -1706,6 +1721,10 @@ int netOpt::characteriseUsage()
 
             if(winSet == true)
             {
+                #ifdef TESTING
+                    cout << "Window set " << time1 << " to " << time2 << endl;
+                #endif
+
                 d1->usage.numOfSample++;
 
                 day1 = gmtime(&time1)->tm_wday; //sunday = 0
