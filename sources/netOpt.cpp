@@ -1714,14 +1714,21 @@ int netOpt::characteriseUsage()
                                 cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
                             #endif
 
-                            listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            if(a2->variable == 0 && a2->state != 1)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
                         }
 
-                        if(a2 != NULL)
+                        if(winSet == true)
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            winSet = true;
                         }
                     }
                 }
