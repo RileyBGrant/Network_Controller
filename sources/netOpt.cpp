@@ -1694,7 +1694,7 @@ int netOpt::characteriseUsage()
             winSet = false;
 
             #ifdef TESTING
-                cout << "a1: variable: " << a1->variable << ", state: " << a1->state << ", timestamp" << a1->timestamp << endl;
+                cout << "a1: variable: " << (int)a1->variable << ", state: " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             #endif
 
             //set timeA1 and timeA2
@@ -1711,7 +1711,7 @@ int netOpt::characteriseUsage()
                             a2 = (activityRecord *)listIteratorA2->data;
 
                             #ifdef TESTING
-                                cout << "a2: variable: " << a2->variable << ", state: " << a2->state << ", timestamp: " << a2->timestamp << endl;
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
                             #endif
 
                             listIteratorA2 = d1->activity.getNext(listIteratorA2);
