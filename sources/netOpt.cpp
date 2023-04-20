@@ -1709,7 +1709,6 @@ int netOpt::characteriseUsage()
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
                             a2 = (activityRecord *)listIteratorA2->data;
-                            cout << "here" << endl;
 
                             #ifdef TESTING
                                 cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
@@ -1738,7 +1737,7 @@ int netOpt::characteriseUsage()
             if(winSet == true)
             {
                 #ifdef TESTING
-                    cout << "Window set " << time1 << " to " << time2 << endl << endl;
+                    cout << "Window set " << time1 << " to " << time2 << endl;
                 #endif
 
                 d1->usage.numOfSample++;
@@ -1756,6 +1755,11 @@ int netOpt::characteriseUsage()
                 tempTime.tm_min = gmtime(&time2)->tm_min;
                 tempTime.tm_hour = gmtime(&time2)->tm_hour;
                 time2 = mktime(&tempTime);
+
+                #ifdef TESTING
+                    cout << "day1: " << day1 << ", day2: " << day2 << endl;
+                    cout << "tod1: " << time1 << ", tod2: " << time2 << endl << endl;
+                #endif
 
                 if(day1 == day2)
                 {
