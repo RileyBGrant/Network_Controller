@@ -2899,10 +2899,13 @@ int netOpt::sendDevStims()
             d1 = (devRecord *)listIteratorD1->data;
 
             unpackMAC(d1->macAddr, mac);
+
+            ss.clear();
+            
             ss << hex;
             for(int i = 0; i < 6; i++)
             {
-                ss << mac[i];
+                ss << (int)mac[i];
             }
             ss << dec;
 
