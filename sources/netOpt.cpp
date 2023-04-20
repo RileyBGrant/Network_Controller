@@ -2900,8 +2900,9 @@ int netOpt::sendDevStims()
 
             unpackMAC(d1->macAddr, mac);
 
+            ss.str("");
             ss.clear();
-            
+
             ss << hex;
             for(int i = 0; i < 6; i++)
             {
