@@ -2818,6 +2818,10 @@ int netOpt::sendDevStims()
 #ifdef LOG
     int netOpt::saveUsage()
     {
+        #ifdef TESTING
+            cout << "Saving usage" << endl;
+        #endif
+        
         node_t *listIteratorD1 = devices->getHead();
         devRecord *d1;
         uint8_t mac[6];
