@@ -44,12 +44,12 @@ int main()
     
     optimiser.sortDevs();
     optimiser.optimise();
-    optimiser.characteriseUsage();
+    //optimiser.characteriseUsage();
 
     cout << interface.getLastTimestamp() << endl;
     
     #ifdef LOG
-        optimiser.saveUsage();
+        //optimiser.saveUsage();
     #endif
 
     //optimiser.printRooms();    
