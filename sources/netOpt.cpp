@@ -1751,12 +1751,12 @@ int netOpt::characteriseUsage()
                 tempTime.tm_sec = gmtime(&time1)->tm_sec;
                 tempTime.tm_min = gmtime(&time1)->tm_min;
                 tempTime.tm_hour = gmtime(&time1)->tm_hour;
-                time1 = mktime(&tempTime);
+                time1 = mktime(&tempTime) + 3600;
 
                 tempTime.tm_sec = gmtime(&time2)->tm_sec;
                 tempTime.tm_min = gmtime(&time2)->tm_min;
                 tempTime.tm_hour = gmtime(&time2)->tm_hour;
-                time2 = mktime(&tempTime);
+                time2 = mktime(&tempTime) + 3600;
 
                 #ifdef TESTING
                     cout << "day1: " << day1 << ", day2: " << day2 << endl;
