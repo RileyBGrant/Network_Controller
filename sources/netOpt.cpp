@@ -84,9 +84,16 @@ int netOpt::optimise()
     plugOpt.pairPlugs(devices);
 
     groupRooms();
+
+    characteriseUsage();
+
     #ifdef TESTING
         printRooms();
         plugOpt.printPlugs();
+    #endif
+
+    #ifdef LOG
+        saveUsage();
     #endif
 
     return 0;
