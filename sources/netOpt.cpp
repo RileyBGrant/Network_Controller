@@ -1823,7 +1823,7 @@ int netOpt::characteriseUsage()
                             {
                                 timeBin2 = (j + 1) * 1800;
 
-                                #ifdef TESTING
+                                #ifdef TESTIN
                                     cout  << "Timebin2: " << timeBin2 << endl;
                                 #endif
 
@@ -1853,13 +1853,13 @@ int netOpt::characteriseUsage()
                                 
                             }
                         }
-                        else if(i = day2)
+                        else if(i == day2)
                         {
                             for(int j = 0; j < 48; j++)
                             {
                                 timeBin1 = j * 1800;
 
-                                #ifdef TESTING
+                                #ifdef TESTIN
                                     cout << "Timebin1: " << timeBin1 << ", i: " << i << ", j: " << j << endl;
                                 #endif
 
@@ -1913,7 +1913,7 @@ int netOpt::characteriseUsage()
                                 
                             }
                         }
-                        else if(i = day2)
+                        else if(i == day2)
                         {
                             for(int j = 0; j < 48; j++)
                             {
