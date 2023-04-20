@@ -85,7 +85,7 @@ int netOpt::optimise()
 
     groupRooms();
 
-    characteriseUsage();
+    //characteriseUsage();
 
     #ifdef TESTING
         printRooms();
@@ -93,7 +93,7 @@ int netOpt::optimise()
     #endif
 
     #ifdef LOG
-        saveUsage();
+        //saveUsage();
     #endif
 
     return 0;
