@@ -45,6 +45,11 @@ int main()
     optimiser.sortDevs();
     optimiser.optimise();
     optimiser.characteriseUsage();
+
+    #ifdef LOG
+        optimiser.saveUsage();
+    #endif
+
     //optimiser.printRooms();    
 
     return 0;

@@ -2814,6 +2814,7 @@ int netOpt::sendDevStims()
         return 0;
     }
 #endif
+
 #ifdef LOG
     int netOpt::saveUsage()
     {
