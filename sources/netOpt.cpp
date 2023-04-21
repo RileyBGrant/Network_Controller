@@ -1912,7 +1912,7 @@ int netOpt::characteriseUsage()
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
 
-                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        while(listIteratorA2)
                         {
                             a2 = (activityRecord *)listIteratorA2->data;
 
@@ -1920,7 +1920,7 @@ int netOpt::characteriseUsage()
                                 cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
                             #endif
 
-                            if(a2->variable == 1 && a2->state != a1->state)
+                            if(a2->variable == 0 && a2->state != a1->state)
                             {
                                 listIteratorA2 = NULL;
                                 winSet = true;
