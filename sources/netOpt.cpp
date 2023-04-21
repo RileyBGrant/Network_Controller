@@ -1700,7 +1700,9 @@ int netOpt::characteriseUsage()
             //set timeA1 and timeA2
             switch(d1->devType)
             {
-                case 0:
+                case 0: //lights
+                case 3: //record player
+                case 9: //switch
                 {
                     if(a1->variable == 0 && a1->state == 1)
                     {
@@ -1731,6 +1733,216 @@ int netOpt::characteriseUsage()
                             time2 = a2->timestamp;
                         }
                     }
+                    break;
+                }
+                case 1: //tv
+                {
+                    if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
+
+                            if(a2->variable == 0 && a2->state != a1->state)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
+                        }
+
+                        if(winSet == true)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                        }
+                    }
+                    break;
+                }
+                case 2: //speaker
+                {
+                    if(a1->variable == 0 && a1->state >= 2)
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
+
+                            if(a2->variable == 0 && a2->state != a1->state)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
+                        }
+
+                        if(winSet == true)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                        }
+                    }
+                    break;
+                }
+                case 4: //oven
+                {
+                    if(a1->variable >= 1 && a1->state == 1)
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
+
+                            if(a2->variable == a1->variable && a2->state == 0)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
+                        }
+
+                        if(winSet == true)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                        }
+                    }
+                    break;
+                }
+                case 5: //fridge
+                {
+                    if(a1->variable == 1 && a1->state == 1)
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
+
+                            if(a2->variable == 1 && a2->state == 0)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
+                        }
+
+                        if(winSet == true)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                        }
+                    }
+                    break;
+                }
+                case 6: //assistant
+                {
+                    if(a1->variable == 0 && a1->state >= 2)
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
+
+                            if(a2->variable == 0 && a2->state != a1->state)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
+                        }
+
+                        if(winSet == true)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                        }
+                    }
+                    else if(a1->variable == 1 && a1->state == 1)
+                    {
+                        time1 = a1->timestamp;
+                        time2 = a1->timestamp;
+                    }
+                    break;
+                }
+                case 7: //kettle
+                case 8: //washing machine
+                {
+                    if(a1->variable == 0 && a1->state == 2)
+                    {
+                        listIteratorA2 = d1->activity.getNext(listIteratorA1);
+
+                        while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
+                        {
+                            a2 = (activityRecord *)listIteratorA2->data;
+
+                            #ifdef TESTING
+                                cout << "a2: variable: " << (int)a2->variable << ", state: " << (int)a2->state << ", timestamp: " << a2->timestamp << endl;
+                            #endif
+
+                            if(a2->variable == 1 && a2->state != a1->state)
+                            {
+                                listIteratorA2 = NULL;
+                                winSet = true;
+                            }
+                            else
+                            {
+                                listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                            }
+                        }
+
+                        if(winSet == true)
+                        {
+                            time1 = a1->timestamp;
+                            time2 = a2->timestamp;
+                        }
+                    }
+                    else if(a1->variable == 0 && a1->state == 1)
+                    {
+                        time1 = a1->timestamp;
+                        time2 = a1->timestamp;
+                    }
+                    break;
                 }
             }
 
