@@ -3140,15 +3140,7 @@ int netOpt::sendDevStims()
                     }
                     ofile << d1->usage.time[i][47] << endl;
                 }
-
-
-
-                for(int j = 0; j < 47; j++)
-                    {
-                        ofile << d1->usage.time[0][j] << ",";
-                    }
-                    ofile << d1->usage.time[0][47] << endl;
-
+                
                 ofile.close();
             }
 
