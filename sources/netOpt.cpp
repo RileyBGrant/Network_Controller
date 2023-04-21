@@ -3132,7 +3132,7 @@ int netOpt::sendDevStims()
 
                 ofile.open("logs/usage/" + csv + ".csv", ios::out);
 
-                for(int i = 0; i < 7; i++)
+                for(int i = 1; i < 7; i++)
                 {
                     for(int j = 0; j < 47; j++)
                     {
@@ -3140,6 +3140,14 @@ int netOpt::sendDevStims()
                     }
                     ofile << d1->usage.time[i][47] << endl;
                 }
+
+
+
+                for(int j = 0; j < 47; j++)
+                    {
+                        ofile << d1->usage.time[0][j] << ",";
+                    }
+                    ofile << d1->usage.time[0][47] << endl;
 
                 ofile.close();
             }
