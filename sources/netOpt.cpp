@@ -3116,7 +3116,7 @@ int netOpt::sendDevStims()
             ss.clear();
 
             ss << hex;
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; i < 6; i++)
             {
                 ss << (int)mac[i];
             }
@@ -3132,7 +3132,7 @@ int netOpt::sendDevStims()
 
                 ofile.open("logs/usage/" + csv + ".csv", ios::out);
 
-                for(int i = 1; i < 7; i++)
+                for(int i = 0; i < 7; i++)
                 {
                     for(int j = 0; j < 47; j++)
                     {
