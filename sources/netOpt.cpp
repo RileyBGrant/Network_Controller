@@ -2187,6 +2187,10 @@ int netOpt::characteriseUsage()
                         }
                     }
                 }
+
+                #ifdef TESTING
+                    cout << "Window added" << endl;
+                #endif
             }
             else
             {
