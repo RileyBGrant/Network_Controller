@@ -3201,6 +3201,11 @@ int netOpt::sendDevStims()
 
         return 0;
     }
+
+    int netOpt::printPlugs()
+    {
+        return(plugOpt.printPlugs());
+    }
 #endif
 
 #ifdef LOG

@@ -51,7 +51,9 @@ int main()
     #endif
 
     cout << interface.getLastTimestamp() << endl;
-    //optimiser.printRooms();    
+    
+    optimiser.printRooms();
+    optimiser.printPlugs();    
 
     return 0;
 }

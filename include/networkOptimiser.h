@@ -221,6 +221,7 @@ public:
     #ifdef TESTING
         int printRooms();
         int printActivity();
+        int printPlugs();
     #endif
     #ifdef LOG
         int saveUsage();

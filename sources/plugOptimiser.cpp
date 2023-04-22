@@ -83,7 +83,6 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                 }
                 cout << dec << endl;
             #endif
-            
 
             listIteratorA1 = d2->activity.getHead();
             listIteratorA2 = p2->activity.getHead();
@@ -104,6 +103,8 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     listIteratorA2 = NULL;
                     devPaired = false;
                     #ifdef TESTING
+                        cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
+                        cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                         cout << "Fail" << endl;
                     #endif
                 }
@@ -128,6 +129,8 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                                 listIteratorA2 = NULL;
                                 devPaired = false;
                                 #ifdef TESTING
+                                    cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
+                                    cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                                     cout << "Fail" << endl;
                                 #endif
                             }
@@ -238,6 +241,8 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                                 listIteratorA2 = NULL;
                                 devPaired = false;
                                 #ifdef TESTING
+                                    cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
+                                    cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                                     cout << "Fail" << endl;
                                 #endif
                             }
@@ -262,6 +267,8 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                                             listIteratorA2 = NULL;
                                             devPaired = false;
                                             #ifdef TESTING
+                                                cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
+                                                cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                                                 cout << "Fail" << endl;
                                             #endif
                                         }
