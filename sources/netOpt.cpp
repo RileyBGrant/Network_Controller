@@ -2410,7 +2410,7 @@ int netOpt::activeRoomUpdate()
                 cout << "Active room changed, requesting next stim at " << asctime(&tempTime2);
             #endif
             activeRoom = r2;
-            interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
+            //interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
             return 0;
         }
     }
