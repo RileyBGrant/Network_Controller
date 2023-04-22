@@ -1655,9 +1655,11 @@ int netOpt::characteriseUsage()
     node_t *listIteratorA1;
     activityRecord *a1;
     time_t time1 = 0;
+    int counterA1;
     node_t *listIteratorA2;
     activityRecord *a2;
     time_t time2 = 0;
+    int counterA2;
 
     bool winSet = false;
     int day1 = 0;
@@ -1676,6 +1678,7 @@ int netOpt::characteriseUsage()
     {
         d1 = (devRecord *)listIteratorD1->data;
         listIteratorA1 = d1->activity.getHead();
+        counterA1 = 0;
 
         #ifdef TESTING
             uint8_t mac[6];
@@ -1707,6 +1710,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable == 0 && a1->state == 1)
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
@@ -1724,6 +1728,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1731,6 +1736,9 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     break;
@@ -1740,6 +1748,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable == 0 && (a1->state == 3 || a1->state == 4))
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
@@ -1757,6 +1766,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1764,6 +1774,9 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     break;
@@ -1773,6 +1786,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable == 0 && a1->state >= 2)
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
@@ -1790,6 +1804,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1797,6 +1812,9 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     break;
@@ -1806,6 +1824,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable >= 1 && a1->state == 1)
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
@@ -1823,6 +1842,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1830,6 +1850,9 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     break;
@@ -1839,6 +1862,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable == 1 && a1->state == 1)
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
@@ -1856,6 +1880,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1863,6 +1888,9 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     break;
@@ -1872,6 +1900,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable == 0 && a1->state >= 2)
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2 /* && (a2->variable != 0 || a2->state == 1)*/)
                         {
@@ -1889,6 +1918,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1896,12 +1926,17 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     else if(a1->variable == 1 && a1->state == 1)
                     {
                         time1 = a1->timestamp;
                         time2 = a1->timestamp;
+                        listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                        d1->activity.remove(counterA1);
                     }
                     break;
                 }
@@ -1911,6 +1946,7 @@ int netOpt::characteriseUsage()
                     if(a1->variable == 0 && a1->state == 2)
                     {
                         listIteratorA2 = d1->activity.getNext(listIteratorA1);
+                        counterA2 = counterA1 + 1;
 
                         while(listIteratorA2)
                         {
@@ -1928,6 +1964,7 @@ int netOpt::characteriseUsage()
                             else
                             {
                                 listIteratorA2 = d1->activity.getNext(listIteratorA2);
+                                counterA2++;
                             }
                         }
 
@@ -1935,12 +1972,17 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                            d1->activity.remove(counterA2);
+                            d1->activity.remove(counterA1);
                         }
                     }
                     else if(a1->variable == 0 && a1->state == 1)
                     {
                         time1 = a1->timestamp;
                         time2 = a1->timestamp;
+                        listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                        d1->activity.remove(counterA1);
                     }
                     break;
                 }
@@ -1956,7 +1998,7 @@ int netOpt::characteriseUsage()
 
                 d1->usage.numOfSample++;
 
-                day1 = gmtime(&time1)->tm_wday; //sunday = 0
+                day1 = gmtime(&time1)->tm_wday;
                 day2 = gmtime(&time2)->tm_wday;
                 timeDiff == difftime(time1,time2);
 
@@ -2146,8 +2188,11 @@ int netOpt::characteriseUsage()
                     }
                 }
             }
-
-            listIteratorA1 = d1->activity.getNext(listIteratorA1);
+            else
+            {
+                listIteratorA1 = d1->activity.getNext(listIteratorA1);
+                counterA1++;
+            }
         }
 
         listIteratorD1 = devices->getNext(listIteratorD1);

@@ -38,20 +38,19 @@ int main()
             lastOpt = interface.getLastTimestamp();
             optimiser.sortDevs();
             optimiser.optimise();
+            optimiser.characteriseUsage();
         }
     }
-
     
     optimiser.sortDevs();
     optimiser.optimise();
     optimiser.characteriseUsage();
-
-    cout << interface.getLastTimestamp() << endl;
     
     #ifdef LOG
         optimiser.saveUsage();
     #endif
-
+    
+    cout << interface.getLastTimestamp() << endl;
     //optimiser.printRooms();    
 
     return 0;
