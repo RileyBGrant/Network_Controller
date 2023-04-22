@@ -28,7 +28,7 @@ int main()
         }
         else
         {
-            optimiser.activeRoomUpdate();
+            //optimiser.activeRoomUpdate();
         }
 
         interface.endBurst();
@@ -49,7 +49,7 @@ int main()
     #ifdef LOG
         optimiser.saveUsage();
     #endif
-    
+
     cout << interface.getLastTimestamp() << endl;
     //optimiser.printRooms();    
 
