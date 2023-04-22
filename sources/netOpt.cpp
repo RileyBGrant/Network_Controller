@@ -1736,8 +1736,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -1774,8 +1774,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -1812,8 +1812,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -1850,8 +1850,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -1888,8 +1888,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -1926,8 +1926,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -1972,8 +1972,8 @@ int netOpt::characteriseUsage()
                         {
                             time1 = a1->timestamp;
                             time2 = a2->timestamp;
-                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA2);
+                            listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
                     }
@@ -2028,13 +2028,13 @@ int netOpt::characteriseUsage()
                             timeBin1 = i * 1800;
                             timeBin2 = (i + 1) * 1800;
                             
-                            #ifdef TESTING
+                            #ifdef TESTIN
                                 cout << timeBin1 << " - " << timeBin2 << endl;
                             #endif
 
                             if(timeBin1 < time2 && timeBin2 > time1)
                             {
-                                #ifdef TESTING
+                                #ifdef TESTIN
                                     cout << "Incremented" << endl;
                                 #endif
                                 d1->usage.time[day1][i]++;
