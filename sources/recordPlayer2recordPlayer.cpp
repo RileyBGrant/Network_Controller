@@ -215,7 +215,7 @@ int8_t netOpt::recordPlayer2recordPlayer(roomMember *m1, roomMember *m2)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }
