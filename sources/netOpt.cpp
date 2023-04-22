@@ -2204,6 +2204,67 @@ int netOpt::characteriseUsage()
         listIteratorD1 = devices->getNext(listIteratorD1);
     }
 
+    #ifdef TESTING
+        cout << "Characterising room usage" << endl;
+    #endif
+
+    node_t *listIteratorR1 = rooms.getHead();
+    devRoom *r1;
+    node_t *listIteratorM1;
+    roomMember *m1;
+    devRecord *d1;
+
+    while(listIteratorR1)
+    {
+        r1 = (devRoom *)listIteratorR1->data;
+        
+        for(int i = 0; i < 7; i++)
+        {
+            for(int j = 0; j < 48; j++)
+            {
+                r1->usage.time[i][j] = 0;
+            }
+        }
+        
+        listIteratorM1 = r1->groups.getHead();
+
+        while(listIteratorM1)
+        {
+            m1 = (roomMember *)listIteratorM1->data;
+            d1 = (devRecord *)((devGroup *)m1->member)->mems.getHead()->data;
+
+            for(int i = 0; i < 7; i++)
+            {
+                for(int j = 0; j < 48; j++)
+                {
+                    r1->usage.time[i][j] += d1->usage.time[i][j];
+                }
+            }
+
+            listIteratorM1 = r1->groups.getNext(listIteratorM1);
+        }
+        
+        listIteratorM1 = r1->mems.getHead();
+
+        while(listIteratorM1)
+        {
+            m1 = (roomMember *)listIteratorM1->data;
+            d1 = (devRecord *)m1->member;
+
+            for(int i = 0; i < 7; i++)
+            {
+                for(int j = 0; j < 48; j++)
+                {
+                    r1->usage.time[i][j] += d1->usage.time[i][j];
+                }
+            }
+
+            listIteratorM1 = r1->mems.getNext(listIteratorM1);
+        }
+
+        listIteratorR1 = rooms.getNext(listIteratorR1);
+    }
+
     return 1;
 }
 
@@ -3196,6 +3257,69 @@ int netOpt::sendDevStims()
             }
 
             listIteratorD1 = devices->getNext(listIteratorD1);
+        }
+
+        node_t *listIteratorR1 = rooms.getHead();
+        devRoom *r1;
+        int counterR1 = 0;
+
+        while(listIteratorR1)
+        {
+            r1 = (devRoom *)listIteratorR1->data;
+            
+            if(r1->groups.getLen() > 0)
+            {
+                d1 = (devRecord *)((devGroup *)((roomMember *)r1->groups.getHead()->data)->member)->mems.getHead()->data;
+            }
+            else if(r1->mems.getLen() > 0)
+            {
+                d1 = (devRecord *)((roomMember *)r1->mems.getHead()->data)->member;
+            }
+            else
+            {
+                #ifdef TESTING
+                    cout << "Room has no devices" << endl;
+                #endif
+
+                return 1;
+            }
+
+            unpackMAC(d1->macAddr, mac);
+
+            ss.str("");
+            ss.clear();
+
+            ss << "r" << counterR1 << "_" << hex;
+            for(int i = 0; i < 6; i++)
+            {
+                ss << (int)mac[i];
+            }
+            ss << dec;
+
+            string csv = ss.str();
+
+            if(!ofile.is_open())
+            {
+                #ifdef TESTING
+                    cout << "opening file: " << "logs/usage/" << csv << ".csv" << endl;
+                #endif
+
+                ofile.open("logs/usage/" + csv + ".csv", ios::out);
+
+                for(int i = 0; i < 7; i++)
+                {
+                    for(int j = 0; j < 47; j++)
+                    {
+                        ofile << r1->usage.time[i][j] << ",";
+                    }
+                    ofile << r1->usage.time[i][47] << endl;
+                }
+                
+                ofile.close();
+            }
+
+            listIteratorR1 = rooms.getNext(listIteratorR1);
+            counterR1++;
         }
 
         #ifdef TESTING

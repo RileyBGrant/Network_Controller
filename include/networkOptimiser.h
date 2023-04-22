@@ -148,6 +148,7 @@ struct devRoom
     linkedList groups; //roomMember where roomMember->member is devGroup
     linkedList mems; //roomMember where roomMember->member is devRecord
     float activeProb;
+    usageProfile usage;
 };
 
 //class for network optimiser
