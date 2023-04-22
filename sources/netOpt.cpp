@@ -1978,14 +1978,14 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
-                    else if(a1->variable == 0 && a1->state == 1)
+                    /*else if(a1->variable == 0 && a1->state == 1)
                     {
                         winSet = true;
                         time1 = a1->timestamp;
                         time2 = a1->timestamp;
                         listIteratorA1 = d1->activity.getNext(listIteratorA1);
                         d1->activity.remove(counterA1);
-                    }
+                    }*/
                     break;
                 }
             }
