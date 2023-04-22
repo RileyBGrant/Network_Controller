@@ -2212,7 +2212,6 @@ int netOpt::characteriseUsage()
     devRoom *r1;
     node_t *listIteratorM1;
     roomMember *m1;
-    devRecord *d1;
 
     while(listIteratorR1)
     {
