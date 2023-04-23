@@ -3142,6 +3142,10 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     }
                     p2->adjustment = p1->adjustment;
                     listIteratorP2 = NULL;
+
+                    #ifdef TESTING
+                        cout << "Probablitiy adkjustment is now: " << p1->adjustment << endl;
+                    #endif
                     
                     return output;
                 }
