@@ -87,7 +87,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
             listIteratorA1 = d2->activity.getHead();
             listIteratorA2 = p2->activity.getHead();
 
-            /*if(listIteratorA2 != NULL)
+            if(listIteratorA2 != NULL)
             {
                 a2 = (activityRecord *)listIteratorA2->data;
                 if(a2->variable == 0 && a2->state == 1 && p2->activity.getLen() < 2)
