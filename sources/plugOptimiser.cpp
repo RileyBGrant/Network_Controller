@@ -87,7 +87,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
             listIteratorA1 = d2->activity.getHead();
             listIteratorA2 = p2->activity.getHead();
 
-            if(listIteratorA2 != NULL)
+            /*if(listIteratorA2 != NULL)
             {
                 a2 = (activityRecord *)listIteratorA2->data;
                 if(a2->variable == 0 && a2->state == 1 && p2->activity.getLen() < 2)
@@ -95,7 +95,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     listIteratorA1 = NULL;
                     listIteratorA2 = NULL;
                 }
-            }
+            }*/
 
             while(listIteratorA1 != NULL && listIteratorA2 != NULL)
             {
@@ -107,11 +107,11 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                 #endif
 
-                /*if(a2->timestamp <= ((pluggedDev *)listIteratorP2->data)->lastTime)
+                if(a2->timestamp <= ((pluggedDev *)listIteratorP2->data)->lastTime)
                 {
                     listIteratorA2 = p2->activity.getNext(listIteratorA2);
                 }
-                else*/ 
+                else
                 if(a1->timestamp > a2->timestamp)
                 {
                     listIteratorA1 = NULL;
