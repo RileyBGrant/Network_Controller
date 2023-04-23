@@ -30,6 +30,8 @@ struct usageProfile
     int time[7][48];
 };
 
+struct pluggedDev;
+
 struct devRecord
 {
     uint64_t macAddr;
@@ -40,6 +42,12 @@ struct devRecord
     linkedList_t probAdjusment;
     usageProfile usage;
     pluggedDev *plug;
+};
+
+struct pluggedDev
+{
+    devRecord *plug;
+    devRecord *dev;
 };
 
 //Class for the network interface
@@ -132,12 +140,6 @@ public:
     #ifdef TESTING
         int printPlugs();
     #endif
-};
-
-struct pluggedDev
-{
-    devRecord *plug;
-    devRecord *dev;
 };
 
 struct roomMember
