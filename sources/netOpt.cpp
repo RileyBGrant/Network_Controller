@@ -3101,13 +3101,13 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
         {
             uint8_t mac[6];
             unpackMAC(d1->macAddr, mac);
-            cout << "Compatability probability between assistant " << hex << (int)mac[0];
+            cout << "Compatability probability between device " << hex << (int)mac[0];
             for(int i = 1; i < 6; i++)
             {
                 cout << "." << (int)mac[i];
             }
             unpackMAC(d2->macAddr, mac);
-            cout << dec << " and assistant " << hex << (int)mac[0];
+            cout << dec << " and device " << hex << (int)mac[0];
             for(int i = 1; i < 6; i++)
             {
                 cout << "." << (int)mac[i];
