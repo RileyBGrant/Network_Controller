@@ -35,17 +35,17 @@ int8_t netOpt::assistant2kettle(roomMember *assistant, roomMember *kettle)
             cout << "activity records are too short" << endl;
         #endif
 
-        if(getProbAdjustment(d1, d2, 0.0) -1 < -2)
+        if(getProbAdjustment(d1, OV1, 0.0) -1 < -2)
         {
             return -2;
         }
-        else if(getProbAdjustment(d1, d2, 0.0) -1 > -1)
+        else if(getProbAdjustment(d1, OV1, 0.0) -1 > -1)
         {
             return 1;
         }
         else
         {
-            return(getProbAdjustment(d1, d2, 0.0) -1);
+            return(getProbAdjustment(d1, OV1, 0.0) -1);
         };
     }
 
