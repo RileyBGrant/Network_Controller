@@ -3144,7 +3144,10 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     listIteratorP2 = NULL;
 
                     #ifdef TESTING
-                        cout << "Probablitiy adkjustment is now: " << p1->adjustment << endl;
+                        if(adjustmentChange != 0)
+                        {
+                            cout << "Probablitiy adkjustment is now: " << p1->adjustment << endl;
+                        }
                     #endif
                     
                     return output;
@@ -3166,6 +3169,9 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
     if(devFound = false)
     {
+        #ifdef TESTING
+            cout << "No adjustment record found creating new one" << endl;
+        #endif
         p1 = new devProbAdjustment;
         p1->dev = d2;
         p1->adjustment = adjustmentChange;
