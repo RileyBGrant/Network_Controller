@@ -87,13 +87,20 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
             listIteratorA1 = d2->activity.getHead();
             listIteratorA2 = p2->activity.getHead();
 
-            a2 = (activityRecord *)listIteratorA2->data;
-
-            if(a2->variable == 0 && a2->state == 1 && p2->activity.getLen() < 2)
+            if(listIteratorA2 != NULL)
             {
-                listIteratorA1 == NULL;
-                listIteratorA2 == NULL;
+                a2 = (activityRecord *)listIteratorA2->data;
+
+                if(a2->variable == 0 && a2->state == 1 && p2->activity.getLen() < 2)
+                {
+                    listIteratorA1 = NULL;
+                    listIteratorA2 = NULL;
+                    #ifdef TESTING
+                        cout << "Plug still on or record too short" << endl;
+                    #endif
+                }
             }
+            
 
             while(listIteratorA1 != NULL && listIteratorA2 != NULL)
             {
