@@ -46,7 +46,8 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
         else
         {
             return(getProbAdjustment(d1, OV1, 0.0) -1);
-        };
+        }
+    }
 
     node_t *listIteratorA1 = d1->activity.getHead();
     node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
