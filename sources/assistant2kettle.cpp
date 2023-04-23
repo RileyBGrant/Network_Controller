@@ -48,7 +48,6 @@ int8_t netOpt::assistant2kettle(roomMember *assistant, roomMember *kettle)
     activityRecord *a4;
 
     int probChange = 0;
-    int timeDiff = 0;
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL && listIteratorA3 != NULL && listIteratorA4 != NULL)
     {
@@ -56,7 +55,6 @@ int8_t netOpt::assistant2kettle(roomMember *assistant, roomMember *kettle)
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
         a4 = (activityRecord *)listIteratorA4->data;
-        timeDiff = a1->timestamp - a3->timestamp;
 
         #ifdef TESTING
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;

@@ -1978,6 +1978,10 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
+                    else if(a1->variable == 0 && a1->state == 1 && counterA1 == 0)
+                    {
+                        d1->activity.remove(counterA1);
+                    }
                     /*else if(a1->variable == 0 && a1->state == 1)
                     {
                         winSet = true;
