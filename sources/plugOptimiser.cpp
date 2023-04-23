@@ -65,7 +65,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
         cout << "Checking exisiting plugs" << endl;
     #endif
 
-    while(listIteratorP2)
+    /*while(listIteratorP2)
     {
         d2 = ((pluggedDev *)listIteratorP2->data)->dev;
         if(d2 != NULL)
@@ -173,7 +173,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
             }
         }
         listIteratorP2 = plugs.getNext(listIteratorP2);
-    }
+    }*/
 
     #ifdef TESTING
         cout << "Checking new pairs" << endl;
