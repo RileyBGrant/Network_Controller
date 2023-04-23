@@ -239,7 +239,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
 
                     if(((pluggedDev *)listIteratorP2->data)->dev == NULL)
                     {
-                        devPaired = true;
+                        devPaired = false;
                         p2 = ((pluggedDev *)listIteratorP2->data)->plug;
 
                         listIteratorA1 = d1->activity.getHead();
@@ -278,6 +278,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                                     {
                                         if(a1->state == a2->state)
                                         {
+                                            devPaired = true;
                                             listIteratorA1 = d1->activity.getNext(listIteratorA1);
                                             listIteratorA2 = p2->activity.getNext(listIteratorA2);
                                         }
