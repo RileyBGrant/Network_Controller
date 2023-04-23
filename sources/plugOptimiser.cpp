@@ -85,22 +85,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
             #endif
 
             listIteratorA1 = d2->activity.getHead();
-            listIteratorA2 = p2->activity.getHead();
-
-            if(listIteratorA2 != NULL)
-            {
-                a2 = (activityRecord *)listIteratorA2->data;
-
-                if(a2->variable == 0 && a2->state == 1 && p2->activity.getLen() < 2)
-                {
-                    listIteratorA1 = NULL;
-                    listIteratorA2 = NULL;
-                    #ifdef TESTING
-                        cout << "Plug still on or record too short" << endl;
-                    #endif
-                }
-            }
-            
+            listIteratorA2 = p2->activity.getHead();          
 
             while(listIteratorA1 != NULL && listIteratorA2 != NULL)
             {
@@ -112,7 +97,11 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                 #endif
 
-                if(a1->timestamp > a2->timestamp)
+                if(a2->timestamp <= ((pluggedDev *)listIteratorP2->data)->lastTime)
+                {
+                    listIteratorA2 = p2->activity.getNext(listIteratorA2);
+                }
+                else if(a1->timestamp > a2->timestamp)
                 {
                     listIteratorA1 = NULL;
                     listIteratorA2 = NULL;
@@ -135,6 +124,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                         {
                             if(a1->state == a2->state)
                             {
+                                ((pluggedDev *)listIteratorP2->data)->lastTime = a2->timestamp;
                                 listIteratorA1 = d1->activity.getNext(listIteratorA1);
                                 listIteratorA2 = p2->activity.getNext(listIteratorA2);
                             }

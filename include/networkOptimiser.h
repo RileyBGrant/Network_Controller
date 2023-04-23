@@ -45,6 +45,7 @@ struct pluggedDev
 {
     devRecord *plug;
     devRecord *dev;
+    time_t lastTime;
 };
 
 //Class for the network interface
