@@ -61,6 +61,7 @@ int lightOptimiser::groupLights()
     devRecord *dev;
     int counterD;
     devRecord *masterDev;
+    devRecord *d2;
     activityRecord *activity1;
     activityRecord *activity2;
     int len;
@@ -228,6 +229,60 @@ int lightOptimiser::groupLights()
         #ifdef TESTING
             int counter = 0;
         #endif
+
+        if(masterDev->groups.getLen() > 0)
+        {
+            listIteratorG1 = masterDev->groups.getHead();
+
+            while(listIteratorG1)
+            {
+                listIteratorG2 = lightGroups.getHead();
+
+                while(listIteratorG2)
+                {
+                    group = (devGroup *)listIteratorG2->data;
+
+                    if(listIteratorG1->data == group)
+                    {
+                        listIteratorD2 = group->mems.getHead();
+                        devMatch = false;
+
+                        while(listIteratorD2)
+                        {
+                            d2 = (devRecord *)listIteratorD2->data;
+                            if(d2 == masterDev)
+                            {
+                                devMatch = true;
+                                listIteratorD2 = NULL; 
+                                #ifdef TESTING
+                                    cout << "Dev still in the group, no issues" << endl;
+                                #endif
+                            }
+                            else
+                            {
+                                listIteratorD2 = group->mems.getNext(listIteratorD2);
+                            }
+                        }
+
+                        if(devMatch == false)
+                        {
+                            #ifdef TESTING
+                                cout << "Dev missing from the group" << endl;
+                            #endif
+                            group->mems.append(masterDev);
+                        }
+
+                        listIteratorG2 = NULL;
+                    }
+                    else
+                    {
+                        listIteratorG2 = lightGroups.getNext(listIteratorG2);
+                    }
+                }
+
+                listIteratorG1 = masterDev->groups.getNext(listIteratorG1);
+            }
+        }
 
         //Check if device can be added to an existing group
         listIteratorG1 = lightGroups.getHead();
