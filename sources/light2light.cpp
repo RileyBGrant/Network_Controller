@@ -26,7 +26,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) << endl;
     #endif
     
     

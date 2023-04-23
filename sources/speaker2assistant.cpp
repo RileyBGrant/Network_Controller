@@ -26,7 +26,7 @@ int8_t netOpt::speaker2assistant(roomMember *speaker, roomMember *assistant)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)s1->mems.getHead()->data), d2, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(((devRecord *)s1->mems.getHead()->data), d2, 0.0) << endl;
     #endif
 
     if(((devRecord *)s1->mems.getHead()->data)->activity.getLen() < 2 || d2->activity.getLen() < 2)

@@ -26,7 +26,7 @@ int8_t netOpt::recordPlayer2washing(roomMember *recordPlayer, roomMember *washin
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)

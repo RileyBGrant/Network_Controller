@@ -26,7 +26,7 @@ int8_t netOpt::speaker2recordPlayer(roomMember *speaker, roomMember *audioDev)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) << endl;
         
     #endif
 

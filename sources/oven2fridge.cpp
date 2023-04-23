@@ -26,7 +26,7 @@ int8_t netOpt::oven2fridge(roomMember *oven, roomMember *fridge)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
     
     

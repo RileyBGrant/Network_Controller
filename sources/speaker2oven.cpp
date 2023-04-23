@@ -26,7 +26,7 @@ int8_t netOpt::speaker2oven(roomMember *speaker, roomMember *oven)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) << endl;
     #endif
 
     if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || OV1->activity.getLen() < 2)

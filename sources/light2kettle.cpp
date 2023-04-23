@@ -26,7 +26,7 @@ int8_t netOpt::light2kettle(roomMember *light, roomMember *kettle)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) << endl;
     #endif
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)

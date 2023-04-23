@@ -26,7 +26,7 @@ int8_t netOpt::assistant2kettle(roomMember *assistant, roomMember *kettle)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, OV1, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(d1, OV1, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || OV1->activity.getLen() < 2)

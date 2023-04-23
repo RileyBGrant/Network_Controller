@@ -26,7 +26,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) << endl;
     #endif
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 1)

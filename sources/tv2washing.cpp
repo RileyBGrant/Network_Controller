@@ -26,7 +26,7 @@ int8_t netOpt::tv2washing(roomMember *tv, roomMember *washing)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
+        cout << dec << " with probability adjustment of " << (int)getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
