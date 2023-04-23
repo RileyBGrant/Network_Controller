@@ -3122,6 +3122,12 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
         if(p1->dev == d2)
         {    
+            #ifdef TESTING
+                if(adjustmentChange != 0)
+                {
+                    cout << "P1 found" << endl;
+                }
+            #endif
             listIteratorP2 = d2->probAdjusment.getHead();
 
             while(listIteratorP2)
@@ -3130,6 +3136,12 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
                 if(p2->dev == d1)
                 {
+                    #ifdef TESTING
+                        if(adjustmentChange != 0)
+                        {
+                            cout << "P2 found" << endl;
+                        }
+                    #endif
                     output = lround(p1->adjustment);
                     p1->adjustment += adjustmentChange;
                     if(p1->adjustment > 127)
@@ -3146,7 +3158,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     #ifdef TESTING
                         if(adjustmentChange != 0)
                         {
-                            cout << "Probablitiy adkjustment is now: " << p1->adjustment << endl;
+                            cout << "Probablitiy adjustment is now: " << p1->adjustment << endl;
                         }
                     #endif
                     
