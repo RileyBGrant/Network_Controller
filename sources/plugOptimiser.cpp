@@ -39,7 +39,6 @@ int plugOptimiser::addDevice(devRecord *newDev)
     p1->dev = NULL;
 
     plugs.append(p1);
-    dev->plug = p1;
     //printDevs();
 
     return 0;
@@ -136,7 +135,6 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                             {
                                 listIteratorA1 = NULL;
                                 listIteratorA2 = NULL;
-                                d2->plug = NULL;
                                 devPaired = false;
                                 #ifdef TESTING
                                     cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -305,7 +303,6 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     if(devPaired == true)
                     {
                         ((pluggedDev *)listIteratorP2->data)->dev = d1;
-                        d1->plug = (pluggedDev *)listIteratorP2->data;
                         listIteratorP2 = NULL;
                         #ifdef TESTING
                             cout << "Paired" << endl;

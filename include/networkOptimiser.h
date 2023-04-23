@@ -30,8 +30,6 @@ struct usageProfile
     int time[7][48];
 };
 
-struct pluggedDev;
-
 struct devRecord
 {
     uint64_t macAddr;
@@ -41,7 +39,6 @@ struct devRecord
     linkedList_t rooms; //list of devRooms that this dev is a part of
     linkedList_t probAdjusment;
     usageProfile usage;
-    pluggedDev *plug;
 };
 
 struct pluggedDev
