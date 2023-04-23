@@ -3122,7 +3122,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
         if(p1->dev == d2)
         {    
-            #ifdef TESTING
+            #ifdef TESTIN
                 if(adjustmentChange != 0)
                 {
                     cout << "P1 found" << endl;
@@ -3136,7 +3136,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
                 if(p2->dev == d1)
                 {
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         if(adjustmentChange != 0)
                         {
                             cout << "P2 found" << endl;
@@ -3170,7 +3170,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                 }
             }
 
-            #ifdef TESTING
+            #ifdef TESTIN
                 if(adjustmentChange != 0)
                 {
                     cout << "P2 not found" << endl;
@@ -3186,7 +3186,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
         }
     }
 
-    #ifdef TESTING
+    #ifdef TESTIN
         if(adjustmentChange != 0)
         {
             cout << "P1 not found" << endl;
