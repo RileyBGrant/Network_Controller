@@ -31,7 +31,7 @@ int8_t netOpt::light2kettle(roomMember *light, roomMember *kettle)
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
     {
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "activity records are too short" << endl;
         #endif
 
