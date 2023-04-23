@@ -3097,20 +3097,23 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
     int8_t output;
 
     #ifdef TESTING
-        uint8_t mac[6];
-        unpackMAC(d1->macAddr, mac);
-        cout << "Compatability probability between assistant " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
+        if(adjustmentChange != 0)
         {
-            cout << "." << (int)mac[i];
+            uint8_t mac[6];
+            unpackMAC(d1->macAddr, mac);
+            cout << "Compatability probability between assistant " << hex << (int)mac[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << (int)mac[i];
+            }
+            unpackMAC(d2->macAddr, mac);
+            cout << dec << " and assistant " << hex << (int)mac[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << (int)mac[i];
+            }
+            cout << dec << " being changed by " << adjustmentChange << endl;
         }
-        unpackMAC(d2->macAddr, mac);
-        cout << dec << " and assistant " << hex << (int)mac[0];
-        for(int i = 1; i < 6; i++)
-        {
-            cout << "." << (int)mac[i];
-        }
-        cout << dec << " being changed by " << adjustmentChange << endl;
     #endif
 
     while(listIteratorP1)
