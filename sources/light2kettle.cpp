@@ -35,7 +35,7 @@ int8_t netOpt::light2kettle(roomMember *light, roomMember *kettle)
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
+        return(-1 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0));
     }
 
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
