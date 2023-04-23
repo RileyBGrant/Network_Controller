@@ -95,7 +95,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     listIteratorA1 = NULL;
                     listIteratorA2 = NULL;
                 }
-            }*/
+            }
 
             while(listIteratorA1 != NULL && listIteratorA2 != NULL)
             {
