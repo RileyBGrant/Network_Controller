@@ -31,11 +31,24 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
     {
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
+        if(getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) -1 < -2)
+        {
+            return -2;
+        }
+        else if(getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) -1 > -1)
+        {
+            return 1;
+        }
+        else
+        {
+            return(getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) -1);
+        }
+
+        
     }
 
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
