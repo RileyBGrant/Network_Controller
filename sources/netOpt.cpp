@@ -2027,6 +2027,7 @@ int netOpt::characteriseUsage()
                     break;
                 }
             }
+            
 
             if(winSet == true)
             {
