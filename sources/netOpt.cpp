@@ -3169,6 +3169,13 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     listIteratorP2 = d2->probAdjusment.getNext(listIteratorP2);
                 }
             }
+
+            #ifdef TESTING
+                if(adjustmentChange != 0)
+                {
+                    cout << "P2 not found" << endl;
+                }
+            #endif
             
             devFound = true;
             listIteratorP1 = NULL;
@@ -3178,6 +3185,13 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
             listIteratorP1 = d1->probAdjusment.getNext(listIteratorP1);
         }
     }
+
+    #ifdef TESTING
+        if(adjustmentChange != 0)
+        {
+            cout << "P1 not found" << endl;
+        }
+    #endif
 
     if(devFound = false)
     {
