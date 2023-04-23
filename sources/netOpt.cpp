@@ -3193,7 +3193,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
         }
     #endif
 
-    if(devFound = false)
+    if(devFound == false)
     {
         #ifdef TESTING
             cout << "No adjustment record found creating new one" << endl;
