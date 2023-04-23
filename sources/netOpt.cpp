@@ -3096,7 +3096,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
     bool devFound = false;
     int8_t output;
 
-    #ifdef TESTING
+    #ifdef TESTIN
         if(adjustmentChange != 0)
         {
             uint8_t mac[6];
@@ -3155,7 +3155,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     p2->adjustment = p1->adjustment;
                     listIteratorP2 = NULL;
 
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         if(adjustmentChange != 0)
                         {
                             cout << "Probablitiy adjustment is now: " << p1->adjustment << endl;
