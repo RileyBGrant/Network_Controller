@@ -36,7 +36,18 @@ int8_t netOpt::speaker2recordPlayer(roomMember *speaker, roomMember *audioDev)
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
+        if(getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) -1 < -2)
+        {
+            return -2;
+        }
+        else if(getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) -1 > -1)
+        {
+            return 1;
+        }
+        else
+        {
+            return(getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) -1);
+        };
     }
 
     node_t *listIteratorA1 = d1->activity.getHead();

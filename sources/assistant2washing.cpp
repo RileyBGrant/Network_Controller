@@ -35,7 +35,18 @@ int8_t netOpt::assistant2washing(roomMember *assistant, roomMember *washing)
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
+        if(getProbAdjustment(d1, d2, 0.0) -1 < -2)
+        {
+            return -2;
+        }
+        else if(getProbAdjustment(d1, d2, 0.0) -1 > -1)
+        {
+            return 1;
+        }
+        else
+        {
+            return(getProbAdjustment(d1, d2, 0.0) -1);
+        };
     }
 
     node_t *listIteratorA1 = d1->activity.getHead();

@@ -35,7 +35,18 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
+        if(getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) -1 < -2)
+        {
+            return -2;
+        }
+        else if(getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) -1 > -1)
+        {
+            return 1;
+        }
+        else
+        {
+            return(getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) -1);
+        };
     }
 
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();

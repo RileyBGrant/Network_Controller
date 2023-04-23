@@ -35,7 +35,22 @@ int8_t netOpt::tv2kettle(roomMember *tv, roomMember *kettle)
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
+        #ifdef TESTIN
+            cout << "activity records are too short" << endl;
+        #endif
+
+        if(getProbAdjustment(d1, OV1, 0.0) -1 < -2)
+        {
+            return -2;
+        }
+        else if(getProbAdjustment(d1, OV1, 0.0) -1 > -1)
+        {
+            return 1;
+        }
+        else
+        {
+            return(getProbAdjustment(d1, OV1, 0.0) -1);
+        };
     }
 
     node_t *listIteratorA1 = d1->activity.getHead();

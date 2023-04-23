@@ -35,8 +35,18 @@ int8_t netOpt::recordPlayer2fridge(roomMember *recordPlayer, roomMember *fridge)
             cout << "activity records are too short" << endl;
         #endif
 
-        return -1;
-    }
+        if(getProbAdjustment(d1, OV1, 0.0) -1 < -2)
+        {
+            return -2;
+        }
+        else if(getProbAdjustment(d1, OV1, 0.0) -1 > -1)
+        {
+            return 1;
+        }
+        else
+        {
+            return(getProbAdjustment(d1, OV1, 0.0) -1);
+        };
 
     node_t *listIteratorA1 = d1->activity.getHead();
     node_t *listIteratorA2 = d1->activity.getNext(listIteratorA1);
