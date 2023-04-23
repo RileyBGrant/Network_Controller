@@ -26,7 +26,7 @@ int8_t netOpt::speaker2speaker(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) << endl;
     #endif
 
     if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || ((devRecord *)g2->mems.getHead()->data)->activity.getLen() < 2)
@@ -101,13 +101,21 @@ int8_t netOpt::speaker2speaker(roomMember *m1, roomMember *m2)
                             {
                                 if(a2->timestamp > a3->timestamp)
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
                                     }
 
                                     listIteratorA3 = ((devRecord *)g2->mems.getHead()->data)->activity.getNext(listIteratorA3);
@@ -129,14 +137,23 @@ int8_t netOpt::speaker2speaker(roomMember *m1, roomMember *m2)
                             {
                                 if(a4->timestamp > a1->timestamp)
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
                                     }
+
 
                                     listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
                                     if(listIteratorA1 != NULL)

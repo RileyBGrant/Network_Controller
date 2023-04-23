@@ -26,7 +26,7 @@ int8_t netOpt::oven2washing(roomMember *oven, roomMember *washing)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     #ifdef TESTING

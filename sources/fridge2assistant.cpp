@@ -26,7 +26,7 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << << " with probability adjustment of " << getProbAdjustment(d1, OV1, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || OV1->activity.getLen() < 2)
@@ -77,13 +77,22 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
                         {
                             if(a2->timestamp > a3->timestamp)
                             {
-                                if(probChange <= 122)
+                                if(5 + getProbAdjustment(d1, OV1, 0.0) > 0)
                                 {
-                                    probChange = probChange + 5;
+                                    if(probChange <= 122 - getProbAdjustment(d1, OV1, 0.0))
+                                    {
+                                        probChange = probChange + 5 + getProbAdjustment(d1, OV1, 0.5);
+                                    }
+                                    else
+                                    {
+                                        probChange = 127;
+                                        getProbAdjustment(d1, OV1, 0.5);
+                                    }
+                                    
                                 }
                                 else
                                 {
-                                    probChange = 127;
+                                    getProbAdjustment(d1, OV1, 0.5);
                                 }
 
                                 listIteratorA3 = OV1->activity.getNext(listIteratorA3);
@@ -94,13 +103,21 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
                             }
                             else
                             {
-                                if(probChange >= -127)
+                                if(-1 + getProbAdjustment(d1, OV1, 0.0) < 0)
                                 {
-                                    probChange -= 1;
+                                    if(probChange >= -127 - getProbAdjustment(d1, OV1, 0.0))
+                                    {
+                                        probChange = probChange -1 + getProbAdjustment(d1, OV1, -0.1);
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                        getProbAdjustment(d1, OV1, -0.1);
+                                    }
                                 }
                                 else
                                 {
-                                    probChange = -128;
+                                    getProbAdjustment(d1, OV1, -0.1);
                                 }
                                 
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
@@ -114,13 +131,22 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
                         {
                             if(a4->timestamp > a1->timestamp)
                             {
-                                if(probChange <= 122)
+                                if(5 + getProbAdjustment(d1, OV1, 0.0) > 0)
                                 {
-                                    probChange = probChange + 5;
+                                    if(probChange <= 122 - getProbAdjustment(d1, OV1, 0.0))
+                                    {
+                                        probChange = probChange + 5 + getProbAdjustment(d1, OV1, 0.5);
+                                    }
+                                    else
+                                    {
+                                        probChange = 127;
+                                        getProbAdjustment(d1, OV1, 0.5);
+                                    }
+                                    
                                 }
                                 else
                                 {
-                                    probChange = 127;
+                                    getProbAdjustment(d1, OV1, 0.5);
                                 }
                                 
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
@@ -133,13 +159,21 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
                             {
                                 if(a3->state = 3)
                                 {
-                                    if(probChange >= -125)
+                                    if(-5 + getProbAdjustment(d1, OV1, 0.0) < 0)
                                     {
-                                        probChange -= 5;
+                                        if(probChange >= -123 - getProbAdjustment(d1, OV1, 0.0))
+                                        {
+                                            probChange = probChange -5 + getProbAdjustment(d1, OV1, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(d1, OV1, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(d1, OV1, -0.1);
                                     }
                                 }
                                 
@@ -160,24 +194,42 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
                 {
                     if(a1->timestamp < a3->timestamp && a2->timestamp > a3->timestamp)
                     {
-                        if(probChange <= 122)
+                        if(5 + getProbAdjustment(d1, OV1, 0.0) > 0)
                         {
-                            probChange = probChange + 5;
+                            if(probChange <= 122 - getProbAdjustment(d1, OV1, 0.0))
+                            {
+                                probChange = probChange + 5 + getProbAdjustment(d1, OV1, 0.5);
+                            }
+                            else
+                            {
+                                probChange = 127;
+                                getProbAdjustment(d1, OV1, 0.5);
+                            }
+                            
                         }
                         else
                         {
-                            probChange = 127;
+                            getProbAdjustment(d1, OV1, 0.5);
                         }
                     }
                     else if((a3->timestamp == a1->timestamp && a3->state == a1->state) || (a3->timestamp == a2->timestamp && a3->state == a2->state))
                     {
-                        if(probChange <= 122)
+                        if(5 + getProbAdjustment(d1, OV1, 0.0) > 0)
                         {
-                            probChange = probChange + 5;
+                            if(probChange <= 122 - getProbAdjustment(d1, OV1, 0.0))
+                            {
+                                probChange = probChange + 5 + getProbAdjustment(d1, OV1, 0.5);
+                            }
+                            else
+                            {
+                                probChange = 127;
+                                getProbAdjustment(d1, OV1, 0.5);
+                            }
+                            
                         }
                         else
                         {
-                            probChange = 127;
+                            getProbAdjustment(d1, OV1, 0.5);
                         }
                     }
 
@@ -211,13 +263,22 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
                     {
                         if(a1->timestamp < a4->timestamp)
                         {
-                            if(probChange <= 122)
+                            if(5 + getProbAdjustment(d1, OV1, 0.0) > 0)
                             {
-                                probChange = probChange + 5;
+                                if(probChange <= 122 - getProbAdjustment(d1, OV1, 0.0))
+                                {
+                                    probChange = probChange + 5 + getProbAdjustment(d1, OV1, 0.5);
+                                }
+                                else
+                                {
+                                    probChange = 127;
+                                    getProbAdjustment(d1, OV1, 0.5);
+                                }
+                                
                             }
                             else
                             {
-                                probChange = 127;
+                                getProbAdjustment(d1, OV1, 0.5);
                             }
                         }
                         else

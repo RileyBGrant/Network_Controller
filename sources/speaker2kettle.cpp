@@ -26,7 +26,7 @@ int8_t netOpt::speaker2kettle(roomMember *speaker, roomMember *kettle)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) << endl;
     #endif
 
     if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 2 || OV1->activity.getLen() < 2)
@@ -79,24 +79,40 @@ int8_t netOpt::speaker2kettle(roomMember *speaker, roomMember *kettle)
                             {
                                 if(a3->state == 2)
                                 {
-                                    if(probChange <= 102)
+                                    if(25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) > 0)
                                     {
-                                        probChange = probChange + 25;
+                                        if(probChange <= 102 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0))
+                                        {
+                                            probChange = probChange + 25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 1.0);
+                                        }
+                                        else
+                                        {
+                                            probChange = 127;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 1.0);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = 127;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 1.0);
                                     }
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
                                     }
                                 }
 
@@ -108,13 +124,21 @@ int8_t netOpt::speaker2kettle(roomMember *speaker, roomMember *kettle)
                             }
                             else
                             {
-                                if(probChange >= -127)
+                                if(-1 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) < 0)
                                 {
-                                    probChange -= 1;
+                                    if(probChange >= -127 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0))
+                                    {
+                                        probChange = probChange -1 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                    }
                                 }
                                 else
                                 {
-                                    probChange = -128;
+                                    getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
                                 }
                                 
                                 listIteratorA1 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA2);
@@ -130,24 +154,40 @@ int8_t netOpt::speaker2kettle(roomMember *speaker, roomMember *kettle)
                             {
                                 if(a3->state == 3)
                                 {
-                                    if(probChange <= 102)
+                                    if(25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) > 0)
                                     {
-                                        probChange = probChange + 25;
+                                        if(probChange <= 102 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0))
+                                        {
+                                            probChange = probChange + 25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 1.0);
+                                        }
+                                        else
+                                        {
+                                            probChange = 127;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 1.0);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = 127;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 1.0);
                                     }
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
                                     }
                                 }
 
@@ -161,13 +201,21 @@ int8_t netOpt::speaker2kettle(roomMember *speaker, roomMember *kettle)
                             {
                                 if(a3->state = 3)
                                 {
-                                    if(probChange >= -125)
+                                    if(-5 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0) < 0)
                                     {
-                                        probChange -= 5;
+                                        if(probChange >= -123 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, 0.0))
+                                        {
+                                            probChange = probChange -5 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(((devRecord *)g1->mems.getHead()->data), OV1, -0.1);
                                     }
                                 }
                                 

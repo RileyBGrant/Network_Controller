@@ -3087,6 +3087,92 @@ int netOpt::sendDevStims()
     return 0;
 }
 
+int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentChange)
+{
+    node_t *listIteratorP1 = d1->probAdjusment.getHead();
+    devProbAdjustment *p1;
+    node_t *listIteratorP2;
+    devProbAdjustment *p2;
+    bool devFound = false;
+    int8_t output;
+
+    #ifdef TESTING
+        uint8_t mac[6];
+        unpackMAC(d1->macAddr, mac);
+        cout << "Compatability probability between assistant " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        unpackMAC(d2->macAddr, mac);
+        cout << dec << " and assistant " << hex << (int)mac[0];
+        for(int i = 1; i < 6; i++)
+        {
+            cout << "." << (int)mac[i];
+        }
+        cout << dec << " being changed by " << adjustmentChange << endl;
+    #endif
+
+    while(listIteratorP1)
+    {
+        p1 = (devProbAdjustment *)listIteratorP1->data;
+
+        if(p1->dev == d2)
+        {    
+            listIteratorP2 = d2->probAdjusment.getHead();
+
+            while(listIteratorP2)
+            {
+                p2 = (devProbAdjustment *)listIteratorP2->data;
+
+                if(p2->dev == d1)
+                {
+                    output = lround(p1->adjustment);
+                    p1->adjustment += adjustmentChange;
+                    if(p1->adjustment > 127)
+                    {
+                        p1->adjustment = 127;
+                    }
+                    else if(p1->adjustment < -128)
+                    {
+                        p1->adjustment = -128;
+                    }
+                    p2->adjustment = p1->adjustment;
+                    listIteratorP2 = NULL;
+                    
+                    return output;
+                }
+                else
+                {
+                    listIteratorP2 = d2->probAdjusment.getNext(listIteratorP2);
+                }
+            }
+            
+            devFound = true;
+            listIteratorP1 = NULL;
+        }
+        else
+        {
+            listIteratorP1 = d1->probAdjusment.getNext(listIteratorP1);
+        }
+    }
+
+    if(devFound = false)
+    {
+        p1 = new devProbAdjustment;
+        p1->dev = d2;
+        p1->adjustment = adjustmentChange;
+        d1->probAdjusment.append(p1);
+
+        p2 = new devProbAdjustment;
+        p2->dev = d1;
+        p2->adjustment = adjustmentChange;
+        d2->probAdjusment.append(p2);
+    }
+
+    return 0;
+}
+
 #ifdef TESTING
     int netOpt::printRooms()
     {

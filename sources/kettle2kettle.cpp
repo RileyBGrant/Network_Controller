@@ -26,7 +26,7 @@ int8_t netOpt::kettle2kettle(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
@@ -67,13 +67,22 @@ int8_t netOpt::kettle2kettle(roomMember *m1, roomMember *m2)
 
         if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff < 5 && timeDiff > -5))
         {
-            if(probChange <= 117)
+            if(5 + getProbAdjustment(d1, d2, 0.0) > 0)
             {
-                probChange = probChange + 5;
+                if(probChange <= 122 - getProbAdjustment(d1, d2, 0.0))
+                {
+                    probChange = probChange + 5 + getProbAdjustment(d1, d2, 0.5);
+                }
+                else
+                {
+                    probChange = 127;
+                    getProbAdjustment(d1, d2, 0.5);
+                }
+                
             }
             else
             {
-                probChange = 127;
+                getProbAdjustment(d1, d2, 0.5);
             }
             
             listIteratorA1 = d1->activity.getNext(listIteratorA1);

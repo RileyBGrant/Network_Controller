@@ -26,7 +26,7 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) << endl;
     #endif
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || ((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 1)
@@ -75,26 +75,42 @@ int8_t netOpt::light2speaker(roomMember *light, roomMember *mainGroup)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(probChange <= 117)
+                        if(7 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
                         {
-                            probChange = probChange + 7;
+                            if(probChange <= 120 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            {
+                                probChange = probChange + 7 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 1.0);
+                            }
+                            else
+                            {
+                                probChange = 127;
+                                getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 1.0);
+                            }
                         }
                         else
                         {
-                            probChange = 127;
+                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 1.0);
                         }
 
                         listIteratorA3 = ((devRecord *)g1->mems.getHead()->data)->activity.getNext(listIteratorA3);
                     }
                     else
                     {
-                        if(probChange >= -123)
+                        if(-5 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0) < 0)
                         {
-                            probChange -= 5;
+                            if(probChange >= -123 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            {
+                                probChange = probChange -5 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), -0.1);
+                            }
+                            else
+                            {
+                                probChange = -128;
+                                getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), -0.1);
+                            }
                         }
                         else
                         {
-                            probChange = -128;
+                            getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)l1->mems.getHead()->data), -0.1);
                         }
 
                         listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);

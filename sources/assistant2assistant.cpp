@@ -26,7 +26,7 @@ int8_t netOpt::assistant2assistant(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
@@ -67,13 +67,21 @@ int8_t netOpt::assistant2assistant(roomMember *m1, roomMember *m2)
 
         if(a1->variable == a3->variable && a1->state == a3->state && (timeDiff < 5 && timeDiff > -5))
         {
-            if(probChange <= 117)
+            if(10 + getProbAdjustment(d1, d2, 0.0) > 0)
             {
-                probChange = probChange + 10;
+                if(probChange <= 117 - getProbAdjustment(d1, d2, 0.0))
+                {
+                    probChange = probChange + 10 + getProbAdjustment(d1, d2, 1.0);
+                }
+                else
+                {
+                    probChange = 127;
+                    getProbAdjustment(d1, d2, 1.0);
+                }
             }
             else
             {
-                probChange = 127;
+                getProbAdjustment(d1, d2, 1.0);
             }
             
             listIteratorA1 = d1->activity.getNext(listIteratorA1);
@@ -101,13 +109,21 @@ int8_t netOpt::assistant2assistant(roomMember *m1, roomMember *m2)
                             {
                                 if(a2->timestamp > a3->timestamp)
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(d1, d2, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(d1, d2, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -0.1);
                                     }
 
                                     listIteratorA3 = d2->activity.getNext(listIteratorA3);
@@ -129,13 +145,21 @@ int8_t netOpt::assistant2assistant(roomMember *m1, roomMember *m2)
                             {
                                 if(a4->timestamp > a1->timestamp)
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(d1, d2, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(d1, d2, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -0.1);
                                     }
 
                                     listIteratorA1 = d1->activity.getNext(listIteratorA2);

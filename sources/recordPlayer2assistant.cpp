@@ -26,7 +26,7 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
@@ -79,24 +79,40 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
                             {
                                 if(a3->state == 2)
                                 {
-                                    if(probChange <= 102)
+                                    if(25 + getProbAdjustment(d1, d2, 0.0) > 0)
                                     {
-                                        probChange = probChange + 25;
+                                        if(probChange <= 102 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange + 25 + getProbAdjustment(d1, d2, 1.0);
+                                        }
+                                        else
+                                        {
+                                            probChange = 127;
+                                            getProbAdjustment(d1, d2, 1.0);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = 127;
+                                        getProbAdjustment(d1, d2, 1.0);
                                     }
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(d1, d2, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(d1, d2, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -0.1);
                                     }
                                 }
 
@@ -108,13 +124,22 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
                             }
                             else
                             {
-                                if(probChange >= -127)
+                                
+                                if(-1 + getProbAdjustment(d1, d2, 0.0) < 0)
                                 {
-                                    probChange -= 1;
+                                    if(probChange >= -127 - getProbAdjustment(d1, d2, 0.0))
+                                    {
+                                        probChange = probChange -1 + getProbAdjustment(d1, d2, -0.1);
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -0.1);
+                                    }
                                 }
                                 else
                                 {
-                                    probChange = -128;
+                                    getProbAdjustment(d1, d2, -0.1);
                                 }
                                 
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
@@ -130,24 +155,40 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
                             {
                                 if(a3->state == 3)
                                 {
-                                    if(probChange <= 102)
+                                    if(25 + getProbAdjustment(d1, d2, 0.0) > 0)
                                     {
-                                        probChange = probChange + 25;
+                                        if(probChange <= 102 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange + 25 + getProbAdjustment(d1, d2, 1.0);
+                                        }
+                                        else
+                                        {
+                                            probChange = 127;
+                                            getProbAdjustment(d1, d2, 1.0);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = 127;
+                                        getProbAdjustment(d1, d2, 1.0);
                                     }
                                 }
                                 else
                                 {
-                                    if(probChange >= -125)
+                                    if(-3 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        probChange -= 3;
+                                        if(probChange >= -125 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange -3 + getProbAdjustment(d1, d2, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(d1, d2, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -0.1);
                                     }
                                 }
 
@@ -161,13 +202,21 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
                             {
                                 if(a3->state = 3)
                                 {
-                                    if(probChange >= -125)
+                                    if(-5 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        probChange -= 5;
+                                        if(probChange >= -123 - getProbAdjustment(d1, d2, 0.0))
+                                        {
+                                            probChange = probChange -5 + getProbAdjustment(d1, d2, -0.1);
+                                        }
+                                        else
+                                        {
+                                            probChange = -128;
+                                            getProbAdjustment(d1, d2, -0.1);
+                                        }
                                     }
                                     else
                                     {
-                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -0.1);
                                     }
                                 }
                                 
@@ -190,13 +239,21 @@ int8_t netOpt::recordPlayer2assistant(roomMember *recordPlayer, roomMember *assi
                     {
                         if(a2->timestamp > a3->timestamp)
                         {
-                            if(probChange <= 122)
+                            if(5 + getProbAdjustment(d1, d2, 0.0) > 0)
                             {
-                                probChange = probChange + 5;
+                                if(probChange <= 122 - getProbAdjustment(d1, d2, 0.0))
+                                {
+                                    probChange = probChange + 5 + getProbAdjustment(d1, d2, 1.0);
+                                }
+                                else
+                                {
+                                    probChange = 127;
+                                    getProbAdjustment(d1, d2, 1.0);
+                                }
                             }
                             else
                             {
-                                probChange = 127;
+                                getProbAdjustment(d1, d2, 1.0);
                             }
 
                             listIteratorA3 = d2->activity.getNext(listIteratorA3);

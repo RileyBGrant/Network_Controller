@@ -26,7 +26,7 @@ int8_t netOpt::assistant2washing(roomMember *assistant, roomMember *washing)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
 
     if(d1->activity.getLen() < 2 || d2->activity.getLen() < 2)
@@ -77,13 +77,21 @@ int8_t netOpt::assistant2washing(roomMember *assistant, roomMember *washing)
                         {
                             if(a2->timestamp > a3->timestamp)
                             {
-                                if(probChange >= -103)
+                                if(-25 + getProbAdjustment(d1, d2, 0.0) < 0)
                                 {
-                                    probChange -= 25;
+                                    if(probChange >= -103 - getProbAdjustment(d1, d2, 0.0))
+                                    {
+                                        probChange = probChange -25 + getProbAdjustment(d1, d2, -2.5);
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -2.5);
+                                    }
                                 }
                                 else
                                 {
-                                    probChange = -128;
+                                    getProbAdjustment(d1, d2, -2.5);
                                 }
 
                                 listIteratorA3 = d2->activity.getNext(listIteratorA3);
@@ -105,13 +113,21 @@ int8_t netOpt::assistant2washing(roomMember *assistant, roomMember *washing)
                         {
                             if(a4->timestamp > a1->timestamp)
                             {
-                                if(probChange >= -103)
+                                if(-25 + getProbAdjustment(d1, d2, 0.0) < 0)
                                 {
-                                    probChange -= 25;
+                                    if(probChange >= -103 - getProbAdjustment(d1, d2, 0.0))
+                                    {
+                                        probChange = probChange -25 + getProbAdjustment(d1, d2, -2.5);
+                                    }
+                                    else
+                                    {
+                                        probChange = -128;
+                                        getProbAdjustment(d1, d2, -2.5);
+                                    }
                                 }
                                 else
                                 {
-                                    probChange = -128;
+                                    getProbAdjustment(d1, d2, -2.5);
                                 }
 
                                 listIteratorA1 = d1->activity.getNext(listIteratorA2);
@@ -173,13 +189,22 @@ int8_t netOpt::assistant2washing(roomMember *assistant, roomMember *washing)
                     {
                         if(a2->timestamp > a3->timestamp)
                         {
-                            if(probChange <= 122)
+                            if(5 + getProbAdjustment(d1, d2, 0.0) > 0)
                             {
-                                probChange += 5;
+                                if(probChange <= 122 - getProbAdjustment(d1, d2, 0.0))
+                                {
+                                    probChange = probChange + 5 + getProbAdjustment(d1, d2, 0.5);
+                                }
+                                else
+                                {
+                                    probChange = 127;
+                                    getProbAdjustment(d1, d2, 0.5);
+                                }
+                                
                             }
                             else
                             {
-                                probChange = 127;
+                                getProbAdjustment(d1, d2, 0.5);
                             }
 
                             listIteratorA3 = d2->activity.getNext(listIteratorA3);

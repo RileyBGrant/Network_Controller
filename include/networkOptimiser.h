@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <cmath>
 
 #define TESTING
 #define LOG
@@ -36,6 +37,7 @@ struct devRecord
     linkedList_t activity; //list of activity record types
     linkedList_t groups; //list of devGroups that this dev is a part of
     linkedList_t rooms; //list of devRooms that this dev is a part of
+    linkedList_t probAdjusment;
     usageProfile usage;
 };
 
@@ -214,6 +216,7 @@ public:
     int8_t kettle2kettle(roomMember *m1, roomMember *m2);
     int8_t kettle2washing(roomMember *light, roomMember *washing);
     int8_t washing2washing(roomMember *light, roomMember *washing);
+    int8_t getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentChange);
     int characteriseUsage();
     int activeRoomUpdate();
     int sendDevStims();
@@ -232,4 +235,10 @@ struct devGroup
 {
     uint8_t devtype;
     linkedList_t mems; //List of devRecord
+};
+
+struct devProbAdjustment
+{
+    devRecord *dev;
+    double adjustment;
 };

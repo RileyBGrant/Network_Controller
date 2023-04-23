@@ -26,7 +26,7 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) << endl;
     #endif
 
     if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
@@ -75,26 +75,42 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(probChange <= 117)
+                        if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
                         {
-                            probChange = probChange + 10;
+                            if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            {
+                                probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                            }
+                            else
+                            {
+                                probChange = 127;
+                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                            }
                         }
                         else
                         {
-                            probChange = 127;
+                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
                         }
 
                         listIteratorA3 = d1->activity.getNext(listIteratorA3);
                     }
                     else
                     {
-                        if(probChange >= -125)
+                        if(-3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) < 0)
                         {
-                            probChange -= 3;
+                            if(probChange >= -125 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            {
+                                probChange = probChange -3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.1);
+                            }
+                            else
+                            {
+                                probChange = -128;
+                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.1);
+                            }
                         }
                         else
                         {
-                            probChange = -128;
+                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.1);
                         }
 
                         listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);

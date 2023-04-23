@@ -26,7 +26,7 @@ int8_t netOpt::fridge2fridge(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(d1, d2, 0.0) << endl;
     #endif
     
     
@@ -72,14 +72,23 @@ int8_t netOpt::fridge2fridge(roomMember *m1, roomMember *m2)
         }
         else
         {
-            if(probChange < 123)
+            if(4 + getProbAdjustment(d1, d2, 0.0) > 0)
             {
-                probChange = probChange + 4;
+                if(probChange <= 123 - getProbAdjustment(d1, d2, 0.0))
+                {
+                    probChange = probChange + 4 + getProbAdjustment(d1, d2, 0.5);
+                }
+                else
+                {
+                    probChange = 127;
+                    getProbAdjustment(d1, d2, 0.5);
+                }
+                
             }
             else
             {
-                probChange = 127;
-            } 
+                getProbAdjustment(d1, d2, 0.5);
+            }
 
             listIteratorA1 = d1->activity.getNext(listIteratorA1);
             listIteratorA2 = d2->activity.getNext(listIteratorA2);

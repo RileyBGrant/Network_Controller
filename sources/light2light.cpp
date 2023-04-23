@@ -26,7 +26,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         {
             cout << "." << (int)mac[i];
         }
-        cout << dec << endl;
+        cout << dec << " with probability adjustment of " << getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) << endl;
     #endif
     
     
@@ -62,13 +62,21 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
 
         if(devMatch == false)
         {
-            if(probChange >= -126)
+            if(-2 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) < 0)
             {
-                probChange -= 2;
+                if(probChange >= -126 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0))
+                {
+                    probChange = probChange -2 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
+                }
+                else
+                {
+                    probChange = -128;
+                    getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
+                }
             }
             else
             {
-                probChange = -128;
+                getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), -0.1);
             }
 
             if(a1->timestamp < a2->timestamp)
@@ -87,14 +95,22 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         }
         else
         {
-            if(probChange < 123)
+            if(4 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) > 0)
             {
-                probChange = probChange + 4;
+                if(probChange <= 123 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0))
+                {
+                    probChange = probChange + 4 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.6);
+                }
+                else
+                {
+                    probChange = 127;
+                    getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.6);
+                }
             }
             else
             {
-                probChange = 127;
-            } 
+                getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.6);
+            }
 
             listIteratorA1 = g1->mems.getNext(listIteratorA1);
             listIteratorA2 = g2->mems.getNext(listIteratorA2);
