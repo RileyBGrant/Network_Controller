@@ -1669,6 +1669,7 @@ int netOpt::characteriseUsage()
     int dayCounter = 0;
     time_t timeBin1 = 0;
     time_t timeBin2 = 0;
+    bool headRemoved = false;
 
     #ifdef TESTING
         cout << "Chracterising usage" << endl;
@@ -1695,6 +1696,7 @@ int netOpt::characteriseUsage()
         {
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
+            headRemoved = false;
 
             #ifdef TESTING
                 cout << "a1: variable: " << (int)a1->variable << ", state: " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -1741,6 +1743,11 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
+                    else if(counterA1 = 0)
+                    {
+                        d1->activity.remove(counterA1);
+                        headRemoved = true;
+                    }
                     break;
                 }
                 case 1: //tv
@@ -1769,6 +1776,7 @@ int netOpt::characteriseUsage()
                                 counterA2++;
                             }
                         }
+                        
 
                         if(winSet == true)
                         {
@@ -1778,6 +1786,11 @@ int netOpt::characteriseUsage()
                             listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
+                    }
+                    else if(counterA1 = 0)
+                    {
+                        d1->activity.remove(counterA1);
+                        headRemoved = true;
                     }
                     break;
                 }
@@ -1817,6 +1830,11 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
+                    else if(counterA1 = 0)
+                    {
+                        d1->activity.remove(counterA1);
+                        headRemoved = true;
+                    }
                     break;
                 }
                 case 4: //oven
@@ -1855,6 +1873,11 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
+                    else if(counterA1 = 0)
+                    {
+                        d1->activity.remove(counterA1);
+                        headRemoved = true;
+                    }
                     break;
                 }
                 case 5: //fridge
@@ -1892,6 +1915,11 @@ int netOpt::characteriseUsage()
                             listIteratorA1 = d1->activity.getNext(listIteratorA1);
                             d1->activity.remove(counterA1);
                         }
+                    }
+                    else if(counterA1 = 0)
+                    {
+                        d1->activity.remove(counterA1);
+                        headRemoved = true;
                     }
                     break;
                 }
@@ -1939,6 +1967,11 @@ int netOpt::characteriseUsage()
                         listIteratorA1 = d1->activity.getNext(listIteratorA1);
                         d1->activity.remove(counterA1);
                     }
+                    else if(counterA1 = 0)
+                    {
+                        d1->activity.remove(counterA1);
+                        headRemoved = true;
+                    }
                     break;
                 }
                 case 7: //kettle
@@ -1981,6 +2014,7 @@ int netOpt::characteriseUsage()
                     else if(a1->variable == 0 && a1->state != 2 && counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
+                        headRemoved = true;
                     }
                     /*else if(a1->variable == 0 && a1->state == 1)
                     {
@@ -2197,6 +2231,11 @@ int netOpt::characteriseUsage()
                 #ifdef TESTING
                     cout << "Window added" << endl;
                 #endif
+            }
+            else if(headRemoved == true)
+            {
+                listIteratorA1 = d1->activity.getHead();
+                counterA1 = 0;
             }
             else
             {
