@@ -107,11 +107,12 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                     cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
                 #endif
 
-                if(a2->timestamp <= ((pluggedDev *)listIteratorP2->data)->lastTime || gmtime(&a2->timestamp)->tm_yday != gmtime(&a1->timestamp)->tm_yday)
+                /*if(a2->timestamp <= ((pluggedDev *)listIteratorP2->data)->lastTime)
                 {
                     listIteratorA2 = p2->activity.getNext(listIteratorA2);
                 }
-                else if(a1->timestamp > a2->timestamp)
+                else*/ 
+                if(a1->timestamp > a2->timestamp)
                 {
                     listIteratorA1 = NULL;
                     listIteratorA2 = NULL;
@@ -134,7 +135,11 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
                         {
                             if(a1->state == a2->state)
                             {
-                                ((pluggedDev *)listIteratorP2->data)->lastTime = a2->timestamp;
+                                if(((pluggedDev *)listIteratorP2->data)->lastTime < a2->timestamp)
+                                {
+                                    ((pluggedDev *)listIteratorP2->data)->lastTime = a2->timestamp;
+                                }
+                                
                                 listIteratorA1 = d1->activity.getNext(listIteratorA1);
                                 listIteratorA2 = p2->activity.getNext(listIteratorA2);
                             }
