@@ -2442,7 +2442,7 @@ int netOpt::activeRoomUpdate()
                     #endif
                     switch(lastDevUpdated->devType)
                     {
-                        case 0:
+                        case 0: //Lights
                         {
                             int numLights = 0;
                             listIteratorG1 = r1->groups.getHead();
@@ -2494,7 +2494,7 @@ int netOpt::activeRoomUpdate()
                             break;
                         }
 
-                        case 1:
+                        case 1: //tv
                         {
                             if(v1 == 0)
                             {
@@ -2524,7 +2524,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 2:
+                        case 2: //speaker
                         {
                             if(v1 == 0)
                             {
@@ -2554,7 +2554,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 3:
+                        case 3: //record player
                         {
                             if(v1 == 0)
                             {
@@ -2584,7 +2584,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 4:
+                        case 4: //ovem
                         {
                             if(v1 == 0)
                             {
@@ -2639,7 +2639,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 5:
+                        case 5: //fridge
                         {
                             if(v1 == 0)
                             {
@@ -2694,7 +2694,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 6:
+                        case 6: //assistant
                         {
                             if(v1 == 0)
                             {
@@ -2738,7 +2738,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 7:
+                        case 7: //kettle
                         {
                             if(v1 == 0)
                             {
@@ -2779,7 +2779,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 8:
+                        case 8: //washing machine
                         {
                             if(v1 == 0)
                             {
@@ -2820,7 +2820,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 9:
+                        case 9: //plug
                         {
                             if(v1 == 0)
                             {
@@ -2859,7 +2859,7 @@ int netOpt::activeRoomUpdate()
                     #endif
                     switch(lastDevUpdated->devType)
                     {
-                        case 0:
+                        case 0: //lights
                         {
                             if(v1 == 0 && s1 == 1)
                             {
@@ -2876,7 +2876,7 @@ int netOpt::activeRoomUpdate()
                             break;
                         }
 
-                        case 1:
+                        case 1: //tv
                         {
                             if(v1 == 0 && (s1 == 3 || s1 == 4))
                             {              
@@ -2892,7 +2892,7 @@ int netOpt::activeRoomUpdate()
 
                             break;
                         }
-                        case 2:
+                        case 2: //speaker
                         {
                             if(v1 == 0 && s1 >= 2 && s1 <= 4)
                             {
@@ -2908,7 +2908,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 3:
+                        case 3: //record player
                         {
                             if(v1 == 0 && s1 == 1)
                             {
@@ -2924,7 +2924,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 4:
+                        case 4: //oven
                         {
                             if(v1 == 0 && s1 == 1)
                             {
@@ -2954,7 +2954,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 5:
+                        case 5: //fridge
                         {
                             if(v1 == 0 && s1 == 1)
                             {
@@ -2981,7 +2981,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 6:
+                        case 6: //assistant
                         {
                             if(v1 == 0 && (s1 == 2 || s1 == 3))
                             {
@@ -3002,13 +3002,13 @@ int netOpt::activeRoomUpdate()
                                 }
                                 else
                                 {
-                                    r1->activeProb = 100.0;
+                                    r1->activeProb = 0.0;
                                 }
                             }
                             
                             break;
                         }
-                        case 7:
+                        case 7: //kettle
                         {
                             if(v1 == 0 && s1 == 1)
                             {
@@ -3024,7 +3024,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 8:
+                        case 8: //washing machine
                         {
                             if(v1 == 0 && s1 == 1)
                             {
@@ -3040,7 +3040,7 @@ int netOpt::activeRoomUpdate()
                             
                             break;
                         }
-                        case 9:
+                        case 9: //plug
                         {
                             if(v1 == 0 && s1 == 1)
                             {
