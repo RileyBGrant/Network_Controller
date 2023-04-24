@@ -2709,7 +2709,7 @@ int netOpt::activeRoomUpdate()
                                         r1->activeProb = 100.0;
                                     }
                                 }
-                                else if(s1 == 0)
+                                /*else if(s1 == 0)
                                 {
                                     if(r1->activeProb >= 1.0)
                                     {
@@ -2719,7 +2719,7 @@ int netOpt::activeRoomUpdate()
                                     {
                                         r1->activeProb = 0.0;
                                     }
-                                }
+                                }*/
                             }
                             else if(v1 == 1)
                             {
