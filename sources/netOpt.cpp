@@ -2380,6 +2380,9 @@ int netOpt::activeRoomUpdate()
 
         if(groupChanged == true)
         {
+            #ifdef TESTING
+                cout << "Group changed" << endl;
+            #endif
             node_t *listIteratorR2;
             bool devInRoom = false;
 
@@ -2408,6 +2411,9 @@ int netOpt::activeRoomUpdate()
 
                 if(devInRoom == true)
                 {
+                    #ifdef TESTING
+                        cout << "In Dev room" << endl;
+                    #endif
                     switch(lastDevUpdated->devType)
                     {
                         case 0:
@@ -2822,6 +2828,9 @@ int netOpt::activeRoomUpdate()
                 }
                 else
                 {
+                    #ifdef TESTING
+                        cout << "Not in dev room" << endl;
+                    #endif
                     switch(lastDevUpdated->devType)
                     {
                         case 0:
