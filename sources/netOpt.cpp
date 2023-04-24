@@ -2363,6 +2363,24 @@ int netOpt::activeRoomUpdate()
                     v2 = ((activityRecord *)d1->activity.getTail()->data)->variable;
                     s2 = ((activityRecord *)d1->activity.getTail()->data)->state;
 
+                    #ifdef TESTING
+                        uint8_t mac[6];
+                        unpackMAC(d1->macAddr, mac);
+                        cout << "Group member " << hex << (int)mac[0];
+                        for(int i = 1; i < 6; i++)
+                        {
+                            cout << "." << (int)mac[i];
+                        }
+                        unpackMAC(lastDevUpdated->macAddr, mac);
+                        cout << dec << ", variable: " << v2 << ", state: " << s2 << endl;
+                        cout << " lastDevupdated: " << hex << (int)mac[0];
+                        for(int i = 1; i < 6; i++)
+                        {
+                            cout << "." << (int)mac[i];
+                        }
+                        cout << dec << ", variable: " << v1 << ", state: " << s1 << endl;
+                    #endif
+
                     if(d1 != lastDevUpdated && (v1 != v2 || s1 != s2))
                     {
                         groupChanged = false;
@@ -2970,7 +2988,7 @@ int netOpt::activeRoomUpdate()
                             }
                             else if(v1 == 1 && s1 == 1)
                             {
-                                if(r1->activeProb <= 1.0)
+                                if(r1->activeProb >= 1.0)
                                 {
                                     r1->activeProb -= 1.0;
                                 }
