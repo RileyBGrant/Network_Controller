@@ -28,6 +28,14 @@ struct usageProfile
     int numOfSample;
     int modeTime[2];
     int time[7][48];
+    linkedList_t windows; //list oof usageWindow
+};
+
+struct usageWindow
+{
+    int day;
+    int start;
+    int end;
 };
 
 struct devRecord

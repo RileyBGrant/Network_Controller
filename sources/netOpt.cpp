@@ -2269,6 +2269,9 @@ int netOpt::characteriseUsage()
     devRoom *r1;
     node_t *listIteratorM1;
     roomMember *m1;
+    int filterFloor = 0;
+    int window[2];
+    usageWindow *w1;
 
     while(listIteratorR1)
     {
@@ -2294,6 +2297,12 @@ int netOpt::characteriseUsage()
                 for(int j = 0; j < 48; j++)
                 {
                     r1->usage.time[i][j] += d1->usage.time[i][j];
+
+                    if(r1->usage.time[i][j] > r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]])
+                    {
+                        r1->usage.modeTime[0] = i;
+                        r1->usage.modeTime[1] = j;
+                    }
                 }
             }
 
@@ -2312,16 +2321,124 @@ int netOpt::characteriseUsage()
                 for(int j = 0; j < 48; j++)
                 {
                     r1->usage.time[i][j] += d1->usage.time[i][j];
+
+                    if(r1->usage.time[i][j] > r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]])
+                    {
+                        r1->usage.modeTime[0] = i;
+                        r1->usage.modeTime[1] = j;
+                    }
                 }
             }
 
             listIteratorM1 = r1->mems.getNext(listIteratorM1);
         }
 
+        #ifdef TESTING
+            cout << "Creating on windows" << endl;
+        #endif
+        
+        filterFloor = floor(r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]] / 4);
+
+        while(r1->usage.windows.getLen() > 0)
+        {
+            free(r1->usage.windows.getHead()->data);
+            r1->usage.windows.remove(0);
+        }
+        
+        for(int i = 0; i < 7; i++)
+        {
+            winSet = false;
+            for(int j = 0; j < 48; j++)
+            {
+                if(r1->usage.time[i][j] >= filterFloor)
+                {
+                    if(winSet != true)
+                    {
+                        winSet = true;
+                        window[0] = j;
+                    }
+                }
+                else
+                {
+                    if(winSet == true)
+                    {
+                        if(j < 47)
+                        {
+                            if(r1->usage.time[i][j + 1] >= filterFloor)
+                            {
+                                j++;
+                            }
+                            else
+                            {
+                                window[1]= j - 1;
+
+                                w1 = new usageWindow;
+                                w1->start = window[0];
+                                w1->end = window[1];
+                                w1->day = i;
+
+                                #ifdef TESTING
+                                    cout << "Window found on day " << i + 1;
+                                    cout << " at" << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                                    cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << ((window[1] + 1 * 1800) % 3600) / 60 << endl;
+                                #endif
+
+                                r1->usage.windows.append(w1);
+                                winSet = false;
+                            }
+                        }
+                        else
+                        {
+                            if(r1->usage.time[(i + 1) % 7][0] < filterFloor)
+                            {
+                                window[1]= j - 1;
+
+                                w1 = new usageWindow;
+                                w1->start = window[0];
+                                w1->end = window[1];
+                                w1->day = i;
+
+                                #ifdef TESTING
+                                    cout << "Window found on day " << i + 1;
+                                    cout << " at" << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                                    cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << ((window[1] + 1 * 1800) % 3600) / 60 << endl;
+                                #endif
+
+                                r1->usage.windows.append(w1);
+                                winSet = false;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+
+            if(winSet == true)
+            {
+                window[1]= 48;
+
+                w1 = new usageWindow;
+                w1->start = window[0];
+                w1->end = window[1];
+                w1->day = i;
+
+                #ifdef TESTING
+                    cout << "Window found on day " << i + 1;
+                    cout << " at" << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                    cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << ((window[1] + 1 * 1800) % 3600) / 60 << endl;
+                #endif
+
+                r1->usage.windows.append(w1);
+                winSet = false;
+            }
+        }
+
         listIteratorR1 = rooms.getNext(listIteratorR1);
     }
 
-    return 1;
+    
+
+    return 0;
 }
 
 int netOpt::activeRoomUpdate() 
@@ -3828,7 +3945,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 #ifdef TESTING
     int netOpt::printRooms()
     {
-        cout << "Printing " << rooms.getLen() << " rooms" << endl;
+        cout << endl << "Printing " << rooms.getLen() << " rooms" << endl;
 
         node_t *listIteratorR1 = rooms.getHead();
         devRoom *r1;
@@ -3839,6 +3956,8 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
         node_t *listIteratorD1;
         devRecord *d1;
         uint8_t mac[6];
+        node_t *listIteratorW1;
+        usageWindow *w1;
 
         while(listIteratorR1)
         {
@@ -3897,9 +4016,24 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                 listIteratorM1 = r1->mems.getNext(listIteratorM1);
             }
 
+            cout << "Usage windows" << endl;
+
+            listIteratorW1 = r1->usage.windows.getHead();
+
+            while(listIteratorW1)
+            {
+                w1 = (usageWindow *)listIteratorW1->data;
+
+                cout << "Window found on day " << w1->day + 1;
+                cout << " at" << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60;
+                cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << ((w1->end + 1 * 1800) % 3600) / 60 << endl;
+
+                listIteratorW1 = r1->usage.windows.getNext(listIteratorW1);
+            }
+
             listIteratorR1 = rooms.getNext(listIteratorR1);
         }
-        
+        cout << endl;
         return 0;
     }
 
