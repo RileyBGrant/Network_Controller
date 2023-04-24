@@ -2379,7 +2379,7 @@ int netOpt::characteriseUsage()
 
                                 #ifdef TESTING
                                     cout << "Window found on day " << i + 1;
-                                    cout << " at" << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                                    cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
                                     cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << ((window[1] + 1 * 1800) % 3600) / 60 << endl;
                                 #endif
 
@@ -2400,7 +2400,7 @@ int netOpt::characteriseUsage()
 
                                 #ifdef TESTING
                                     cout << "Window found on day " << i + 1;
-                                    cout << " at" << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                                    cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
                                     cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << ((window[1] + 1 * 1800) % 3600) / 60 << endl;
                                 #endif
 
@@ -4025,7 +4025,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                 w1 = (usageWindow *)listIteratorW1->data;
 
                 cout << "Window found on day " << w1->day + 1;
-                cout << " at" << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60;
+                cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60;
                 cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << ((w1->end + 1 * 1800) % 3600) / 60 << endl;
 
                 listIteratorW1 = r1->usage.windows.getNext(listIteratorW1);
