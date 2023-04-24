@@ -3096,7 +3096,6 @@ int netOpt::activeRoomUpdate()
 
             #ifdef LOG
                 ofstream ofile;
-                ostringstream ss;
                 uint8_t mac[6];
 
                 if(activeRoom->groups.getLen() > 0)
@@ -3118,15 +3117,8 @@ int netOpt::activeRoomUpdate()
 
                 unpackMAC(d1->macAddr, mac);
 
-                ss.str("");
-                ss.clear();
                 time_t tempT = interface->getLastTimestamp();
                 tm tempTM = *gmtime(&tempT);
-
-                for(int i = 0; i < 6; i++)
-                {
-                    ss << (int)mac[i];
-                }
 
                 if(!ofile.is_open())
                 {
@@ -3136,7 +3128,7 @@ int netOpt::activeRoomUpdate()
 
                     ofile.open("logs/activeRoom.csv", ios::app);
 
-                    ofile << tempTM.tm_year + 1900 << "," << tempTM.tm_mon + 1 << "," << tempTM.tm_mday << "," << tempTM.tm_hour << "," << tempTM.tm_min << "," << tempTM.tm_sec << "," << ss.str() << endl;
+                    ofile << tempTM.tm_year + 1900 << "," << tempTM.tm_mon + 1 << "," << tempTM.tm_mday << "," << tempTM.tm_hour << "," << tempTM.tm_min << "," << tempTM.tm_sec << "," << (int)mac[5] << endl;
                     
                     ofile.close();
                 }
