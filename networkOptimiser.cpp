@@ -28,7 +28,7 @@ int main()
         }
         else
         {
-            //optimiser.activeRoomUpdate();
+            optimiser.activeRoomUpdate();
         }
 
         interface.endBurst();
@@ -51,7 +51,7 @@ int main()
     #endif
 
     cout << interface.getLastTimestamp() << endl;
-    
+
     optimiser.printRooms();
     optimiser.printPlugs();    
 

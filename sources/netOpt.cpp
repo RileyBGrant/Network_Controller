@@ -16,6 +16,19 @@ netOpt::netOpt(netInt *netInterface)
     groups.append(speakerOpt.getGroups());
 
     activeRoom = NULL;
+
+    ofstream ofile;
+
+    if(!ofile.is_open())
+    {
+        #ifdef TESTING
+            cout << "opening file: " << "logs/activeRoom.csv" << endl;
+        #endif
+
+        ofile.open("logs/activeRoom.csv", ios::out);
+        
+        ofile.close();
+    }
 }
 
 int netOpt::sortDevs()
@@ -2414,7 +2427,7 @@ int netOpt::activeRoomUpdate()
                                 listIteratorG1 = r1->groups.getNext(listIteratorG1);
                             }
 
-                            #ifdef TESTING
+                            #ifdef TESTIN
                                 cout << "Original room probability is " << fixed << setprecision(2) << r1->activeProb << endl;
                             #endif
 
@@ -2429,7 +2442,7 @@ int netOpt::activeRoomUpdate()
                                     r1->activeProb = 100.0;
                                 }
 
-                                #ifdef TESTING
+                                #ifdef TESTIN
                                     cout << ", new room probability is " << r1->activeProb << endl;
                                 #endif
                             }
@@ -2464,26 +2477,341 @@ int netOpt::activeRoomUpdate()
                                         r1->activeProb = 100.0;
                                     }
                                 }
-                                else if(s1 == 0 || s1 == 2)
+                                else if(s1 == 0 || s1 == 1 || s1 == 2)
                                 {
-                                    if(r1->activeProb >= 60.0)
+                                    if(r1->activeProb >= 50.0)
                                     {
-                                        r1->activeProb -= 60.0;
+                                        r1->activeProb -= 50.0;
                                     }
                                     else
                                     {
                                         r1->activeProb = 0.0;
                                     }
                                 }
-                                else
+                            }
+                            
+                            break;
+                        }
+                        case 2:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 >= 2 && s1 <= 4)
                                 {
-                                    if(r1->activeProb <= 95.0)
+                                    if(r1->activeProb <= 50.0)
                                     {
                                         r1->activeProb += 50.0;
                                     }
                                     else
                                     {
                                         r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0 || s1 == 1)
+                                {
+                                    if(r1->activeProb >= 50.0)
+                                    {
+                                        r1->activeProb -= 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 3:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 50.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0 || s1 == 2)
+                                {
+                                    if(r1->activeProb >= 50.0)
+                                    {
+                                        r1->activeProb -= 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 4:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 50.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 50.0)
+                                    {
+                                        r1->activeProb -= 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            else if(v1 >= 1 && v1 <= 6)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 90.0)
+                                    {
+                                        r1->activeProb += 10.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 10.0)
+                                    {
+                                        r1->activeProb -= 10.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 5:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 90.0)
+                                    {
+                                        r1->activeProb += 10.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 10.0)
+                                    {
+                                        r1->activeProb -= 10.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            else if(v1 == 1)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 90.0)
+                                    {
+                                        r1->activeProb += 10.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0 || s1 == 1)
+                                {
+                                    if(r1->activeProb >= 10.0)
+                                    {
+                                        r1->activeProb -= 10.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 6:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 2 || s1 == 3)
+                                {
+                                    if(r1->activeProb <= 50.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 50.0)
+                                    {
+                                        r1->activeProb -= 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            else if(v1 == 1)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 99.0)
+                                    {
+                                        r1->activeProb += 1.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 7:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 50.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 2)
+                                {
+                                    if(r1->activeProb >= 25.0)
+                                    {
+                                        r1->activeProb -= 25.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 25.0)
+                                    {
+                                        r1->activeProb -= 25.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 8:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 50.0)
+                                    {
+                                        r1->activeProb += 50.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 2)
+                                {
+                                    if(r1->activeProb >= 25.0)
+                                    {
+                                        r1->activeProb -= 25.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 25.0)
+                                    {
+                                        r1->activeProb -= 25.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
+                                    }
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 9:
+                        {
+                            if(v1 == 0)
+                            {
+                                if(s1 == 1)
+                                {
+                                    if(r1->activeProb <= 99.0)
+                                    {
+                                        r1->activeProb += 1.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 100.0;
+                                    }
+                                }
+                                else if(s1 == 0)
+                                {
+                                    if(r1->activeProb >= 1.0)
+                                    {
+                                        r1->activeProb -= 1.0;
+                                    }
+                                    else
+                                    {
+                                        r1->activeProb = 0.0;
                                     }
                                 }
                             }
@@ -2517,9 +2845,9 @@ int netOpt::activeRoomUpdate()
                         {
                             if(v1 == 0 && (s1 == 3 || s1 == 4))
                             {              
-                                if(r1->activeProb >= 25.0)
+                                if(r1->activeProb >= 40.0)
                                 {
-                                    r1->activeProb -= 25.0;
+                                    r1->activeProb -= 40.0;
                                 }
                                 else
                                 {
@@ -2527,6 +2855,170 @@ int netOpt::activeRoomUpdate()
                                 }
                             }
 
+                            break;
+                        }
+                        case 2:
+                        {
+                            if(v1 == 0 && s1 >= 2 && s1 <= 4)
+                            {
+                                if(r1->activeProb >= 40.0)
+                                {
+                                    r1->activeProb -= 40.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 3:
+                        {
+                            if(v1 == 0 && s1 == 1)
+                            {
+                                if(r1->activeProb >= 40.0)
+                                {
+                                    r1->activeProb -= 40.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 4:
+                        {
+                            if(v1 == 0 && s1 == 1)
+                            {
+                                
+                                if(r1->activeProb >= 40.0)
+                                {
+                                    r1->activeProb -= 40.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+
+                            }
+                            else if(v1 >= 1 && v1 <= 6 && s1 == 1)
+                            {
+                                
+                                if(r1->activeProb >= 1.0)
+                                {
+                                    r1->activeProb -= 1.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 5:
+                        {
+                            if(v1 == 0 && s1 == 1)
+                            {
+                                if(r1->activeProb >= 10.0)
+                                {
+                                    r1->activeProb -= 10.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            else if(v1 == 1 && s1 == 1)
+                            {
+                                if(r1->activeProb >= 1.0)
+                                {
+                                    r1->activeProb -= 1.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 6:
+                        {
+                            if(v1 == 0 && (s1 == 2 || s1 == 3))
+                            {
+                                if(r1->activeProb >= 40.0)
+                                {
+                                    r1->activeProb -= 40.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            else if(v1 == 1 && s1 == 1)
+                            {
+                                if(r1->activeProb <= 1.0)
+                                {
+                                    r1->activeProb -= 1.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 100.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 7:
+                        {
+                            if(v1 == 0 && s1 == 1)
+                            {
+                                if(r1->activeProb >= 40.0)
+                                {
+                                    r1->activeProb -= 40.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 8:
+                        {
+                            if(v1 == 0 && s1 == 1)
+                            {
+                                if(r1->activeProb >= 40.0)
+                                {
+                                    r1->activeProb -= 40.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
+                            break;
+                        }
+                        case 9:
+                        {
+                            if(v1 == 0 && s1 == 1)
+                            {
+                                if(r1->activeProb >= 1.0)
+                                {
+                                    r1->activeProb -= 1.0;
+                                }
+                                else
+                                {
+                                    r1->activeProb = 0.0;
+                                }
+                            }
+                            
                             break;
                         }
                     }
@@ -2560,11 +3052,64 @@ int netOpt::activeRoomUpdate()
         if(r2 != activeRoom)
         {
             #ifdef TESTING
-            time_t tempTime1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp + 900;
-            tm tempTime2 = *gmtime(&tempTime1);
+                time_t tempTime1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp + 900;
+                tm tempTime2 = *gmtime(&tempTime1);
                 cout << "Active room changed, requesting next stim at " << asctime(&tempTime2);
             #endif
+
             activeRoom = r2;
+
+            #ifdef LOG
+                ofstream ofile;
+                ostringstream ss;
+                uint8_t mac[6];
+
+                if(activeRoom->groups.getLen() > 0)
+                {
+                    d1 = (devRecord *)((devGroup *)((roomMember *)activeRoom->groups.getHead()->data)->member)->mems.getHead()->data;
+                }
+                else if(activeRoom->mems.getLen() > 0)
+                {
+                    d1 = (devRecord *)((roomMember *)activeRoom->mems.getHead()->data)->member;
+                }
+                else
+                {
+                    #ifdef TESTING
+                        cout << "Room has no devices" << endl;
+                    #endif
+
+                    return 1;
+                }
+
+                unpackMAC(d1->macAddr, mac);
+
+                ss.str("");
+                ss.clear();
+                time_t tempT = interface->getLastTimestamp();
+                tm tempTM = *gmtime(&tempT);
+
+                ss << hex;
+                for(int i = 0; i < 6; i++)
+                {
+                    ss << (int)mac[i];
+                }
+                ss << dec;
+
+
+                if(!ofile.is_open())
+                {
+                    #ifdef TESTING
+                        cout << "opening file: " << "logs/activeRoom.csv" << endl;
+                    #endif
+
+                    ofile.open("logs/activeRoom.csv", ios::app);
+
+                    ofile << tempTM.tm_year << "," << tempTM.tm_mon << "," << tempTM.tm_mday << "," << tempTM.tm_hour << "," << tempTM.tm_min << "," << tempTM.tm_sec << "," << ss.str() << endl;
+                    
+                    ofile.close();
+                }
+            #endif
+
             //interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
             return 0;
         }
