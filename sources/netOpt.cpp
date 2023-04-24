@@ -3123,13 +3123,10 @@ int netOpt::activeRoomUpdate()
                 time_t tempT = interface->getLastTimestamp();
                 tm tempTM = *gmtime(&tempT);
 
-                ss << hex;
                 for(int i = 0; i < 6; i++)
                 {
                     ss << (int)mac[i];
                 }
-                ss << dec;
-
 
                 if(!ofile.is_open())
                 {
