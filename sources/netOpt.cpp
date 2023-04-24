@@ -2360,7 +2360,7 @@ int netOpt::activeRoomUpdate()
                 while(listIteratorD1)
                 {
                     d1 = (devRecord *)listIteratorD1->data;
-                    if(d1->activity.getTail() != NULL)
+                    if(d1->activity.getLen() > 0)
                     {
                         v2 = ((activityRecord *)d1->activity.getTail()->data)->variable;
                         s2 = ((activityRecord *)d1->activity.getTail()->data)->state;
