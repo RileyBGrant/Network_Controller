@@ -2768,7 +2768,7 @@ int netOpt::activeRoomUpdate()
                                 {
                                     if(r1->activeProb >= 25.0)
                                     {
-                                        r1->activeProb -= 25.0;
+                                        r1->activeProb -= 50.0;
                                     }
                                     else
                                     {
