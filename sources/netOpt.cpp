@@ -3139,7 +3139,7 @@ int netOpt::activeRoomUpdate()
 
                     ofile.open("logs/activeRoom.csv", ios::app);
 
-                    ofile << tempTM.tm_year << "," << tempTM.tm_mon << "," << tempTM.tm_mday << "," << tempTM.tm_hour << "," << tempTM.tm_min << "," << tempTM.tm_sec << "," << ss.str() << endl;
+                    ofile << tempTM.tm_year + 1900 << "," << tempTM.tm_mon + 1 << "," << tempTM.tm_mday << "," << tempTM.tm_hour << "," << tempTM.tm_min << "," << tempTM.tm_sec << "," << ss.str() << endl;
                     
                     ofile.close();
                 }
