@@ -2700,9 +2700,9 @@ int netOpt::activeRoomUpdate()
                             {
                                 if(s1 == 2 || s1 == 3)
                                 {
-                                    if(r1->activeProb <= 50.0)
+                                    if(r1->activeProb <= 99.0)
                                     {
-                                        r1->activeProb += 50.0;
+                                        r1->activeProb += 1.0;
                                     }
                                     else
                                     {
@@ -2711,9 +2711,9 @@ int netOpt::activeRoomUpdate()
                                 }
                                 else if(s1 == 0)
                                 {
-                                    if(r1->activeProb >= 50.0)
+                                    if(r1->activeProb >= 1.0)
                                     {
-                                        r1->activeProb -= 50.0;
+                                        r1->activeProb -= 1.0;
                                     }
                                     else
                                     {
@@ -2727,7 +2727,7 @@ int netOpt::activeRoomUpdate()
                                 {
                                     if(r1->activeProb <= 99.0)
                                     {
-                                        r1->activeProb += 1.0;
+                                        r1->activeProb += 5.0;
                                     }
                                     else
                                     {
@@ -2985,9 +2985,9 @@ int netOpt::activeRoomUpdate()
                         {
                             if(v1 == 0 && (s1 == 2 || s1 == 3))
                             {
-                                if(r1->activeProb >= 40.0)
+                                if(r1->activeProb >= 1.0)
                                 {
-                                    r1->activeProb -= 40.0;
+                                    r1->activeProb -= 1.0;
                                 }
                                 else
                                 {
