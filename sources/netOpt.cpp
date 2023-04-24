@@ -2360,35 +2360,43 @@ int netOpt::activeRoomUpdate()
                 while(listIteratorD1)
                 {
                     d1 = (devRecord *)listIteratorD1->data;
-                    v2 = ((activityRecord *)d1->activity.getTail()->data)->variable;
-                    s2 = ((activityRecord *)d1->activity.getTail()->data)->state;
-
-                    #ifdef TESTING
-                        uint8_t mac[6];
-                        unpackMAC(d1->macAddr, mac);
-                        cout << "Group member " << hex << (int)mac[0];
-                        for(int i = 1; i < 6; i++)
-                        {
-                            cout << "." << (int)mac[i];
-                        }
-                        unpackMAC(lastDevUpdated->macAddr, mac);
-                        cout << dec << ", variable: " << v2 << ", state: " << s2 << endl;
-                        cout << " lastDevupdated: " << hex << (int)mac[0];
-                        for(int i = 1; i < 6; i++)
-                        {
-                            cout << "." << (int)mac[i];
-                        }
-                        cout << dec << ", variable: " << v1 << ", state: " << s1 << endl;
-                    #endif
-
-                    if(d1 != lastDevUpdated && (v1 != v2 || s1 != s2))
+                    if(d1->activity.getTail() != NULL)
                     {
-                        groupChanged = false;
-                        listIteratorD1 = NULL;
+                        v2 = ((activityRecord *)d1->activity.getTail()->data)->variable;
+                        s2 = ((activityRecord *)d1->activity.getTail()->data)->state;
+
+                        #ifdef TESTING
+                            uint8_t mac[6];
+                            unpackMAC(d1->macAddr, mac);
+                            cout << "Group member " << hex << (int)mac[0];
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << (int)mac[i];
+                            }
+                            unpackMAC(lastDevUpdated->macAddr, mac);
+                            cout << dec << ", variable: " << (int)v2 << ", state: " << (int)s2 << endl;
+                            cout << "lastDevupdated: " << hex << (int)mac[0];
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << (int)mac[i];
+                            }
+                            cout << dec << ", variable: " << (int)v1 << ", state: " << (int)s1 << endl;
+                        #endif
+
+                        if(d1 != lastDevUpdated && (v1 != v2 || s1 != s2))
+                        {
+                            groupChanged = false;
+                            listIteratorD1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorD1 = g1->mems.getNext(listIteratorD1);
+                        }
                     }
                     else
                     {
-                        listIteratorD1 = g1->mems.getNext(listIteratorD1);
+                        groupChanged = false;
+                        listIteratorD1 = NULL;
                     }
                 }
                 
