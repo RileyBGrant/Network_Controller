@@ -123,9 +123,13 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
                             if(listIteratorA3 != NULL)
                             {
                                 listIteratorA4 = d1->activity.getNext(listIteratorA3);
-                                if(listIteratorA4 == NULL)
+                                while(listIteratorA4 == NULL && listIteratorA3 != NULL)
                                 {
                                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                                    if(listIteratorA3 != NULL)
+                                    {
+                                        listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                                    }
                                 }
                             }
                         }
@@ -159,13 +163,15 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
                     else
                     {
                         listIteratorA4 = d1->activity.getNext(listIteratorA4);
-                        if(listIteratorA4 == NULL)
+                        while(listIteratorA4 == NULL && listIteratorA3 != NULL)
                         {
                             listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                            }
                         }
                     }
-                    
-                    
                 }
                 else if((a3->variable >= 1 && a3->variable <= 6) && a3->state == 1 && a3->timestamp >= a1->timestamp)
                 {
@@ -194,9 +200,13 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
                             if(listIteratorA3 != NULL)
                             {
                                 listIteratorA4 = d1->activity.getNext(listIteratorA3);
-                                if(listIteratorA4 == NULL)
+                                while(listIteratorA4 == NULL && listIteratorA3 != NULL)
                                 {
                                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                                    if(listIteratorA3 != NULL)
+                                    {
+                                        listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                                    }
                                 }
                             }
                         }
@@ -230,9 +240,13 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
                     else
                     {
                         listIteratorA4 = d1->activity.getNext(listIteratorA4);
-                        if(listIteratorA4 == NULL)
+                        while(listIteratorA4 == NULL && listIteratorA3 != NULL)
                         {
                             listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                            }
                         }
                     }
                     
@@ -247,9 +261,13 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
                     if(listIteratorA3 != NULL)
                     {
                         listIteratorA4 = d1->activity.getNext(listIteratorA3);
-                        if(listIteratorA4 == NULL)
+                        while(listIteratorA4 == NULL && listIteratorA3 != NULL)
                         {
                             listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                            }
                         }
                     }
                 }
