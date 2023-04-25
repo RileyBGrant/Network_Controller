@@ -371,7 +371,7 @@ int netOpt::groupRooms()
                     currentProbChange = getProbAdjustment(d1, d2, 0.0);
                     if(currentProbChange > -1)
                     {
-                        getProbAdjustment(d1, d2, -10));
+                        getProbAdjustment(d1, d2, -10);
                     }
 
                     listIteratorM2 = r1->groups.getNext(listIteratorM2);
