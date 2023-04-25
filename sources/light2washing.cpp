@@ -161,7 +161,7 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
             }
         }
 
-        #ifdef TESTIN
+        #ifdef TESTING
             cout << "Compatability: " << probChange << endl;
         #endif
     }
