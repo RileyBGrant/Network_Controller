@@ -3251,7 +3251,7 @@ int netOpt::activeRoomUpdate()
                 }
             #endif
 
-            interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
+            //interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
             return 0;
         }
     }
