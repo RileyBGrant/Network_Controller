@@ -82,25 +82,25 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
         { 
             if(a2->variable == 0 && (a2->state == 0 || a2->state == 2))
             {
-                if(a3->variable == 0 && a3->state == 1 && a3->timestamp >= a1->timestamp)
+                if(a3->variable == 0 && (a3->state == 1 || a3->state == 2) && a3->timestamp >= a1->timestamp)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
+                        if(5 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
                         {
-                            if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            if(probChange <= 122 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
                             {
-                                probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                probChange = probChange + 5 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.5);
                             }
                             else
                             {
                                 probChange = 127;
-                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.5);
                             }
                         }
                         else
                         {
-                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.5);
                         }
 
                         listIteratorA3 = d1->activity.getNext(listIteratorA3);
