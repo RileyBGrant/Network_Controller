@@ -44,13 +44,13 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
         a1 = (activityRecord *)listIteratorA1->data;
         a2 = (activityRecord *)listIteratorA2->data;
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
         #endif
 
         timeDiff = a1->timestamp - a2->timestamp;
-        if(timeDiff > 15 || timeDiff < -15)
+        if(timeDiff > 30 || timeDiff < -30)
         {
             devMatch = false;
         }
