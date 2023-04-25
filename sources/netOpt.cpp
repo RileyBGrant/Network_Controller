@@ -361,8 +361,8 @@ int netOpt::groupRooms()
                     cout << "Removing Group" << endl;
                 #endif
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
-
                 d1 = (devRecord *)listIteratorD1->data;
+                
                 listIteratorM2 = r1->groups.getHead();
                 while(listIteratorM2)
                 {
@@ -781,7 +781,6 @@ int netOpt::groupRooms()
 
                 d1 = (devRecord *)m1->member;
 
-                d1 = (devRecord *)listIteratorD1->data;
                 listIteratorM2 = r1->groups.getHead();
                 while(listIteratorM2)
                 {
