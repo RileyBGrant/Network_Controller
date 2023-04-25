@@ -1727,7 +1727,7 @@ int netOpt::characteriseUsage()
 
         while(listIteratorA1)
         {
-            cout << "here" << endl;
+            
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
             headRemoved = false;
@@ -1735,7 +1735,7 @@ int netOpt::characteriseUsage()
             #ifdef TESTING
                 cout << "a1: variable: " << (int)a1->variable << ", state: " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             #endif
-
+            cout << "here" << endl;
             //set timeA1 and timeA2
             switch(d1->devType)
             {
