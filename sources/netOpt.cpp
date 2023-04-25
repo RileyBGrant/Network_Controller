@@ -2292,53 +2292,60 @@ int netOpt::characteriseUsage()
             }
         }
         
-        listIteratorM1 = r1->groups.getHead();
-
-        while(listIteratorM1)
+        if(r1->groups.getLen() > 0)
         {
-            m1 = (roomMember *)listIteratorM1->data;
-            d1 = (devRecord *)((devGroup *)m1->member)->mems.getHead()->data;
+            listIteratorM1 = r1->groups.getHead();
 
-            for(int i = 0; i < 7; i++)
+            while(listIteratorM1)
             {
-                for(int j = 0; j < 48; j++)
-                {
-                    r1->usage.time[i][j] += d1->usage.time[i][j];
+                m1 = (roomMember *)listIteratorM1->data;
+                d1 = (devRecord *)((devGroup *)m1->member)->mems.getHead()->data;
 
-                    if(r1->usage.time[i][j] > r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]])
+                for(int i = 0; i < 7; i++)
+                {
+                    for(int j = 0; j < 48; j++)
                     {
-                        r1->usage.modeTime[0] = i;
-                        r1->usage.modeTime[1] = j;
+                        r1->usage.time[i][j] += d1->usage.time[i][j];
+
+                        if(r1->usage.time[i][j] > r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]])
+                        {
+                            r1->usage.modeTime[0] = i;
+                            r1->usage.modeTime[1] = j;
+                        }
                     }
                 }
-            }
 
-            listIteratorM1 = r1->groups.getNext(listIteratorM1);
+                listIteratorM1 = r1->groups.getNext(listIteratorM1);
+            }
         }
         
-        listIteratorM1 = r1->mems.getHead();
-
-        while(listIteratorM1)
+        if(r1->mems.getLen() > 0)
         {
-            m1 = (roomMember *)listIteratorM1->data;
-            d1 = (devRecord *)m1->member;
+            listIteratorM1 = r1->mems.getHead();
 
-            for(int i = 0; i < 7; i++)
+            while(listIteratorM1)
             {
-                for(int j = 0; j < 48; j++)
-                {
-                    r1->usage.time[i][j] += d1->usage.time[i][j];
+                m1 = (roomMember *)listIteratorM1->data;
+                d1 = (devRecord *)m1->member;
 
-                    if(r1->usage.time[i][j] > r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]])
+                for(int i = 0; i < 7; i++)
+                {
+                    for(int j = 0; j < 48; j++)
                     {
-                        r1->usage.modeTime[0] = i;
-                        r1->usage.modeTime[1] = j;
+                        r1->usage.time[i][j] += d1->usage.time[i][j];
+
+                        if(r1->usage.time[i][j] > r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]])
+                        {
+                            r1->usage.modeTime[0] = i;
+                            r1->usage.modeTime[1] = j;
+                        }
                     }
                 }
-            }
 
-            listIteratorM1 = r1->mems.getNext(listIteratorM1);
+                listIteratorM1 = r1->mems.getNext(listIteratorM1);
+            }
         }
+        
 
         #ifdef TESTING
             cout << "Creating roomon windows" << endl;
