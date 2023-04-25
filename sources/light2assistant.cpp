@@ -86,32 +86,32 @@ int8_t netOpt::light2assistant(roomMember *light, roomMember *assistant)
                 {
                     if(a2->timestamp > a3->timestamp)
                     {
-                        if(10 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0) > 0)
+                        if(4 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0) > 0)
                         {
-                            if(probChange <= 117 - getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0))
+                            if(probChange <= 123 - getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0))
                             {
-                                probChange = probChange + 10 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 1.0);
+                                probChange = probChange + 4 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.5);
                             }
                             else
                             {
                                 probChange = 127;
-                                getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 1.0);
+                                getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.5);
                             }
                         }
                         else
                         {
-                            getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 1.0);
+                            getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.5);
                         }
 
                         listIteratorA3 = d1->activity.getNext(listIteratorA3);
                     }
                     else
                     {
-                        if(-3 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0) < 0)
+                        if(-1 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0) < 0)
                         {
-                            if(probChange >= -125 - getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0))
+                            if(probChange >= -127 - getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0))
                             {
-                                probChange = probChange -3 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.1);
+                                probChange = probChange -1 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.1);
                             }
                             else
                             {
