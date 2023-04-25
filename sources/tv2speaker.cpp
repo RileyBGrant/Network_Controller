@@ -90,11 +90,11 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                             {
                                 if(a3->state == 2)
                                 {
-                                    if(20 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) > 0)
+                                    if(25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) > 0)
                                     {
-                                        if(probChange <= 107 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0))
+                                        if(probChange <= 102 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0))
                                         {
-                                            probChange = probChange + 20 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 1.0);
+                                            probChange = probChange + 25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 1.0);
                                         }
                                         else
                                         {
@@ -165,11 +165,11 @@ int8_t netOpt::tv2speaker(roomMember *tv, roomMember *speaker)
                             {
                                 if(a3->state == 2)
                                 {
-                                    if(20 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) > 0)
+                                    if(25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0) > 0)
                                     {
-                                        if(probChange <= 107 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0))
+                                        if(probChange <= 102 - getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 0.0))
                                         {
-                                            probChange = probChange + 20 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 1.0);
+                                            probChange = probChange + 25 + getProbAdjustment(((devRecord *)g1->mems.getHead()->data), d1, 1.0);
                                         }
                                         else
                                         {

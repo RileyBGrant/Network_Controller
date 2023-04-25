@@ -113,17 +113,17 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
                         {
                             if(probChange >= -125 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
                             {
-                                probChange = probChange -3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.1);
+                                probChange = probChange -3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
                             }
                             else
                             {
                                 probChange = -128;
-                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.1);
+                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
                             }
                         }
                         else
                         {
-                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.1);
+                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
                         }
 
                         listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
