@@ -1730,6 +1730,7 @@ int netOpt::characteriseUsage()
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
             headRemoved = false;
+            cout << counterA1 << endl;
 
             #ifdef TESTING
                 cout << "a1: variable: " << (int)a1->variable << ", state: " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
