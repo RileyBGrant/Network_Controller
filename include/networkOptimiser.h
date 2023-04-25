@@ -38,6 +38,13 @@ struct usageWindow
     int end;
 };
 
+struct activityRecord
+{ 
+    uint8_t variable;
+    uint8_t state;
+    time_t timestamp;
+};
+
 struct devRecord
 {
     uint64_t macAddr;
@@ -91,12 +98,7 @@ public:
     #endif
 };
 
-struct activityRecord
-{ 
-    uint8_t variable;
-    uint8_t state;
-    time_t timestamp;
-};
+
 
 class lightOptimiser
 {
