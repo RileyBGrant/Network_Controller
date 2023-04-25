@@ -3263,7 +3263,7 @@ int netOpt::activeRoomUpdate()
         if(r2 != activeRoom)
         {
             #ifdef TESTING
-                time_t tempTime1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp + 900;
+                time_t tempTime1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp + 300;
                 tm tempTime2 = *gmtime(&tempTime1);
                 cout << "Active room changed, requesting next stim at " << asctime(&tempTime2);
             #endif
@@ -3311,6 +3311,17 @@ int netOpt::activeRoomUpdate()
             #endif
 
             interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
+            return 0;
+        }
+        else
+        {
+            #ifdef TESTING
+                time_t tempTime1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp + 900;
+                tm tempTime2 = *gmtime(&tempTime1);
+                cout << "Active room not affected, requesting next stim at " << asctime(&tempTime2);
+            #endif
+
+            interface->requestStim((time_t)(900 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 15 mins
             return 0;
         }
     }
