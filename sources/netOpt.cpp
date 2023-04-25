@@ -2088,7 +2088,7 @@ int netOpt::characteriseUsage()
 
                 #ifdef TESTING
                     cout << "day1: " << day1 << ", day2: " << day2 << endl;
-                    cout << "tod1: " << time1 << ", tod2: " << time2 << endl << endl;
+                    cout << "tod1: " << time1 << ", tod2: " << time2 << endl;
                     //cout << gmtime(&time1)->tm_hour << ":" << gmtime(&time1)->tm_min << ":" << gmtime(&time1)->tm_sec << endl;
                     //cout << gmtime(&time2)->tm_hour << ":" << gmtime(&time2)->tm_min << ":" << gmtime(&time2)->tm_sec << endl;
                 #endif
@@ -2282,7 +2282,7 @@ int netOpt::characteriseUsage()
     }
 
     #ifdef TESTING
-        cout << "Characterising room usage" << endl;
+        cout << "Characterising room usage" << endl << endl;
     #endif
 
     node_t *listIteratorR1 = rooms.getHead();
@@ -2301,7 +2301,7 @@ int netOpt::characteriseUsage()
     {
         r1 = (devRoom *)listIteratorR1->data;
         #ifdef TESTING
-            cout << "Chracterisig room " << counterR1 << endl;
+            cout << "Characterising room " << counterR1 << endl;
             counterR1++;
         #endif
         
