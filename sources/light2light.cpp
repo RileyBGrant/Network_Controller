@@ -109,12 +109,12 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
                 else
                 {
                     probChange = 127;
-                    getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.6);
+                    getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 1.0);
                 }
             }
             else
             {
-                getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.6);
+                getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 1.0);
             }
 
             listIteratorA1 = g1->mems.getNext(listIteratorA1);
