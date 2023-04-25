@@ -1725,9 +1725,8 @@ int netOpt::characteriseUsage()
             cout << dec << endl;
         #endif
 
-        while(listIteratorA1)
+        while(listIteratorA1 && d1->activity.getLen() > 0)
         {
-            
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
             headRemoved = false;
