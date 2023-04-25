@@ -1777,7 +1777,7 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
-                    else if(counterA1 = 0)
+                    else if(counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
                         headRemoved = true;
@@ -1821,7 +1821,7 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
-                    else if(counterA1 = 0)
+                    else if(counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
                         headRemoved = true;
@@ -1864,7 +1864,7 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
-                    else if(counterA1 = 0)
+                    else if(counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
                         headRemoved = true;
@@ -1907,7 +1907,7 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
-                    else if(counterA1 = 0)
+                    else if(counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
                         headRemoved = true;
@@ -1950,7 +1950,7 @@ int netOpt::characteriseUsage()
                             d1->activity.remove(counterA1);
                         }
                     }
-                    else if(counterA1 = 0)
+                    else if(counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
                         headRemoved = true;
@@ -2001,7 +2001,7 @@ int netOpt::characteriseUsage()
                         listIteratorA1 = d1->activity.getNext(listIteratorA1);
                         d1->activity.remove(counterA1);
                     }
-                    else if(counterA1 = 0)
+                    else if(counterA1 == 0)
                     {
                         d1->activity.remove(counterA1);
                         headRemoved = true;
