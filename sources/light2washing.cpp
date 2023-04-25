@@ -132,6 +132,27 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
                         
                     }
                 }
+                else if(a3->variable == 0 && a3->state == 0 && a3->timestamp == a2->timestamp)
+                {
+                    if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
+                    {
+                        if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                        {
+                            probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                        }
+                        else
+                        {
+                            probChange = 127;
+                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                        }
+                    }
+                    else
+                    {
+                        getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                    }
+
+                    listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                }
                 else
                 {
                     #ifdef TESTIN
