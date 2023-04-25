@@ -45,7 +45,7 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
         }
         else
         {
-            return(getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) -1);
+            return(getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0));
         };
     }
 
