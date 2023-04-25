@@ -353,6 +353,9 @@ int netOpt::groupRooms()
 
             if(r1->groups.getLen() + r1->mems.getLen() > 1 && m1->memberProb < 100)
             {
+                #ifdef TESTING
+                    cout << "Removing Group, membership probability: " << (int)m1->memberProb << endl;
+                #endif
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
                 d1 = (devRecord *)listIteratorD1->data;
@@ -4127,7 +4130,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     p2->adjustment = p1->adjustment;
                     listIteratorP2 = NULL;
 
-                    #ifdef TESTIN
+                    #ifdef TESTING
                         if(adjustmentChange != 0)
                         {
                             cout << "Probablitiy adjustment is now: " << p1->adjustment << endl;
