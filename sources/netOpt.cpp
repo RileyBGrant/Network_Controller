@@ -2272,10 +2272,17 @@ int netOpt::characteriseUsage()
     int filterFloor = 0;
     int window[2];
     usageWindow *w1;
+    #ifdef TESTING
+        int counterR1 = 0;
+    #endif
 
     while(listIteratorR1)
     {
         r1 = (devRoom *)listIteratorR1->data;
+        #ifdef TESTING
+            cout << "Chracterisig room" << counterR1 << endl;
+            counterR1++;
+        #endif
         
         for(int i = 0; i < 7; i++)
         {
@@ -2334,7 +2341,7 @@ int netOpt::characteriseUsage()
         }
 
         #ifdef TESTING
-            cout << "Creating on windows" << endl;
+            cout << "Creating roomon windows" << endl;
         #endif
         
         filterFloor = floor(r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]] / 4);
@@ -2415,7 +2422,7 @@ int netOpt::characteriseUsage()
 
             if(winSet == true)
             {
-                window[1]= 48;
+                window[1]= 47;
 
                 w1 = new usageWindow;
                 w1->start = window[0];
