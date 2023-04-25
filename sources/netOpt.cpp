@@ -351,7 +351,7 @@ int netOpt::groupRooms()
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
-             #ifdef TESTING
+            #ifdef TESTING
                 cout << "Group membership probability: " << (int)m1->memberProb << endl;
             #endif
 
@@ -769,10 +769,14 @@ int netOpt::groupRooms()
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
+            #ifdef TESTING
+                cout << "Device membership probability: " << (int)m1->memberProb << endl;
+            #endif
+
             if(r1->groups.getLen() + r1->mems.getLen() > 1 && m1->memberProb < 100)
             {
                 #ifdef TESTING
-                    cout << "Group no longer in room";
+                    cout << "Device no longer in room";
                 #endif
 
                 d1 = (devRecord *)m1->member;
