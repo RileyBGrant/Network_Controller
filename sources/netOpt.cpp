@@ -362,7 +362,7 @@ int netOpt::groupRooms()
                 #endif
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
                 d1 = (devRecord *)listIteratorD1->data;
-                
+
                 listIteratorM2 = r1->groups.getHead();
                 while(listIteratorM2)
                 {
@@ -371,7 +371,7 @@ int netOpt::groupRooms()
                     currentProbChange = getProbAdjustment(d1, d2, 0.0);
                     if(currentProbChange > -1)
                     {
-                        getProbAdjustment(d1, d2, -(currentProbChange + 1));
+                        getProbAdjustment(d1, d2, -10));
                     }
 
                     listIteratorM2 = r1->groups.getNext(listIteratorM2);
@@ -787,12 +787,10 @@ int netOpt::groupRooms()
                     m2 = (roomMember *)listIteratorM2->data;
                     d2 = (devRecord *)(((devGroup *)m2->member)->mems.getHead())->data;
 
-                    cout << "here" << endl;
-
                     currentProbChange = getProbAdjustment(d1, d2, 0.0);
                     if(currentProbChange > -1)
                     {
-                        getProbAdjustment(d1, d2, -(currentProbChange + 1));
+                        getProbAdjustment(d1, d2, -10);
                     }
                     
                     listIteratorM2 = r1->groups.getNext(listIteratorM2);
