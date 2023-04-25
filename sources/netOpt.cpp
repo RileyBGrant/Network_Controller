@@ -3332,6 +3332,11 @@ int netOpt::activeRoomUpdate()
             listIteratorR1 = rooms.getNext(listIteratorR1);
         }
 
+        if(highestProb < 1)
+        {
+            r2 = &houseInactive;
+        }
+
         if(r2 != activeRoom)
         {
             #ifdef TESTING

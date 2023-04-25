@@ -177,6 +177,7 @@ private:
     lightOptimiser lightOpt;
     speakerOptimiser speakerOpt;
     plugOptimiser plugOpt;
+    devRoom houseInactive;
 
 public:
     netOpt(netInt *netInterface);
