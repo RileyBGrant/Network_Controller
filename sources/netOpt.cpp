@@ -1727,6 +1727,7 @@ int netOpt::characteriseUsage()
 
         while(listIteratorA1)
         {
+            cout << "here" << endl;
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
             headRemoved = false;
@@ -2277,7 +2278,7 @@ int netOpt::characteriseUsage()
                 counterA1++;
             }
         }
-
+        
         listIteratorD1 = devices->getNext(listIteratorD1);
     }
 
