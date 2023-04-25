@@ -3251,7 +3251,7 @@ int netOpt::activeRoomUpdate()
                 }
             #endif
 
-            //interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
+            interface->requestStim((time_t)(300 + ((activityRecord *)lastDevUpdated->activity.getTail()->data)->timestamp)); //in 5 mins
             return 0;
         }
     }
@@ -3741,6 +3741,74 @@ int netOpt::sendDevStims()
                 break;
 
             case 7: //Kettle
+                a1 = (activityRecord *)d1->activity.getTail()->data;
+                if(a1->variable == 0 && a1->state != 0)
+                {
+                    listIteratorR1 = d1->rooms.getHead();
+                    inActiveRoom = false;
+
+                    while(listIteratorR1)
+                    {
+                        r1 = (devRoom *)listIteratorR1->data;
+
+                        if(r1 == activeRoom)
+                        {
+                            inActiveRoom = true;
+                            listIteratorR1 = NULL;
+                        }
+                        else
+                        {
+                            listIteratorR1 = d1->rooms.getNext(listIteratorR1);
+                        }
+                    }
+                    
+                    if(inActiveRoom == false)
+                    {
+                        #ifdef TESTING
+                            cout << "Sending message to turn off device ";
+                        #endif
+
+                        string message = "";
+
+                        uint8_t macAddr[6];
+
+                        unpackMAC(d1->macAddr, macAddr);
+
+                        #ifdef TESTING
+                            cout << hex << stoi(to_string(macAddr[0]));
+                            for(int i = 1; i < 6; i++)
+                            {
+                                cout << "." << stoi(to_string(macAddr[i]));
+                            }
+                            cout << dec << endl;
+                        #endif
+
+                        for(int i = 0; i < 6; i++) //MAC
+                        {
+                            message += (char)macAddr[i];
+                        }
+
+                        message += ","; 
+                        message += (char)0; //varID
+                        message += ",";
+                        message += '0'; //signal
+
+                        for(int i = 0; i < 6; i++)
+                        {
+                            message += (char)0; //padding
+                        }                    
+
+                        #ifdef TESTING
+                            cout << "Message: " << message << endl;
+                        #endif
+
+                        interface->sendtoHost((void *)message.c_str(), REPLY_LENGTH);
+                        interface->readFromHost();
+                        interface->endBurst();
+                    }
+                }
+                break;
+            case 8: //Kettle
                 a1 = (activityRecord *)d1->activity.getTail()->data;
                 if(a1->variable == 0 && a1->state != 0)
                 {
