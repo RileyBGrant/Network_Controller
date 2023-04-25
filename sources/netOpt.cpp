@@ -127,7 +127,10 @@ int netOpt::groupRooms()
     roomMember *m2;
     node_t *listIteratorD1;
     devRecord *d1;
+    node_t *listIteratorD2;
+    devRecord *d2;
     int16_t probChange = 0;
+    int currentProbChange = 0;
 
     //check exisiting rooms
     #ifdef TESTING
@@ -352,6 +355,35 @@ int netOpt::groupRooms()
             {
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
+                d1 = (devRecord *)listIteratorD1->data;
+                listIteratorM2 = r1->groups.getHead();
+                while(listIteratorM2)
+                {
+                    d2 = (devRecord *)((devGroup *)((roomMember *)listIteratorM2->data)->member)->mems.getHead()->data;
+
+                    currentProbChange = getProbAdjustment(d1, d2, 0.0);
+                    if(currentProbChange > -1)
+                    {
+                        getProbAdjustment(d1, d2, -(currentProbChange + 1));
+                    }
+
+                    listIteratorM2 = r1->groups.getNext(listIteratorM2);
+                }
+
+                listIteratorM2 = r1->mems.getHead();
+                while(listIteratorM2)
+                {
+                    d2 = (devRecord *)((roomMember *)listIteratorM2->data)->member;
+
+                    currentProbChange = getProbAdjustment(d1, d2, 0.0);
+                    if(currentProbChange > -1)
+                    {
+                        getProbAdjustment(d1, d2, -(currentProbChange + 1));
+                    }
+
+                    listIteratorM2 = r1->groups.getNext(listIteratorM2);
+                }
+                
                 while (listIteratorD1)
                 {
                     d1 = (devRecord *)listIteratorD1->data;
@@ -733,10 +765,39 @@ int netOpt::groupRooms()
             if(r1->groups.getLen() + r1->mems.getLen() > 1 && m1->memberProb < 100)
             {
                 #ifdef TESTING
-                    cout << "Device no longer in room";
+                    cout << "Group no longer in room";
                 #endif
 
                 d1 = (devRecord *)m1->member;
+
+                d1 = (devRecord *)listIteratorD1->data;
+                listIteratorM2 = r1->groups.getHead();
+                while(listIteratorM2)
+                {
+                    d2 = (devRecord *)((devGroup *)((roomMember *)listIteratorM2->data)->member)->mems.getHead()->data;
+
+                    currentProbChange = getProbAdjustment(d1, d2, 0.0);
+                    if(currentProbChange > -1)
+                    {
+                        getProbAdjustment(d1, d2, -(currentProbChange + 1));
+                    }
+                    
+                    listIteratorM2 = r1->groups.getNext(listIteratorM2);
+                }
+
+                listIteratorM2 = r1->mems.getHead();
+                while(listIteratorM2)
+                {
+                    d2 = (devRecord *)((roomMember *)listIteratorM2->data)->member;
+
+                    currentProbChange = getProbAdjustment(d1, d2, 0.0);
+                    if(currentProbChange > -1)
+                    {
+                        getProbAdjustment(d1, d2, -(currentProbChange + 1));
+                    }
+
+                    listIteratorM2 = r1->groups.getNext(listIteratorM2);
+                }
 
                 listIteratorR2 = d1->rooms.getHead();
                 counterR2 = 0;
