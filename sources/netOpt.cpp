@@ -1088,6 +1088,16 @@ int netOpt::groupRooms()
                     m1->memberProb = 255;
                     r1->activeProb = 0;
                     r1->groups.append(m1);
+                    for(int i = 0; i < 7; i++)
+                    {
+                        for(int j = 0; j < 48; j++)
+                        {
+                            r1->usage.time[i][j] = 0;
+                        }
+                    }
+                    r1->usage.modeTime[0] = 0;
+                    r1->usage.modeTime[1] = 0;
+                    r1->usage.numOfSample = 0;
                     rooms.append(r1);
                     listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
                     
@@ -1621,6 +1631,16 @@ int netOpt::groupRooms()
                     r1 = new devRoom;
                     m1->memberProb = 255;
                     r1->activeProb = 0;
+                    for(int i = 0; i < 7; i++)
+                    {
+                        for(int j = 0; j < 48; j++)
+                        {
+                            r1->usage.time[i][j] = 0;
+                        }
+                    }
+                    r1->usage.modeTime[0] = 0;
+                    r1->usage.modeTime[1] = 0;
+                    r1->usage.numOfSample = 0;
                     r1->mems.append(m1);
                     rooms.append(r1);
                 
@@ -2325,6 +2345,10 @@ int netOpt::characteriseUsage()
                         }
                     }
                 }
+
+                #ifdef TESTING
+                    cout << "Group added" << endl;
+                #endif
 
                 listIteratorM1 = r1->groups.getNext(listIteratorM1);
             }
