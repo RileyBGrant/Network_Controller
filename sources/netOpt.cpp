@@ -351,10 +351,14 @@ int netOpt::groupRooms()
                 listIteratorM2 = r1->mems.getNext(listIteratorM2);
             }
 
+             #ifdef TESTING
+                cout << "Group membership probability: " << (int)m1->memberProb << endl;
+            #endif
+
             if(r1->groups.getLen() + r1->mems.getLen() > 1 && m1->memberProb < 100)
             {
                 #ifdef TESTING
-                    cout << "Removing Group, membership probability: " << (int)m1->memberProb << endl;
+                    cout << "Removing Group" << endl;
                 #endif
                 listIteratorD1 = ((devGroup *)m1->member)->mems.getHead();
 
