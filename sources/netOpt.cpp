@@ -2274,13 +2274,14 @@ int netOpt::characteriseUsage()
     usageWindow *w1;
     #ifdef TESTING
         int counterR1 = 0;
+        uint8_t mac[6];
     #endif
 
     while(listIteratorR1)
     {
         r1 = (devRoom *)listIteratorR1->data;
         #ifdef TESTING
-            cout << "Chracterisig room" << counterR1 << endl;
+            cout << "Chracterisig room " << counterR1 << endl;
             counterR1++;
         #endif
         
@@ -2300,6 +2301,16 @@ int netOpt::characteriseUsage()
             {
                 m1 = (roomMember *)listIteratorM1->data;
                 d1 = (devRecord *)((devGroup *)m1->member)->mems.getHead()->data;
+
+                #ifdef TESTING
+                    unpackMAC(d1->macAddr, mac);
+                    cout << dec << "Adding device " << hex << (int)mac[0];
+                    for(int i = 1; i < 6; i++)
+                    {
+                        cout << "." << (int)mac[i];
+                    }
+                    cout << dec << " usage to room " << endl;
+                #endif
 
                 for(int i = 0; i < 7; i++)
                 {
@@ -2328,6 +2339,16 @@ int netOpt::characteriseUsage()
                 m1 = (roomMember *)listIteratorM1->data;
                 d1 = (devRecord *)m1->member;
 
+                #ifdef TESTING
+                    unpackMAC(d1->macAddr, mac);
+                    cout << dec << "Adding device " << hex << (int)mac[0];
+                    for(int i = 1; i < 6; i++)
+                    {
+                        cout << "." << (int)mac[i];
+                    }
+                    cout << dec << " usage to room " << endl;
+                #endif
+
                 for(int i = 0; i < 7; i++)
                 {
                     for(int j = 0; j < 48; j++)
@@ -2348,7 +2369,7 @@ int netOpt::characteriseUsage()
         
 
         #ifdef TESTING
-            cout << "Creating roomon windows" << endl;
+            cout << "Creating rooming windows" << endl;
         #endif
         
         filterFloor = floor(r1->usage.time[r1->usage.modeTime[0]][r1->usage.modeTime[1]] / 4);
@@ -2438,7 +2459,7 @@ int netOpt::characteriseUsage()
 
                 #ifdef TESTING
                     cout << "Window found on day " << i + 1;
-                    cout << " at" << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                    cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
                     cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << ((window[1] + 1 * 1800) % 3600) / 60 << endl;
                 #endif
 
