@@ -81,7 +81,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
         a3 = (activityRecord *)listIteratorA3->data;
         a4 = (activityRecord *)listIteratorA4->data;
 
-        #ifdef  TESTING
+        #ifdef  TESTIN
             //tm tempTime;
             //tempTime = *gmtime(&a1->timestamp);
             cout << "a1: " << listIteratorA1 << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
@@ -293,7 +293,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
             }
         }
 
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "Compatability: " << probChange << endl;
         #endif
     }

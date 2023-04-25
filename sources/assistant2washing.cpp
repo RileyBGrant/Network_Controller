@@ -15,7 +15,7 @@ int8_t netOpt::assistant2washing(roomMember *assistant, roomMember *washing)
     #ifdef TESTING
         uint8_t mac[6];
         unpackMAC(d1->macAddr, mac);
-        cout << "Compatability test between tv " << hex << (int)mac[0];
+        cout << "Compatability test between washing machine " << hex << (int)mac[0];
         for(int i = 1; i < 6; i++)
         {
             cout << "." << (int)mac[i];
