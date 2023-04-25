@@ -1730,12 +1730,11 @@ int netOpt::characteriseUsage()
             a1 = (activityRecord *)listIteratorA1->data;
             winSet = false;
             headRemoved = false;
-            cout << counterA1 << endl;
 
-            #ifdef TESTING
+            #ifdef TESTIN
                 cout << "a1: variable: " << (int)a1->variable << ", state: " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
             #endif
-            cout << "here" << endl;
+
             //set timeA1 and timeA2
             switch(d1->devType)
             {
@@ -3335,6 +3334,10 @@ int netOpt::sendDevStims()
     bool inActiveRoom = false;
     uint8_t macAddr[6];
     //activityRecord *a1;
+
+    #ifdef TESTING
+        cout << "Sending dev stims" << endl;
+    #endif
 
     while(listIteratorD1)
     {
