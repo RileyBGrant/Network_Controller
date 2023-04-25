@@ -294,6 +294,7 @@ int netInt::readFromHost()
             tempTime.tm_sec = (uint8_t)rBuffer[i + 18];
             newEntry->timestamp = mktime(&tempTime);
             lastTimestamp = newEntry->timestamp;
+            
 
             node_t *listIterator = devices.getHead();
             devRecord *dev;
@@ -311,6 +312,9 @@ int netInt::readFromHost()
                     #endif
 
                     dev->activity.append(newEntry);
+                    dev->lastActivity.state = newEntry->state;
+                    dev->lastActivity.variable = newEntry->variable;
+                    dev->lastActivity.timestamp = newEntry->timestamp;
 
                     #ifdef TESTING
                         cout << "Device activity record length: " << dev->activity.getLen() << endl;
@@ -348,6 +352,9 @@ int netInt::readFromHost()
 
                 newDev->activity.append(newEntry);
                 lastDevUpdated = newDev;
+                newDev->lastActivity.state = newEntry->state;
+                newDev->lastActivity.variable = newEntry->variable;
+                newDev->lastActivity.timestamp = newEntry->timestamp;
 
                 #ifdef TESTING
                     cout << "Device activity record length: " << newDev->activity.getLen() << endl;

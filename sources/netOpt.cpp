@@ -3360,7 +3360,7 @@ int netOpt::sendDevStims()
             {
             case 0: //light
 
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3404,7 +3404,7 @@ int netOpt::sendDevStims()
                 break;
 
             case 1: // tv
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3476,7 +3476,7 @@ int netOpt::sendDevStims()
                 break;
 
             case 2: // tv
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3548,7 +3548,7 @@ int netOpt::sendDevStims()
                 break;
             
             case 3: //Record player
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3620,7 +3620,7 @@ int netOpt::sendDevStims()
                 break;
 
             case 4: //Oven
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3692,10 +3692,11 @@ int netOpt::sendDevStims()
                 break;
 
             case 5: //Fridge
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
+
                 if(a1->variable == 0 && a1->state != 0)
                 {
                     listIteratorR1 = d1->rooms.getHead();
@@ -3764,7 +3765,7 @@ int netOpt::sendDevStims()
                 break;
 
             case 6: //Assistant
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3836,7 +3837,7 @@ int netOpt::sendDevStims()
                 break;
 
             case 7: //Kettle
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif
@@ -3906,8 +3907,8 @@ int netOpt::sendDevStims()
                     }
                 }
                 break;
-            case 8: //Kettle
-                a1 = (activityRecord *)d1->activity.getTail()->data;
+            case 8: //Washing machine
+                a1 = &d1->lastActivity;
                 #ifdef TESTING
                     cout << "a1: " << ", variable " << (int)a1->variable << ", state " << (int)a1->state << ", timestamp " << a1->timestamp << endl;
                 #endif

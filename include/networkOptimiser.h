@@ -47,6 +47,7 @@ struct devRecord
     linkedList_t rooms; //list of devRooms that this dev is a part of
     linkedList_t probAdjusment;
     usageProfile usage;
+    activityRecord lastActivity;
 };
 
 struct pluggedDev
