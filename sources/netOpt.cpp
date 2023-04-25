@@ -3337,11 +3337,22 @@ int netOpt::sendDevStims()
 
     #ifdef TESTING
         cout << "Sending dev stims" << endl;
+        uint8_t mac[6];
     #endif
 
     while(listIteratorD1)
     {
         d1 = (devRecord *)listIteratorD1->data;
+        #ifdef TESTING
+            cout << "Checking device ";
+            unpackMAC(d1->macAddr, mac);
+            cout << hex << (int)mac[0];
+            for(int i = 1; i < 6; i++)
+            {
+                cout << "." << (int)mac[i];
+            }
+            cout << dec << endl;
+        #endif
         
         if(d1->rooms.getLen() > 0)
         {
