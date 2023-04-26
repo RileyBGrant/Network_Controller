@@ -1075,11 +1075,25 @@ int netOpt::groupRooms()
                         {
                             case 0: //light
                             {
+                                numLights = 0;
+                                listIteratorG1 = r1->groups.getHead();
+
+                                while(listIteratorG1)
+                                {
+                                    g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+
+                                    if(g1->devtype == 0)
+                                    {
+                                        numLights++;
+                                    }
+
+                                    listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                                }
                                 switch (((devRecord *)m2->member)->devType)
                                 {
                                     case 1: //tv
                                     {
-                                        compatability += light2tv(m1,m2);   
+                                        compatability += (light2tv(m1,m2) / numLights);   
                                         break;
                                     }
                                     case 3: //Record player
@@ -1308,7 +1322,21 @@ int netOpt::groupRooms()
                             {
                                 case 0: //light
                                 {
-                                    compatability += light2tv(m2,m1);   
+                                    numLights = 0;
+                                    listIteratorG1 = r1->groups.getHead();
+
+                                    while(listIteratorG1)
+                                    {
+                                        g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+
+                                        if(g1->devtype == 0)
+                                        {
+                                            numLights++;
+                                        }
+
+                                        listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                                    }
+                                    compatability += (light2tv(m2,m1) / numLights);   
                                     break;
                                 }
                                 case 2: //speaker
