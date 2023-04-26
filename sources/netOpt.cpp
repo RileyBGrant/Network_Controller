@@ -4616,9 +4616,9 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
             {
                 for(int j = 0; j < 47; j++)
                 {
-                    ofile << r1->usage.time[i][j] << ",";
+                    ofile << houseUsage.time[i][j] << ",";
                 }
-                ofile << r1->usage.time[i][47] << endl;
+                ofile << houseUsage.time[i][47] << endl;
             }
             
             ofile.close();
