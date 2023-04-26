@@ -62,7 +62,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
     node_t *listIteratorA4;
     if(listIteratorA3 != NULL)
     {
-        listIteratorA4 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA3);
+        listIteratorA4 = d1->activity.getNext(listIteratorA3);
     }
     activityRecord *a1;
     activityRecord *a2;
@@ -99,7 +99,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
             {
                 if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
                 {
-                    if(a4->variable = 0 && (a4->state == 0 || a4->state == 1 || a4->state == 2))
+                    if(a4->variable == 0 && (a4->state == 0 || a4->state == 1 || a4->state == 2))
                     {
                         if(a2->timestamp > a3->timestamp)
                         {
