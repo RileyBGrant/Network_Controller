@@ -80,7 +80,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
         a1 = (activityRecord *)listIteratorA1->data;
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
-        a4 = (activityRecord *)listIteratorA3->data;
+        a4 = (activityRecord *)listIteratorA4->data;
 
         #ifdef  TESTING
             //tm tempTime;
@@ -99,7 +99,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
             {
                 if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
                 {
-                    if(a4->variable = 0 && a4->state == 0)
+                    if(a4->variable = 0 && (a4->state == 0 || a4->state == 1 || a4->state == 2))
                     {
                         if(a2->timestamp > a3->timestamp)
                         {
