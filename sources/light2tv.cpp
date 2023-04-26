@@ -52,11 +52,22 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
     }
 
     node_t *listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getHead();
-    node_t *listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+    node_t *listIteratorA2;
+    if(listIteratorA1 != NULL)
+    {
+        listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+    }
+
     node_t *listIteratorA3 = d1->activity.getHead();
+    node_t *listIteratorA4;
+    if(listIteratorA3 != NULL)
+    {
+        listIteratorA4 = d1->activity.getNext(listIteratorA3);    
+    }
     activityRecord *a1;
     activityRecord *a2;
     activityRecord *a3;
+    activityRecord *a4;
 
     int probChange = 0;
     
@@ -69,6 +80,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
         a1 = (activityRecord *)listIteratorA1->data;
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
+        a4 = (activityRecord *)listIteratorA3->data;
 
         #ifdef  TESTING
             //tm tempTime;
@@ -78,6 +90,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             //tempTime = *gmtime(&a3->timestamp);
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
+            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
         #endif
 
         if(a1->variable == 0 && a1->state == 1)
@@ -86,52 +99,66 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
             {
                 if(a3->variable == 0 && (a3->state == 3 || a3->state == 4) && a3->timestamp >= a1->timestamp)
                 {
-                    if(a2->timestamp > a3->timestamp)
+                    if(a4->variable = 0 && a4->state == 0)
                     {
-                        if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
+                        if(a2->timestamp > a3->timestamp)
                         {
-                            if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
                             {
-                                probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                                {
+                                    probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                }
+                                else
+                                {
+                                    probChange = 127;
+                                    getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                }
                             }
                             else
                             {
-                                probChange = 127;
                                 getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
                             }
+
+                            listIteratorA3 = d1->activity.getNext(listIteratorA3);
                         }
                         else
                         {
-                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
-                        }
+                            if(-3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) < 0)
+                            {
+                                if(probChange >= -125 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                                {
+                                    probChange = probChange -3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
+                                }
+                                else
+                                {
+                                    probChange = -128;
+                                    getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
+                                }
+                            }
+                            else
+                            {
+                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
+                            }
 
-                        listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                            listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
+                            if(listIteratorA1 != NULL)
+                            {
+                                listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
+                            } 
+                        }
                     }
                     else
                     {
-                        if(-3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) < 0)
+                        listIteratorA4 = d1->activity.getNext(listIteratorA4);
+                        while(listIteratorA4 == NULL && listIteratorA3 != NULL)
                         {
-                            if(probChange >= -125 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                            listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
                             {
-                                probChange = probChange -3 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
-                            }
-                            else
-                            {
-                                probChange = -128;
-                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
+                                listIteratorA4 = d1->activity.getNext(listIteratorA3);
                             }
                         }
-                        else
-                        {
-                            getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), -0.5);
-                        }
-
-                        listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
-                        if(listIteratorA1 != NULL)
-                        {
-                            listIteratorA2 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA1);
-                        }
-                        
                     }
                 }
                 else
@@ -140,6 +167,18 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
                         cout << "a3 invalid: " << endl;
                     #endif
                     listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                    if(listIteratorA3 != NULL)
+                    {
+                        listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                        while(listIteratorA4 == NULL && listIteratorA3 != NULL)
+                        {
+                            listIteratorA3 = d1->activity.getNext(listIteratorA3);
+                            if(listIteratorA3 != NULL)
+                            {
+                                listIteratorA4 = d1->activity.getNext(listIteratorA3);
+                            }
+                        }
+                    }
                 }
             }
             else
