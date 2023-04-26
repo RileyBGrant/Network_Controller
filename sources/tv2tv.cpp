@@ -112,21 +112,21 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                             {
                                 if(a2->timestamp > a3->timestamp)
                                 {
-                                    if(-3 + getProbAdjustment(d1, d2, 0.0) < 0)
+                                    if(-20 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        if(probChange >= -125 - getProbAdjustment(d1, d2, 0.0))
+                                        if(probChange >= -108 - getProbAdjustment(d1, d2, 0.0))
                                         {
-                                            probChange = probChange -3 + getProbAdjustment(d1, d2, -0.1);
+                                            probChange = probChange -20 + getProbAdjustment(d1, d2, -2.0);
                                         }
                                         else
                                         {
                                             probChange = -128;
-                                            getProbAdjustment(d1, d2, -0.1);
+                                            getProbAdjustment(d1, d2, -2.0);
                                         }
                                     }
                                     else
                                     {
-                                        getProbAdjustment(d1, d2, -0.1);
+                                        getProbAdjustment(d1, d2, -2.0);
                                     }
 
                                     listIteratorA3 = d2->activity.getNext(listIteratorA3);
@@ -148,21 +148,21 @@ int8_t netOpt::tv2tv(roomMember *m1, roomMember *m2)
                             {
                                 if(a4->timestamp > a1->timestamp)
                                 {
-                                    if(-3 + getProbAdjustment(d1, d2, 0.0) < 0)
+                                    if(-20 + getProbAdjustment(d1, d2, 0.0) < 0)
                                     {
-                                        if(probChange >= -125 - getProbAdjustment(d1, d2, 0.0))
+                                        if(probChange >= -108 - getProbAdjustment(d1, d2, 0.0))
                                         {
-                                            probChange = probChange -3 + getProbAdjustment(d1, d2, -0.1);
+                                            probChange = probChange -20 + getProbAdjustment(d1, d2, -2.0);
                                         }
                                         else
                                         {
                                             probChange = -128;
-                                            getProbAdjustment(d1, d2, -0.1);
+                                            getProbAdjustment(d1, d2, -2.0);
                                         }
                                     }
                                     else
                                     {
-                                        getProbAdjustment(d1, d2, -0.1);
+                                        getProbAdjustment(d1, d2, -2.0);
                                     }
 
                                     listIteratorA1 = d1->activity.getNext(listIteratorA2);
