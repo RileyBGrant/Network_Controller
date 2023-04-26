@@ -78,6 +78,7 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
         a1 = (activityRecord *)listIteratorA1->data;
         a2 = (activityRecord *)listIteratorA2->data;
         a3 = (activityRecord *)listIteratorA3->data;
+        a4 = (activityRecord *)listIteratorA4->data;
 
         #ifdef  TESTING
             //tm tempTime;
@@ -87,7 +88,7 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
             cout << "a2: " << listIteratorA2 << ", variable " << (int)a2->variable << ", state " << (int)a2->state << ", timestamp " << a2->timestamp << endl;
             //tempTime = *gmtime(&a3->timestamp);
             cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
-            cout << "a3: " << listIteratorA3 << ", variable " << (int)a3->variable << ", state " << (int)a3->state << ", timestamp " << a3->timestamp << endl;
+            cout << "a4: " << listIteratorA4 << ", variable " << (int)a4->variable << ", state " << (int)a4->state << ", timestamp " << a4->timestamp << endl;
         #endif
 
         if(a1->variable == 0 && a1->state == 1)
