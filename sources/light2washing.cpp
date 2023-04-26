@@ -96,7 +96,7 @@ int8_t netOpt::light2washing(roomMember *light, roomMember *washing)
             {
                 if(a3->variable == 0 && (a3->state == 1 || a3->state == 2) && a3->timestamp >= a1->timestamp)
                 {
-                    if(a4->variable = 0 && a4->state == 0)
+                    if(a4->variable == 0 && a4->state == 0)
                     {
                         if(a2->timestamp > a3->timestamp)
                         {

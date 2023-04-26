@@ -98,7 +98,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
             {
                 if(a3->variable == 0 && a3->state == 1 && a3->timestamp >= a1->timestamp)
                 {
-                    if(a4->variable = 0 && a4->state == 0)
+                    if(a4->variable == 0 && a4->state == 0)
                     {
                         if(a2->timestamp > a3->timestamp)
                         {
@@ -175,7 +175,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
                 }
                 else if((a3->variable >= 1 && a3->variable <= 6) && a3->state == 1 && a3->timestamp >= a1->timestamp)
                 {
-                    if(a4->variable = a3->variable && a4->state == 0)
+                    if(a4->variable == a3->variable && a4->state == 0)
                     {
                         if(a2->timestamp > a3->timestamp)
                         {
