@@ -2682,6 +2682,8 @@ int netOpt::activeRoomUpdate()
     #endif
 
     devRecord *lastDevUpdated = interface->getLastDevUpdated();
+    
+
     //check if device is assigned to a room;
     if(lastDevUpdated->rooms.getLen() > 0)
     {
@@ -2692,10 +2694,16 @@ int netOpt::activeRoomUpdate()
         devGroup *g1;
         node_t *listIteratorD1;
         devRecord *d1;
+        node_t *listIteratorW1;
+        usageWindow *w1;
         bool groupChanged = true;
         uint8_t highestProb = 0;
         uint8_t v1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->variable;
         uint8_t s1 = ((activityRecord *)lastDevUpdated->activity.getTail()->data)->state;
+
+        time_t lastTimestamp = 0;
+        tm tempTM = *gmtime(&lastTimestamp);
+        int day = 0;
 
         //Check if device is part of a group
         if(lastDevUpdated->groups.getLen() > 0)
@@ -3202,6 +3210,74 @@ int netOpt::activeRoomUpdate()
                             break;
                         }
                     }
+                    
+                    if(houseUsage.windows.getLen() >= 7)
+                    {
+                        #ifdef TESTING
+                            cout << "Checking house activiy windows" << endl;
+                        #endif
+                        
+                        listIteratorW1 = houseUsage.windows.getHead();
+                        lastTimestamp = interface->getLastTimestamp();
+
+                        tempTM.tm_sec = gmtime(&lastTimestamp)->tm_sec;
+                        tempTM.tm_min = gmtime(&lastTimestamp)->tm_min;
+                        tempTM.tm_hour = gmtime(&lastTimestamp)->tm_hour;
+                        lastTimestamp = mktime(&tempTM) + 3600;
+                        day = gmtime(&lastTimestamp)->tm_wday;
+
+                        while(listIteratorW1)
+                        {
+                            w1 = (usageWindow *)listIteratorW1->data;
+
+                            #ifdef TESTING
+                                cout << "Window is " << w1->day + 1;
+                                cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60 << "(" << w1->start << ")";
+                                cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << (((w1->end + 1) * 1800) % 3600) / 60 << "(" << w1->end << ")" << endl;
+                            #endif
+
+                            if(day == w1->day)
+                            {
+                                if(lastTimestamp >= w1->start * 1800)
+                                {
+                                    if(lastTimestamp <= (w1->end + 2) * 1800) //+2 for some tolerance
+                                    {
+                                        #ifdef TESTING
+                                            cout << "Record in house active window" << endl;
+                                        #endif
+
+                                        listIteratorW1 = NULL;
+                                    }
+                                    else
+                                    {
+                                        listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
+                                    }
+                                }
+                                else
+                                {
+                                    #ifdef TESTING
+                                        cout << "Record not in house active window" << endl;
+                                    #endif
+
+                                    if(r1->activeProb > 1.0)
+                                    {
+                                        r1->activeProb = 1.0;
+                                    }
+
+                                    listIteratorW1 = NULL;
+                                }
+                            }
+                            else if(day > w1->day)
+                            {
+                                listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
+                            }
+                            else if(day < w1->day)
+                            {
+                                listIteratorW1 = NULL;
+                            }
+                        }
+                    }
+                    
                 }
                 else
                 {
@@ -3437,6 +3513,9 @@ int netOpt::activeRoomUpdate()
 
         if(highestProb < 1)
         {
+            #ifdef TESTING
+                cout << "House Inactive" << endl;
+            #endif
             r2 = &houseInactive;
         }
 
