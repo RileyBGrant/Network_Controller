@@ -2617,9 +2617,9 @@ int netOpt::characteriseUsage()
         {
             winSet = false;
             window[0] = 0;
-            for(int j = 0; j < 45; j++)
+            for(int j = 0; j < 44; j++)
             {
-                if(houseUsage.time[i][j] == houseUsage.time[i][j + 1] && houseUsage.time[i][j] == houseUsage.time[i][j + 2])
+                if(houseUsage.time[i][j] == houseUsage.time[i][j + 1] && houseUsage.time[i][j] == houseUsage.time[i][j + 2] && houseUsage.time[i][j] == houseUsage.time[i][j + 3])
                 {
                     if(winSet != true)
                     {
@@ -2645,7 +2645,7 @@ int netOpt::characteriseUsage()
                     if(winSet == true)
                     {
                         winSet = false;
-                        window[0] = j + 2;
+                        window[0] = j + 3;
                     }
                 }
             }
