@@ -143,6 +143,7 @@ int netOpt::groupRooms()
     devRecord *d2;
     int16_t probChange = 0;
     int currentProbChange = 0;
+    int numLights = 0;
 
     //check exisiting rooms
     #ifdef TESTING
@@ -250,11 +251,26 @@ int netOpt::groupRooms()
                 {
                     case 0: //light
                     {
+                        numLights = 0;
+                        listIteratorG1 = r1->groups.getHead();
+
+                        while(listIteratorG1)
+                        {
+                            g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+
+                            if(g1->devtype == 0)
+                            {
+                                numLights++;
+                            }
+
+                            listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                        }
+
                         switch (((devRecord *)m2->member)->devType)
                         {
                             case 1: //tv
                             {
-                                probChange += light2tv(m1,m2);                                
+                                probChange += (light2tv(m1,m2) / numLights);                                
                                 break;
                             }
                             case 3: //Record player
