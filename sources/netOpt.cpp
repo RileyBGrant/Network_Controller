@@ -2686,7 +2686,7 @@ int netOpt::activeRoomUpdate()
 
                 if(devInRoom == true)
                 {
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         cout << "In Dev room" << endl;
                     #endif
                     switch(lastDevUpdated->devType)
@@ -3103,7 +3103,7 @@ int netOpt::activeRoomUpdate()
                 }
                 else
                 {
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         cout << "Not in dev room" << endl;
                     #endif
                     switch(lastDevUpdated->devType)
@@ -4284,8 +4284,8 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                 w1 = (usageWindow *)listIteratorW1->data;
 
                 cout << "Window found on day " << w1->day + 1;
-                cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60;
-                cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << ((w1->end + 1 * 1800) % 3600) / 60 << endl;
+                cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60 << "(" << w1->start << ")";
+                cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << ((w1->end + 1 * 1800) % 3600) / 60 << "(" << w1->end << ")" << endl;
 
                 listIteratorW1 = r1->usage.windows.getNext(listIteratorW1);
             }
