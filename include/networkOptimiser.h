@@ -178,6 +178,7 @@ private:
     speakerOptimiser speakerOpt;
     plugOptimiser plugOpt;
     devRoom houseInactive;
+    usageProfile houseUsage;
 
 public:
     netOpt(netInt *netInterface);
