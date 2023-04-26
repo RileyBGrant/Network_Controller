@@ -102,23 +102,47 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
                     if(a4->variable == 0 && (a4->state == 0 || a4->state == 1 || a4->state == 2))
                     {
                         if(a2->timestamp > a3->timestamp)
-                        {
-                            if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
+                        {              
+                            if(difftime(a2->timestamp, a3->timestamp) <= difftime(a3->timestamp, a1->timestamp))
                             {
-                                if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                                if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
                                 {
-                                    probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                    if(probChange <= 117 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                                    {
+                                        probChange = probChange + 10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                    }
+                                    else
+                                    {
+                                        probChange = 127;
+                                        getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                    }
                                 }
                                 else
                                 {
-                                    probChange = 127;
                                     getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
                                 }
                             }
                             else
                             {
-                                getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                if(8 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
+                                {
+                                    if(probChange <= 119 - getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0))
+                                    {
+                                        probChange = probChange + 8 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                    }
+                                    else
+                                    {
+                                        probChange = 127;
+                                        getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                    }
+                                }
+                                else
+                                {
+                                    getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 1.0);
+                                }
                             }
+                            
+                            
 
                             listIteratorA3 = d1->activity.getNext(listIteratorA3);
                             if(listIteratorA3 != NULL)
