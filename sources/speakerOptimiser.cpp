@@ -42,7 +42,7 @@ int speakerOptimiser::addDevice(devRecord *newDev)
 int speakerOptimiser::groupSpeakers()
 {
     #ifdef TESTING
-        cout << "Speaker optimiser: Grouping speakers" << endl;
+        cout << endl << "Speaker optimiser: Grouping speakers" << endl;
     #endif
     node_t *listIteratorG1 = speakerGroups.getHead();
     node_t *listIteratorG2;
@@ -374,7 +374,7 @@ string speakerOptimiser::inactivity(devRecord *d0)
 #ifdef TESTING
     int speakerOptimiser::printDevs()
     {
-        cout << "Speaker Optimiser: Speaker devices" << endl;
+        cout << endl << "Speaker Optimiser: Speaker devices" << endl;
         node_t *listIteratorD = speakerDevs.getHead();
         devRecord *dev;
         uint8_t mac[6];
@@ -396,7 +396,7 @@ string speakerOptimiser::inactivity(devRecord *d0)
 
     int speakerOptimiser::printGroups()
     {
-        cout << "Speaker Optimiser: Speaker groups" << endl;
+        cout << ndl << "Speaker Optimiser: Speaker groups" << endl;
         node_t *listIteratorG = speakerGroups.getHead();
         devGroup *group;
         node_t *listIteratorM;

@@ -47,7 +47,7 @@ int plugOptimiser::addDevice(devRecord *newDev)
 int plugOptimiser::pairPlugs(linkedList_t *devices)
 {
     #ifdef TESTING
-        cout << "Plug optimiser: pairing plugs" << endl;
+        cout << endl << "Plug optimiser: pairing plugs" << endl;
     #endif
 
     node_t *listIteratorD1 = devices->getHead();
@@ -61,7 +61,7 @@ int plugOptimiser::pairPlugs(linkedList_t *devices)
     activityRecord *a2;
     bool devPaired;
 
-    #ifdef TESTING
+    #ifdef TESTIN
         cout << "Checking exisiting plugs" << endl;
     #endif
 
@@ -373,7 +373,7 @@ string plugOptimiser::inactivity(devRecord *d0)
 #ifdef TESTING
     int plugOptimiser::printPlugs()
     {
-        cout << "Plug Optimiser: Plugged devices" << endl;
+        cout << endl <<  "Plug Optimiser: Plugged devices" << endl;
         node_t *listIteratorP1 = plugs.getHead();
         pluggedDev *p1;
         uint8_t mac[6];

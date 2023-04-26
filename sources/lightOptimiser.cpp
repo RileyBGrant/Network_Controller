@@ -440,7 +440,7 @@ string lightOptimiser::inactivity(devRecord *d0)
 #ifdef TESTING
     int lightOptimiser::printDevs()
     {
-        cout << "Light Optimiser: Light devices" << endl;
+        cout << endl << "Light Optimiser: Light devices" << endl;
         node_t *listIteratorD = lightDevs.getHead();
         devRecord *dev;
         uint8_t mac[6];
@@ -462,7 +462,7 @@ string lightOptimiser::inactivity(devRecord *d0)
 
     int lightOptimiser::printGroups()
     {
-        cout << "Light Optimiser: Light groups" << endl;
+        cout << endl << "Light Optimiser: Light groups" << endl;
         node_t *listIteratorG = lightGroups.getHead();
         devGroup *group;
         node_t *listIteratorM;

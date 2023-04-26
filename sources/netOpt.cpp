@@ -34,7 +34,7 @@ netOpt::netOpt(netInt *netInterface)
 int netOpt::sortDevs()
 {
     #ifdef TESTING
-        cout << "Sorting Records" << endl;
+        cout << endl << "Sorting Records" << endl;
     #endif
     node_t *listIterator = devices->getHead();
     devRecord *dev;
@@ -82,6 +82,7 @@ int netOpt::sortDevs()
 
     lightOpt.printDevs();
     speakerOpt.printDevs();
+    //plugOpt.printPlugs();
 
     return 0;
 }
@@ -89,7 +90,7 @@ int netOpt::sortDevs()
 int netOpt::optimise()
 {
     #ifdef TESTING
-        cout << "Optimising Devices" << endl;
+        cout << endl << "Optimising Devices" << endl;
     #endif
 
     lightOpt.groupLights();
@@ -4143,7 +4144,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
                     p2->adjustment = p1->adjustment;
                     listIteratorP2 = NULL;
 
-                    #ifdef TESTING
+                    #ifdef TESTIN
                         if(adjustmentChange != 0)
                         {
                             cout << "Probablitiy adjustment is now: " << p1->adjustment << endl;
@@ -4183,7 +4184,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
     if(devFound == false)
     {
-        #ifdef TESTING
+        #ifdef TESTIN
             cout << "No adjustment record found creating new one" << endl;
         #endif
         p1 = new devProbAdjustment;
@@ -4203,7 +4204,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 #ifdef TESTING
     int netOpt::printRooms()
     {
-        cout << endl << "Printing " << rooms.getLen() << " rooms" << endl;
+        cout << endl << endl << "Printing " << rooms.getLen() << " rooms" << endl;
 
         node_t *listIteratorR1 = rooms.getHead();
         devRoom *r1;
@@ -4221,7 +4222,7 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
         {
             r1 = (devRoom *)listIteratorR1->data;
 
-            cout << "Room " << counterR1 << ":" << endl;
+            cout << endl << "Room " << counterR1 << ":" << endl;
             counterR1++;
             listIteratorM1 = r1->groups.getHead();
             counterM1 = 0;
