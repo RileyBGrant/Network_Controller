@@ -35,17 +35,17 @@ int8_t netOpt::fridge2assistant(roomMember *fridge, roomMember *assistant)
             cout << "activity records are too short" << endl;
         #endif
 
-        if(getProbAdjustment(d1, OV1, 0.0) -1 < -2)
+        if(getProbAdjustment(d1, OV1, 0.0) -1 < -1)
         {
-            return -2;
+            return -1;
         }
-        else if(getProbAdjustment(d1, OV1, 0.0) -1 > -1)
+        else if(getProbAdjustment(d1, OV1, 0.0) - 1 > 1)
         {
             return 1;
         }
         else
         {
-            return(getProbAdjustment(d1, OV1, 0.0) -1);
+            return(getProbAdjustment(d1, OV1, 0.0));
         };
     }
 
