@@ -2616,72 +2616,41 @@ int netOpt::characteriseUsage()
         for(int i = 0; i < 7; i++)
         {
             winSet = false;
-            for(int j = 0; j < 48; j++)
+            window[0] = 0;
+            for(int j = 0; j < 45; j++)
             {
-                if(houseUsage.time[i][j] >= filterFloor)
+                if(houseUsage.time[i][j] == houseUsage.time[i][j + 1] && houseUsage.time[i][j] == houseUsage.time[i][j + 2])
                 {
                     if(winSet != true)
                     {
                         winSet = true;
-                        window[0] = j;
+                        window[1]= j - 1;
+
+                        w1 = new usageWindow;
+                        w1->start = window[0];
+                        w1->end = window[1];
+                        w1->day = i;
+
+                        #ifdef TESTING
+                            cout << "Window found on day " << i + 1;
+                            cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
+                            cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << (((window[1] + 1) * 1800) % 3600) / 60 << endl;
+                        #endif
+
+                        houseUsage.windows.append(w1);
                     }
                 }
                 else
                 {
                     if(winSet == true)
                     {
-                        if(j < 47)
-                        {
-                            if(houseUsage.time[i][j + 1] >= filterFloor)
-                            {
-                                j++;
-                            }
-                            else
-                            {
-                                window[1]= j - 1;
-
-                                w1 = new usageWindow;
-                                w1->start = window[0];
-                                w1->end = window[1];
-                                w1->day = i;
-
-                                #ifdef TESTING
-                                    cout << "Window found on day " << i + 1;
-                                    cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
-                                    cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << (((window[1] + 1) * 1800) % 3600) / 60 << endl;
-                                #endif
-
-                                houseUsage.windows.append(w1);
-                                winSet = false;
-                            }
-                        }
-                        else
-                        {
-                            if(houseUsage.time[(i + 1) % 7][0] < filterFloor)
-                            {
-                                window[1]= j - 1;
-
-                                w1 = new usageWindow;
-                                w1->start = window[0];
-                                w1->end = window[1];
-                                w1->day = i;
-
-                                #ifdef TESTING
-                                    cout << "Window found on day " << i + 1;
-                                    cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
-                                    cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << (((window[1] + 1) * 1800) % 3600) / 60 << endl;
-                                #endif
-
-                                houseUsage.windows.append(w1);
-                                winSet = false;
-                            }
-                        }
+                        winSet = false;
+                        window[0] = j + 2;
                     }
-                    
                 }
             }
 
-            if(winSet == true)
+            if(winSet == false)
             {
                 window[1]= 47;
 
