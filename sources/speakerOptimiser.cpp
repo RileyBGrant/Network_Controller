@@ -396,7 +396,7 @@ string speakerOptimiser::inactivity(devRecord *d0)
 
     int speakerOptimiser::printGroups()
     {
-        cout << ndl << "Speaker Optimiser: Speaker groups" << endl;
+        cout << endl << "Speaker Optimiser: Speaker groups" << endl;
         node_t *listIteratorG = speakerGroups.getHead();
         devGroup *group;
         node_t *listIteratorM;
