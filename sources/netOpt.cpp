@@ -1087,7 +1087,7 @@ int netOpt::groupRooms()
                                         numLights++;
                                     }
 
-                                    listIteratorG2 = r1->groups.getNext(listIteratorG1);
+                                    listIteratorG2 = r1->groups.getNext(listIteratorG2);
                                 }
                                 switch (((devRecord *)m2->member)->devType)
                                 {
