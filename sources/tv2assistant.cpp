@@ -204,12 +204,12 @@ int8_t netOpt::tv2assistant(roomMember *tv, roomMember *assistant)
                             {
                                 if(probChange <= 122 - getProbAdjustment(d1, d2, 0.0))
                                 {
-                                    probChange = probChange + 5 + getProbAdjustment(d1, d2, 1.0);
+                                    probChange = probChange + 5 + getProbAdjustment(d1, d2, 0.1);
                                 }
                                 else
                                 {
                                     probChange = 127;
-                                    getProbAdjustment(d1, d2, 1.0);
+                                    getProbAdjustment(d1, d2, 0.1);
                                 }
                             }
                             else
