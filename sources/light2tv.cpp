@@ -103,7 +103,7 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
                     {
                         if(a2->timestamp > a3->timestamp)
                         {              
-                            if(difftime(a2->timestamp, a3->timestamp) <= difftime(a3->timestamp, a1->timestamp))
+                            if(difftime(a2->timestamp, a3->timestamp) >= difftime(a3->timestamp, a1->timestamp))
                             {
                                 if(10 + getProbAdjustment(d1, ((devRecord *)l1->mems.getHead()->data), 0.0) > 0)
                                 {
