@@ -966,8 +966,8 @@ int netOpt::groupRooms()
     //Fit unroomed devices into rooms
     node_t *listIteratorL1 = groups.getHead();
     linkedList_t *l1;
-    node_t *listIteratorG1;
-    devGroup *g1;
+    //node_t *listIteratorG1;
+    //devGroup *g1;
     int compatability = 0;
     devRoom *r3;
     int r3Compatability= 0;
