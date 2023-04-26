@@ -143,6 +143,8 @@ int netOpt::groupRooms()
     devRecord *d2;
     int16_t probChange = 0;
     int currentProbChange = 0;
+    node_t *listIteratorG1;
+    devGroup *g1;
     int numLights = 0;
 
     //check exisiting rooms
