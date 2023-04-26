@@ -966,8 +966,8 @@ int netOpt::groupRooms()
     //Fit unroomed devices into rooms
     node_t *listIteratorL1 = groups.getHead();
     linkedList_t *l1;
-    //node_t *listIteratorG1;
-    //devGroup *g1;
+    node_t *listIteratorG2;
+    devGroup *g2;
     int compatability = 0;
     devRoom *r3;
     int r3Compatability= 0;
@@ -1076,18 +1076,18 @@ int netOpt::groupRooms()
                             case 0: //light
                             {
                                 numLights = 0;
-                                listIteratorG1 = r1->groups.getHead();
+                                listIteratorG2 = r1->groups.getHead();
 
-                                while(listIteratorG1)
+                                while(listIteratorG2)
                                 {
-                                    g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+                                    g2 = (devGroup *)((roomMember *)listIteratorG2->data)->member;
 
-                                    if(g1->devtype == 0)
+                                    if(g2->devtype == 0)
                                     {
                                         numLights++;
                                     }
 
-                                    listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                                    listIteratorG2 = r1->groups.getNext(listIteratorG1);
                                 }
                                 switch (((devRecord *)m2->member)->devType)
                                 {
@@ -1323,18 +1323,18 @@ int netOpt::groupRooms()
                                 case 0: //light
                                 {
                                     numLights = 0;
-                                    listIteratorG1 = r1->groups.getHead();
+                                    listIteratorG2 = r1->groups.getHead();
 
-                                    while(listIteratorG1)
+                                    while(listIteratorG2)
                                     {
-                                        g1 = (devGroup *)((roomMember *)listIteratorG1->data)->member;
+                                        g2 = (devGroup *)((roomMember *)listIteratorG2->data)->member;
 
-                                        if(g1->devtype == 0)
+                                        if(g2->devtype == 0)
                                         {
                                             numLights++;
                                         }
 
-                                        listIteratorG1 = r1->groups.getNext(listIteratorG1);
+                                        listIteratorG2 = r1->groups.getNext(listIteratorG2);
                                     }
                                     compatability += (light2tv(m2,m1) / numLights);   
                                     break;
