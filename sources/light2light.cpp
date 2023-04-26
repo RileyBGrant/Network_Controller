@@ -40,7 +40,7 @@ int8_t netOpt::light2light(roomMember *m1, roomMember *m2)
 
     if(((devRecord *)g1->mems.getHead()->data)->activity.getLen() < 1 || ((devRecord *)g2->mems.getHead()->data)->activity.getLen() < 1)
     {
-        probChange = getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0);
+        probChange = getProbAdjustment(((devRecord *)g1->mems.getHead()->data), ((devRecord *)g2->mems.getHead()->data), 0.0) - 1;
     }
 
     while(listIteratorA1 != NULL && listIteratorA2 != NULL)
