@@ -62,7 +62,15 @@ int8_t netOpt::light2tv(roomMember *light, roomMember *tv)
     node_t *listIteratorA4;
     if(listIteratorA3 != NULL)
     {
-        listIteratorA4 = d1->activity.getNext(listIteratorA3);    
+        listIteratorA4 = d1->activity.getNext(listIteratorA3);
+        while(listIteratorA4 == NULL && listIteratorA3 != NULL)
+        {
+            listIteratorA3 = d1->activity.getNext(listIteratorA3);
+            if(listIteratorA3 != NULL)
+            {
+                listIteratorA4 = d1->activity.getNext(listIteratorA3);
+            }
+        }
     }
     activityRecord *a1;
     activityRecord *a2;

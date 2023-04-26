@@ -58,7 +58,7 @@ int8_t netOpt::light2oven(roomMember *light, roomMember *oven)
 
     node_t *listIteratorA3 = d1->activity.getHead();
     node_t *listIteratorA4;
-    if(listIteratorA3 != NULL)
+    while(listIteratorA4 == NULL && listIteratorA3 != NULL)
     {
         listIteratorA4 = d1->activity.getNext(listIteratorA3);    
     }
