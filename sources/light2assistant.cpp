@@ -111,17 +111,17 @@ int8_t netOpt::light2assistant(roomMember *light, roomMember *assistant)
                         {
                             if(probChange >= -126 - getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0))
                             {
-                                probChange = probChange -2 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.2);
+                                probChange = probChange -2 + getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.5);
                             }
                             else
                             {
                                 probChange = -128;
-                                getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.2);
+                                getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.5);
                             }
                         }
                         else
                         {
-                            getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.2);
+                            getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, -0.5);
                         }
 
                         listIteratorA1 = ((devRecord *)l1->mems.getHead()->data)->activity.getNext(listIteratorA2);
