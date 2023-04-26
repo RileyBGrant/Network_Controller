@@ -29,7 +29,7 @@ int8_t netOpt::light2assistant(roomMember *light, roomMember *assistant)
         cout << dec << " with probability adjustment of " << (int)getProbAdjustment(d1, (devRecord *)l1->mems.getHead()->data, 0.0) << endl;
     #endif
 
-    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 1)
+    if(((devRecord *)l1->mems.getHead()->data)->activity.getLen() <= 2 || d1->activity.getLen() < 2)
     {
         #ifdef TESTIN
             cout << "activity records are too short" << endl;
