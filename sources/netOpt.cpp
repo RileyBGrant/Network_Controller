@@ -2704,6 +2704,7 @@ int netOpt::activeRoomUpdate()
         time_t lastTimestamp = 0;
         tm tempTM = *gmtime(&lastTimestamp);
         int day = 0;
+        bool inHouseWin = false;
 
         //Check if device is part of a group
         if(lastDevUpdated->groups.getLen() > 0)
@@ -3211,6 +3212,8 @@ int netOpt::activeRoomUpdate()
                         }
                     }
                     
+                    inHouseWin = false;
+
                     if(houseUsage.windows.getLen() >= 7)
                     {
                         #ifdef TESTING
@@ -3247,6 +3250,7 @@ int netOpt::activeRoomUpdate()
                                         #endif
 
                                         listIteratorW1 = NULL;
+                                        inHouseWin = true;
                                     }
                                     else
                                     {
@@ -3270,6 +3274,64 @@ int netOpt::activeRoomUpdate()
                             else if(day > w1->day)
                             {
                                 listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
+                            }
+                            else if(day < w1->day)
+                            {
+                                listIteratorW1 = NULL;
+                            }
+                        }
+                    }
+
+                    if(r1->usage.windows.getLen() >= 7 && inHouseWin == true)
+                    {
+                        #ifdef TESTING
+                            cout << "Checking house activiy windows" << endl;
+                        #endif
+                        
+                        listIteratorW1 = r1->usage.windows.getHead();
+
+                        while(listIteratorW1)
+                        {
+                            w1 = (usageWindow *)listIteratorW1->data;
+
+                            #ifdef TESTING
+                                cout << "Window is " << w1->day + 1;
+                                cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60 << "(" << w1->start << ")";
+                                cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << (((w1->end + 1) * 1800) % 3600) / 60 << "(" << w1->end << ")" << endl;
+                            #endif
+
+                            if(day == w1->day)
+                            {
+                                if(lastTimestamp >= w1->start * 1800)
+                                {
+                                    if(lastTimestamp <= (w1->end + 2) * 1800) //+2 for some tolerance
+                                    {
+                                        #ifdef TESTING
+                                            cout << "Record in room active window" << endl;
+                                        #endif
+
+                                        listIteratorW1 = NULL;
+                                        inHouseWin = true;
+                                    }
+                                    else
+                                    {
+                                        listIteratorW1 = r1->usage.windows.getNext(listIteratorW1);
+                                    }
+                                }
+                                else
+                                {
+                                    #ifdef TESTING
+                                        cout << "Record not in room active window" << endl;
+                                    #endif
+
+                                    r1->activeProb = r1->activeProb / 10;
+
+                                    listIteratorW1 = NULL;
+                                }
+                            }
+                            else if(day > w1->day)
+                            {
+                                listIteratorW1 = r1->usage.windows.getNext(listIteratorW1);
                             }
                             else if(day < w1->day)
                             {
