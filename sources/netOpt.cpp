@@ -2422,7 +2422,6 @@ int netOpt::characteriseUsage()
     int filterFloor = 0;
     int window[2];
     usageWindow *w1;
-    int stimTime;
     #ifdef TESTING
         int counterR1 = 0;
         uint8_t mac[6];
@@ -2683,11 +2682,6 @@ int netOpt::characteriseUsage()
                             cout << " at " << (window[0] * 1800) / 3600 << ":" << ((window[0] * 1800) % 3600) / 60;
                             cout << " - " << ((window[1] + 1) * 1800) / 3600 << ":" << (((window[1] + 1) * 1800) % 3600) / 60 << endl;
                         #endif
-
-                        stimTime = interface->getLastTimestamp() / 86400;
-                        stimTime = (stimTime + 1) * 86400;
-                        stimTime += ((j + 1) * 1800);
-                        interface->requestStim(stimTime);
 
                         houseUsage.windows.append(w1);
                     }
@@ -3719,92 +3713,6 @@ int netOpt::sendDevStims()
     uint8_t macAddr[6];
     //activityRecord *a1;
 
-    time_t lastTimestamp = 0;
-    tm tempTM = *gmtime(&lastTimestamp);
-    int day = 0;
-    node_t *listIteratorW1 = houseUsage.windows.getHead();
-    usageWindow *w1;
-    bool inHouseWin = false;
-
-    lastTimestamp = interface->getLastTimestamp();
-
-    tempTM.tm_sec = gmtime(&lastTimestamp)->tm_sec;
-    tempTM.tm_min = gmtime(&lastTimestamp)->tm_min;
-    tempTM.tm_hour = gmtime(&lastTimestamp)->tm_hour;
-    lastTimestamp = mktime(&tempTM) + 3600;
-    day = gmtime(&lastTimestamp)->tm_wday;
-
-    while(listIteratorW1)
-    {
-        w1 = (usageWindow *)listIteratorW1->data;
-
-        #ifdef TESTING
-            cout << "Window is " << w1->day + 1;
-            cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60 << "(" << w1->start << ")";
-            cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << (((w1->end + 1) * 1800) % 3600) / 60 << "(" << w1->end << ")" << endl;
-        #endif
-
-        if(day == w1->day)
-        {
-            if(lastTimestamp >= w1->start * 1800)
-            {
-                if(lastTimestamp <= (w1->end + 2) * 1800) //+2 for some tolerance
-                {
-                    #ifdef TESTING
-                        cout << "Record in house active window" << endl;
-                    #endif
-
-                    listIteratorW1 = NULL;
-                    inHouseWin = true;
-                }
-                else
-                {
-                    listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
-                }
-            }
-            else
-            {
-                #ifdef TESTING
-                    cout << "Record not in house active window" << endl;
-                #endif
-
-                listIteratorW1 = NULL;
-            }
-        }
-        else if(day > w1->day)
-        {
-            listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
-        }
-        else if(day < w1->day)
-        {
-            #ifdef TESTING
-                cout << "Record not in house active window" << endl;
-            #endif
-
-            listIteratorW1 = NULL;
-        }
-    }
-
-    if(inHouseWin == false)
-    {
-        listIteratorR1 = rooms.getHead();
-
-        while(listIteratorR1)
-        {
-            r1 = (devRoom *)listIteratorR1->data;
-
-            r1->activeProb = 0;
-
-            activeRoom = &houseInactive;
-
-            listIteratorR1 = rooms.getNext(listIteratorR1);
-        }
-
-        #ifdef TESTING
-            printActivity();
-        #endif
-    }
-
     #ifdef TESTING
         cout << "Sending dev stims" << endl;
         uint8_t mac[6];
@@ -4688,8 +4596,6 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
 
             listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
         }
-
-        
         return 0;
     }
 
