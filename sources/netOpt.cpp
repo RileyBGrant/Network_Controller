@@ -4426,6 +4426,20 @@ int8_t netOpt::getProbAdjustment(devRecord *d1, devRecord *d2, float adjustmentC
             listIteratorR1 = rooms.getNext(listIteratorR1);
         }
         cout << endl;
+
+        cout << "House usage windows" << endl;
+        listIteratorW1 = houseUsage.windows.getHead();
+
+        while(listIteratorW1)
+        {
+            w1 = (usageWindow *)listIteratorW1->data;
+
+            cout << "Window found on day " << w1->day + 1;
+            cout << " at " << (w1->start * 1800) / 3600 << ":" << ((w1->start * 1800) % 3600) / 60 << "(" << w1->start << ")";
+            cout << " - " << ((w1->end + 1) * 1800) / 3600 << ":" << (((w1->end + 1) * 1800) % 3600) / 60 << "(" << w1->end << ")" << endl;
+
+            listIteratorW1 = houseUsage.windows.getNext(listIteratorW1);
+        }
         return 0;
     }
 
