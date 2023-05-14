@@ -33,7 +33,7 @@ int main()
 
         interface.endBurst();
 
-        if(interface.getLastTimestamp() - lastOpt > 86400)
+        if(interface.getLastTimestamp() - lastOpt > 86400) //per day
         {
             lastOpt = interface.getLastTimestamp();
             optimiser.sortDevs();
